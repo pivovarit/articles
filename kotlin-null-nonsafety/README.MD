@@ -1,0 +1,1 @@
+http://4comprehension.com/bypassing-kotlins-null-safety/
