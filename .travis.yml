@@ -1,0 +1,13 @@
+language: java
+
+install: mvn -q test
+
+jdk:
+  - oraclejdk8
+
+cache:
+  directories:
+  - .autoconf
+  - $HOME/.m2
+
+
