@@ -39,7 +39,7 @@ class SequentialStatelessHammingEncoderTest {
          * home made property testing
          */
         generateSequence("0") { it + "0" }
-          .take(6000)
+          .take(1000)
           .map { encoder.encode(BinaryString(it)).value }
           .forEach {
               assertThat(it)

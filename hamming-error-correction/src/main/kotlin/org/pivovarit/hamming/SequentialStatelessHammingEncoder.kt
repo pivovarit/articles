@@ -6,7 +6,7 @@ import org.pivovarit.hamming.message.EncodedString
 class SequentialStatelessHammingEncoder : HammingEncoder {
     companion object {
 
-        internal fun codewordSize(msgLength: Int) = generateSequence(0) { it + 1 }
+        internal fun codewordSize(msgLength: Int) = generateSequence(2) { it + 1 }
           .first { r -> msgLength + r + 1 <= (1 shl r) } + msgLength
 
         internal fun toHammingCodeValue(it: Int, input: BinaryString): String {
