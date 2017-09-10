@@ -1,15 +1,14 @@
-package org.pivovarit.hamming.encode
+package com.pivovarit.hamming.domain.encode
 
-import org.pivovarit.hamming.message.BinaryString
-import org.pivovarit.hamming.message.EncodedString
+import com.pivovarit.hamming.domain.message.BinaryString
+import com.pivovarit.hamming.domain.message.EncodedString
+import com.pivovarit.hamming.domain.internal.codewordSize
+import com.pivovarit.hamming.domain.internal.isPowerOfTwo
+import com.pivovarit.hamming.domain.internal.parityIndicesSequence
 
-class SequentialStatelessHammingEncoder : HammingEncoder {
+internal class SequentialStatelessHammingEncoder : HammingEncoder {
     companion object {
-
-        internal fun codewordSize(msgLength: Int) = generateSequence(2) { it + 1 }
-          .first { r -> msgLength + r + 1 <= (1 shl r) } + msgLength
-
-        internal fun toHammingCodeValue(it: Int, input: BinaryString) =
+        private fun toHammingCodeValue(it: Int, input: BinaryString) =
           when ((it + 1).isPowerOfTwo()) {
               true -> getParityBit(it, input)
               false -> getDataBit(it, input)
@@ -23,11 +22,6 @@ class SequentialStatelessHammingEncoder : HammingEncoder {
 
         internal fun getDataBit(ind: Int, input: BinaryString) = input
           .value[ind - Integer.toBinaryString(ind).length].toString()
-
-        internal fun parityIndicesSequence(startIndex: Int, endExclusive: Int) = generateSequence(startIndex) { it + 1 }
-          .take(endExclusive - startIndex)
-          .filterIndexed { i, _ -> i % ((2 * (startIndex + 1))) < startIndex + 1 }
-          .drop(1)
     }
 
     override fun encode(input: BinaryString) = generateSequence(0) { it + 1 }
@@ -36,5 +30,3 @@ class SequentialStatelessHammingEncoder : HammingEncoder {
       .joinToString("")
       .let { EncodedString(it) }
 }
-
-private fun Int.isPowerOfTwo() = this != 0 && this and this - 1 == 0

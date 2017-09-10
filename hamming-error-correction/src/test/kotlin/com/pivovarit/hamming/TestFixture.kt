@@ -1,9 +1,9 @@
 package com.pivovarit.hamming
 
-import org.pivovarit.hamming.message.BinaryString
-import org.pivovarit.hamming.message.EncodedString
+import com.pivovarit.hamming.domain.message.BinaryString
+import com.pivovarit.hamming.domain.message.EncodedString
 
-internal fun exampleData() = listOf(
+internal fun exampleValidData() = listOf(
   "1" to "111",
   "01" to "10011",
   "11" to "01111",
