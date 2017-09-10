@@ -1,6 +1,7 @@
-package com.pivovarit.hamming.domain.encode
+package com.pivovarit.hamming.domain.encode.stateless
 
 import com.pivovarit.hamming.domain.BinaryString
+import com.pivovarit.hamming.domain.encode.HammingEncoder
 import com.pivovarit.hamming.exampleValidData
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test

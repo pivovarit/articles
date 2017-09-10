@@ -1,8 +1,9 @@
-package com.pivovarit.hamming.domain.encode
+package com.pivovarit.hamming.domain.encode.stateless
 
 import com.pivovarit.hamming.domain.isPowerOfTwo
 import com.pivovarit.hamming.domain.BinaryString
 import com.pivovarit.hamming.domain.EncodedString
+import com.pivovarit.hamming.domain.encode.HammingEncoder
 
 internal class SequentialStatelessHammingEncoder : HammingEncoder {
 

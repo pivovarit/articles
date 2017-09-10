@@ -1,4 +1,4 @@
-package com.pivovarit.hamming.domain.encode
+package com.pivovarit.hamming.domain.encode.stateless
 
 import com.pivovarit.hamming.domain.BinaryString
 import org.assertj.core.api.Assertions.assertThat
