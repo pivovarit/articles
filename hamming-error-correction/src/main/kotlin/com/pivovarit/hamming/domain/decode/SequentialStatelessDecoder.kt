@@ -1,7 +1,7 @@
 package com.pivovarit.hamming.domain.decode
 
-import com.pivovarit.hamming.domain.message.BinaryString
-import com.pivovarit.hamming.domain.message.EncodedString
+import com.pivovarit.hamming.domain.BinaryString
+import com.pivovarit.hamming.domain.EncodedString
 
 internal class SequentialStatelessDecoder : HammingDecoder {
     override fun decode(input: EncodedString): BinaryString? = TODO()

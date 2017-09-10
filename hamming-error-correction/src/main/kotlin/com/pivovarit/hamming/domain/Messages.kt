@@ -1,4 +1,4 @@
-package com.pivovarit.hamming.domain.message
+package com.pivovarit.hamming.domain
 
 data class EncodedString(val value: String)
 
