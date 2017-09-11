@@ -11,5 +11,6 @@
 
     <modules>
         <module>kotlin-null-nonsafety</module>
+        <module>hamming-error-correction</module>
     </modules>
 </project>
