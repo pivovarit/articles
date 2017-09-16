@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 import java.util.PriorityQueue;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -12,6 +13,20 @@ import java.util.stream.Stream;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class PriorityQueueToStreamTest {
+
+    static <T> Stream<T> drainToStream(PriorityQueue<T> queue) {
+        Objects.requireNonNull(queue);
+        return Stream.generate(queue::poll)
+          .limit(queue.size());
+    }
+
+    static <T> Stream<T> asStream(PriorityQueue<T> queue) {
+        Objects.requireNonNull(queue);
+        Comparator<? super T> comparator = queue.comparator();
+        return comparator != null
+          ? queue.stream().sorted(comparator)
+          : queue.stream().sorted();
+    }
 
     @Test
     void shouldMaintainInsertionOrder() {
@@ -38,12 +53,11 @@ class PriorityQueueToStreamTest {
 
     @Test
     void solution_2() throws Exception {
-        Comparator<String> priority = Comparator.comparing(String::length);
-        PriorityQueue<String> queue = new PriorityQueue<>(priority);
+        PriorityQueue<String> queue = new PriorityQueue<>(Comparator.comparing(String::length));
         queue.addAll(Arrays.asList("1", "333", "22", "55555", "4444"));
 
         List<String> result = queue.stream()
-          .sorted(priority)
+          .sorted(queue.comparator())
           .collect(Collectors.toList());
 
         assertThat(result).containsExactly("1", "22", "333", "4444", "55555");
@@ -52,8 +66,7 @@ class PriorityQueueToStreamTest {
 
     @Test
     void solution_2_comparable() throws Exception {
-        PriorityQueue<String> queue = new PriorityQueue<>();
-        queue.addAll(Arrays.asList("1", "333", "22", "55555", "4444"));
+        PriorityQueue<String> queue = new PriorityQueue<>(Arrays.asList("1", "333", "22", "55555", "4444"));
 
         List<String> result = queue.stream()
           .sorted()
