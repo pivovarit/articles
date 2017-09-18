@@ -13,5 +13,10 @@
         <module>kotlin-null-nonsafety</module>
         <module>hamming-error-correction</module>
         <module>priorityqueue-stream-order</module>
+        <module>sneaky-throws-lambda</module>
     </modules>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
 </project>
