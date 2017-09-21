@@ -20,6 +20,12 @@ class PriorityQueueToStreamTest {
           .limit(queue.size());
     }
 
+    static <T> Stream<T> drainToStreamJava9(PriorityQueue<T> queue) {
+        Objects.requireNonNull(queue);
+        return Stream.generate(queue::poll)
+          .takeWhile(Objects::nonNull);
+    }
+
     static <T> Stream<T> asStream(PriorityQueue<T> queue) {
         Objects.requireNonNull(queue);
         Comparator<? super T> comparator = queue.comparator();
