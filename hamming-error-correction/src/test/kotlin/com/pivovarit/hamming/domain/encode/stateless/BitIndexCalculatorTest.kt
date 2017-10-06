@@ -4,9 +4,9 @@ import com.pivovarit.hamming.domain.BinaryString
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
 
-class StatelessBitIndexCalculatorTest {
+class BitIndexCalculatorTest {
 
-    private val sut = StatelessBitIndexCalculator()
+    private val sut = BitIndexCalculator()
 
     @Test
     fun shouldGetDataBit() {
