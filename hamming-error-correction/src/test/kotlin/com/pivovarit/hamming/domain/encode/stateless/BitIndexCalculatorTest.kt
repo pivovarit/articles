@@ -2,44 +2,42 @@ package com.pivovarit.hamming.domain.encode.stateless
 
 import com.pivovarit.hamming.domain.BinaryString
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.Test
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.CsvSource
 
 class BitIndexCalculatorTest {
 
     private val sut = BitIndexCalculator()
 
-    @Test
-    fun shouldGetDataBit() {
-        listOf(
-          2 to "1",
-          4 to "2",
-          5 to "3",
-          6 to "4",
-          8 to "5",
-          9 to "6",
-          10 to "7",
-          11 to "8")
-          .forEach {
-              assertThat(sut.getDataBit(it.first, BinaryString("12345678")))
-                .isEqualTo(it.second)
-          }
+    @ParameterizedTest(name = "Data bit for {0} should be {1}")
+    @CsvSource(
+      "2,1",
+      "4,2",
+      "5,3",
+      "6,4",
+      "8,5",
+      "9,6",
+      "10,7",
+      "11,8")
+    fun shouldGetDataBit(first: Int, second: String) {
+        assertThat(sut.getDataBit(first, BinaryString("12345678")))
+          .isEqualTo(second)
     }
 
-    @Test
-    fun shouldGetCodewordSize() {
-        listOf(
-          1 to 3,
-          2 to 5,
-          3 to 6,
-          4 to 7,
-          5 to 9,
-          6 to 10,
-          7 to 11,
-          8 to 12)
-          .forEach {
-              assertThat(sut.codewordSize(it.first))
-                .isEqualTo(it.second)
-          }
+    @ParameterizedTest(name = "Codeword size for {0} should be {1}")
+    @CsvSource(
+      "1,3",
+      "2,5",
+      "3,6",
+      "4,7",
+      "5,9",
+      "6,10",
+      "7,11",
+      "8,12")
+    fun shouldGetCodewordSize(first: Int, second: Int) {
+        assertThat(sut.codewordSize(first))
+          .isEqualTo(second)
     }
 
 
