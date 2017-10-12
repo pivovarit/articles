@@ -2,7 +2,6 @@ package com.pivovarit.hamming.domain.encode.stateless
 
 import com.pivovarit.hamming.domain.BinaryString
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 
@@ -41,18 +40,17 @@ class BitIndexCalculatorTest {
     }
 
 
-    @Test
-    fun shouldGetGroupedIndicesSequence() {
-        listOf(
-          (0 to 3) to listOf(2),
-          (1 to 3) to listOf(2),
-          (0 to 12) to listOf(2, 4, 6, 8, 10),
-          (1 to 12) to listOf(2, 5, 6, 9, 10),
-          (3 to 18) to listOf(4, 5, 6, 11, 12, 13, 14),
-          (1 to 18) to listOf(2, 5, 6, 9, 10, 13, 14, 17))
-          .forEach {
-              assertThat(sut.parityIndicesSequence(it.first.first, it.first.second).toList())
-                .containsExactlyElementsOf(it.second)
-          }
+    @ParameterizedTest(name = "Sequence for params: {0},{1} should be {2}")
+    @CsvSource(
+      "0,3,2",
+      "1,3,2",
+      "0,12,2:4:6:8:10",
+      "1,12,2:5:6:9:10",
+      "3,18,4:5:6:11:12:13:14",
+      "1,18,2:5:6:9:10:13:14:17")
+    fun shouldGetGroupedIndicesSequence(first: Int, second: Int, third: String) {
+        assertThat(sut.parityIndicesSequence(first, second).toList())
+          .containsExactlyElementsOf(third.split(":")
+            .map { it.toInt() }.toList())
     }
 }
