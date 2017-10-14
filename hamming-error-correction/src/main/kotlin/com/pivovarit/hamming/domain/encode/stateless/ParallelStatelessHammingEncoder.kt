@@ -5,12 +5,12 @@ import com.pivovarit.hamming.domain.EncodedString
 import com.pivovarit.hamming.domain.encode.HammingEncoder
 import com.pivovarit.hamming.domain.isPowerOfTwo
 
-internal class SequentialStatelessHammingEncoder : HammingEncoder {
+internal class ParallelStatelessHammingEncoder : HammingEncoder {
 
     private val bitIndexCalculator: BitIndexCalculator = BitIndexCalculator()
 
     override fun encode(input: BinaryString) = bitIndexCalculator.getHammingCodewordIndices(input.value.length)
-      .toList().stream() // to be fair.
+      .toList().parallelStream()
       .map { toHammingCodeValue(it, input) }
       .reduce("") { t, u -> t + u }
       .let(::EncodedString)
