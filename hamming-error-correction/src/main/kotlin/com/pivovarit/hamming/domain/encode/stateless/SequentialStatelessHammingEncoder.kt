@@ -7,9 +7,9 @@ import com.pivovarit.hamming.domain.isPowerOfTwo
 
 internal class SequentialStatelessHammingEncoder : HammingEncoder {
 
-    private val bitIndexCalculator: BitIndexCalculator = BitIndexCalculator()
+    private val hammingHelper: HammingHelper = HammingHelper()
 
-    override fun encode(input: BinaryString) = bitIndexCalculator.getHammingCodewordIndices(input.value.length)
+    override fun encode(input: BinaryString) = hammingHelper.getHammingCodewordIndices(input.value.length)
       .toList().stream() // to be fair.
       .map { toHammingCodeValue(it, input) }
       .reduce("") { t, u -> t + u }
@@ -17,7 +17,7 @@ internal class SequentialStatelessHammingEncoder : HammingEncoder {
 
     private fun toHammingCodeValue(it: Int, input: BinaryString) =
       when ((it + 1).isPowerOfTwo()) {
-          true -> bitIndexCalculator.getParityBit(it, input)
-          false -> bitIndexCalculator.getDataBit(it, input)
+          true -> hammingHelper.getParityBit(it, input)
+          false -> hammingHelper.getDataBit(it, input)
       }
 }

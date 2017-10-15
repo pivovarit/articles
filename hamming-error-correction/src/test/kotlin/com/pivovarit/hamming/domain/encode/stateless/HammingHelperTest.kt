@@ -5,9 +5,9 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 
-class BitIndexCalculatorTest {
+class HammingHelperTest {
 
-    private val sut = BitIndexCalculator()
+    private val sut = HammingHelper()
 
     @ParameterizedTest(name = "Data bit for {0} should be {1}")
     @CsvSource(
