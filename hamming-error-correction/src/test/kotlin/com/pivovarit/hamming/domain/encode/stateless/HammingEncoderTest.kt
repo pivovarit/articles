@@ -5,17 +5,13 @@ import com.pivovarit.hamming.domain.EncodedString
 import com.pivovarit.hamming.domain.encode.HammingEncoder
 import com.pivovarit.hamming.domain.encode.HammingEncoder.Companion.parallelStateless
 import com.pivovarit.hamming.domain.encode.HammingEncoder.Companion.sequentialStateless
-import org.assertj.core.api.Assertions
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 
-class SequentialStatelessHammingEncoderTest : HammingEncoderTest(sequentialStateless())
-
-class ParallelStatelessHammingEncoderTest : HammingEncoderTest(parallelStateless())
-
-abstract class HammingEncoderTest(private val sut: HammingEncoder) {
+sealed class HammingEncoderTest(private val sut: HammingEncoder) {
 
     @ParameterizedTest(name = "{0} should be encoded to {1}")
     @CsvSource(
@@ -35,8 +31,7 @@ abstract class HammingEncoderTest(private val sut: HammingEncoder) {
       "1100101,00111000101",
       "10011010,011100101010")
     fun shouldEncode(first: String, second: String) {
-        Assertions.assertThat(sut.encode(BinaryString(first)))
-          .isEqualTo(EncodedString(second))
+        assertThat(sut.encode(BinaryString(first))).isEqualTo(EncodedString(second))
     }
 
     @Test
@@ -45,9 +40,10 @@ abstract class HammingEncoderTest(private val sut: HammingEncoder) {
         generateSequence("0") { it + "0" }
           .take(1000)
           .map { sut.encode(BinaryString(it)).value }
-          .forEach {
-              Assertions.assertThat(it)
-                .doesNotContain("1")
-          }
+          .forEach { assertThat(it).doesNotContain("1") }
     }
+
+    class SequentialStatelessHammingEncoderTest : HammingEncoderTest(sequentialStateless())
+
+    class ParallelStatelessHammingEncoderTest : HammingEncoderTest(parallelStateless())
 }
