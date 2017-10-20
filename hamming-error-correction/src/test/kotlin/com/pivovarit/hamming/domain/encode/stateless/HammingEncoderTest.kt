@@ -3,15 +3,18 @@ package com.pivovarit.hamming.domain.encode.stateless
 import com.pivovarit.hamming.domain.BinaryString
 import com.pivovarit.hamming.domain.EncodedString
 import com.pivovarit.hamming.domain.encode.HammingEncoder
-import com.pivovarit.hamming.domain.encode.HammingEncoder.Companion.parallelStateless
-import com.pivovarit.hamming.domain.encode.HammingEncoder.Companion.sequentialStateless
-import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.api.Assertions
+import org.assertj.core.api.Assertions.*
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 
-sealed class HammingEncoderTest(private val sut: HammingEncoder) {
+class ParallelStatelessHammingEncoderTest : HammingEncoderTestBase(HammingEncoder.parallelStateless())
+
+class SequentialStatelessHammingEncoderTest : HammingEncoderTestBase(HammingEncoder.sequentialStateless())
+
+abstract class HammingEncoderTestBase(private val sut: HammingEncoder) {
 
     @ParameterizedTest(name = "{0} should be encoded to {1}")
     @CsvSource(
@@ -43,7 +46,4 @@ sealed class HammingEncoderTest(private val sut: HammingEncoder) {
           .forEach { assertThat(it).doesNotContain("1") }
     }
 
-    class SequentialStatelessHammingEncoderTest : HammingEncoderTest(sequentialStateless())
-
-    class ParallelStatelessHammingEncoderTest : HammingEncoderTest(parallelStateless())
 }

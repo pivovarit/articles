@@ -9,7 +9,7 @@ internal class ParallelStatelessHammingEncoder : HammingEncoder {
 
     private val hammingHelper: HammingHelper = HammingHelper()
 
-    override fun encode(input: BinaryString) = hammingHelper.getHammingCodewordIndices(input.value.length)
+    override fun encode(input: BinaryString) = hammingHelper.getHammingCodewordIndices(input.length)
       .toList().parallelStream()
       .map { toHammingCodeValue(it, input) }
       .reduce("") { t, u -> t + u }

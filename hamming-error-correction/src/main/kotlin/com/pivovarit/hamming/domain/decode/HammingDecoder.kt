@@ -6,7 +6,9 @@ import com.pivovarit.hamming.domain.decode.stateless.SequentialStatelessDecoder
 
 interface HammingDecoder {
     companion object {
-        fun sequentialStateless() : HammingDecoder = SequentialStatelessDecoder()
+        fun sequentialStateless(): HammingDecoder = SequentialStatelessDecoder()
     }
+
     fun decode(input: EncodedString): BinaryString?
+    fun isValid(input: EncodedString): Boolean
 }

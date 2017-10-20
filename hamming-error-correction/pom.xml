@@ -48,6 +48,28 @@
 
     <build>
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.19.1</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.junit.platform</groupId>
+                        <artifactId>junit-platform-surefire-provider</artifactId>
+                        <version>1.0.1</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.junit.jupiter</groupId>
+                        <artifactId>junit-jupiter-engine</artifactId>
+                        <version>${junit.version}</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.junit.jupiter</groupId>
+                        <artifactId>junit-jupiter-params</artifactId>
+                        <version>${junit.version}</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
             <!--
                 1. Compile Kotlin sources first.
             -->
@@ -60,12 +82,13 @@
                 <executions>
                     <execution>
                         <id>process-sources</id>
-                        <phase>generate-sources</phase>
+                        <phase>process-sources</phase>
                         <goals>
                             <goal>compile</goal>
                         </goals>
                         <configuration>
                             <sourceDirs>
+                                <sourceDir>${project.basedir}/src/test/java</sourceDir>
                                 <sourceDir>${project.basedir}/src/main/kotlin</sourceDir>
                             </sourceDirs>
                         </configuration>
@@ -77,6 +100,12 @@
                         <goals>
                             <goal>test-compile</goal>
                         </goals>
+                        <configuration>
+                            <sourceDirs>
+                                <sourceDir>${project.basedir}/src/test/kotlin</sourceDir>
+                                <sourceDir>${project.basedir}/src/test/java</sourceDir>
+                            </sourceDirs>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>
@@ -202,7 +231,7 @@
 
     <properties>
         <kotlin.version>1.1.4-2</kotlin.version>
-        <junit.version>5.0.0</junit.version>
+        <junit.version>5.0.1</junit.version>
         <jmh.version>1.19</jmh.version>
         <jmh.generator>default</jmh.generator>
         <javac.target>1.8</javac.target>

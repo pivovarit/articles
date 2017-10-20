@@ -7,7 +7,7 @@ import com.pivovarit.hamming.domain.isPowerOfTwo
 internal class HammingMessageExtractor {
     fun stripHammingMetadata(input: EncodedString): BinaryString {
         return input.value.asSequence()
-          .filterIndexed { ind, _ -> (ind + 1).isPowerOfTwo().not() }
+          .filterIndexed { i, _ -> (i + 1).isPowerOfTwo().not() }
           .joinToString("")
           .let(::BinaryString)
     }
