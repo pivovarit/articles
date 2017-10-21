@@ -1,13 +1,13 @@
 package com.pivovarit.hamming.vavr;
 
-import java.util.Optional;
+import io.vavr.control.Option;
 
 interface HammingDecoder {
     static HammingDecoder vavrDecoder() {
         return new VavrHammingDecoder();
     }
 
-    Optional<BinaryString> decode(EncodedString input);
+    Option<BinaryString> decode(EncodedString input);
 
     boolean isValid(EncodedString input);
 }

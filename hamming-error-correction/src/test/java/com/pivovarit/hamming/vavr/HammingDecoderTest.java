@@ -30,7 +30,7 @@ class HammingDecoderTest {
     void shouldDecodeCodewordWithoutErrors(String first, String second) {
         assertThat(sut.isValid(EncodedString.of(second)))
           .isTrue();
-        assertThat(sut.decode(EncodedString.of(second)))
+        assertThat(sut.decode(EncodedString.of(second)).get())
           .isEqualTo(BinaryString.of(first));
     }
 
@@ -55,7 +55,7 @@ class HammingDecoderTest {
     void shouldDecodeCodewordWithSingleBitErrors(String first, String second) {
         assertThat(sut.isValid(EncodedString.of(second)))
           .isFalse();
-        assertThat(sut.decode(EncodedString.of(second)))
+        assertThat(sut.decode(EncodedString.of(second)).get())
           .isEqualTo(BinaryString.of(first));
     }
 
