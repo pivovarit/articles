@@ -38,7 +38,7 @@ class VavrHammingEncoderTest {
     @Test
     @DisplayName("should always encode zeros to zeros")
     void shouldEncodeZeros() {
-        Stream.iterate("", i -> i + "0")
+        Stream.iterate("0", i -> i + "0")
           .take(1000)
           .map(it -> sut.encode(BinaryString.of(it)).getValue())
           .forEach(msg -> assertThat(msg).doesNotContain("1"));

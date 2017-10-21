@@ -4,6 +4,10 @@ import io.vavr.collection.Stream;
 
 class HammingHelper {
 
+    static boolean isPowerOfTwo(int i) {
+        return (i & -i) == i;
+    }
+
     int codewordSize(int msgLength) {
         return Stream.from(2, 1)
           .filter(r -> msgLength + r + 1 <= 1 << r)
