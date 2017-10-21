@@ -9,6 +9,6 @@ interface HammingDecoder {
         fun sequentialStateless(): HammingDecoder = SequentialStatelessDecoder()
     }
 
-    fun decode(input: EncodedString): BinaryString?
-    fun isValid(input: EncodedString): Boolean
+    fun decode(codeWord: EncodedString): BinaryString
+    fun isValid(codeWord: EncodedString): Boolean
 }

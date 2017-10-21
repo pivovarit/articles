@@ -9,6 +9,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class HammingPropertyTest {
 
+    private static final Random rand = new Random();
     private final HammingEncoder encoder = HammingEncoder.vavrEncoder();
     private final HammingDecoder decoder = HammingDecoder.vavrDecoder();
 
@@ -17,23 +18,21 @@ class HammingPropertyTest {
         for (int i = 0; i < 10000; i++) {
             BinaryString msg = randomMessage();
             assertThat(msg)
-              .isEqualTo(decoder.decode(encoder.encode(msg)).get());
+              .isEqualTo(decoder.decode(encoder.encode(msg)));
         }
     }
 
     @Test
     void shouldEncodeAndDecodeWithSingleBitErrors() {
-        Random rand = new Random();
         for (int i = 0; i < 10000; i++) {
             BinaryString msg = randomMessage();
             EncodedString encoded = encoder.encode(msg);
             assertThat(msg)
-              .isEqualTo(decoder.decode(withBitFlippedAt(rand.nextInt(encoded.getValue().length()), encoded)).get());
+              .isEqualTo(decoder.decode(withBitFlippedAt(rand.nextInt(encoded.getValue().length()), encoded)));
         }
     }
 
     private BinaryString randomMessage() {
-        Random rand = new Random();
         String msg = Stream.continually(() -> rand.nextInt(1))
           .map(i -> Integer.toString(i))
           .take(rand.nextInt(10) + 1)

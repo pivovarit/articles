@@ -7,6 +7,8 @@ import org.junit.jupiter.api.Test
 import java.util.Random
 
 class HammingPropertyTest {
+    private val rand = Random()
+
     private val encoder = HammingEncoder.sequentialStateless()
     private val decoder = HammingDecoder.sequentialStateless()
 
@@ -20,20 +22,18 @@ class HammingPropertyTest {
 
     @Test
     fun shouldEncodeAndDecodeWithSingleBitErrors() = repeat(10000) {
-        val rand = Random()
         randomMessage().let {
-            assertThat(it)
-              .isEqualTo(decoder.decode(encoder.encode(it)
-                .withBitFlippedAt(rand.nextInt(it.length))))
+            assertThat(it).isEqualTo(decoder.decode(encoder.encode(it)
+              .withBitFlippedAt(rand.nextInt(it.length))))
         }
     }
 
-    private fun randomMessage(): BinaryString = Random().let {
-        generateSequence { it.nextInt(1).toString() }
-          .take(it.nextInt(1000).inc())
-          .reduce { acc, s -> acc + s }
-          .let(::BinaryString)
-    }
+    private fun randomMessage(): BinaryString =
+      generateSequence { rand.nextInt(1).toString() }
+        .take(rand.nextInt(1000).inc())
+        .reduce { acc, s -> acc + s }
+        .let(::BinaryString)
+
 
     private fun EncodedString.withBitFlippedAt(ind: Int): EncodedString = this[ind].toString().toInt()
       .let { this.value.replaceRange(ind, ind + 1, ((it + 1) % 2).toString()) }

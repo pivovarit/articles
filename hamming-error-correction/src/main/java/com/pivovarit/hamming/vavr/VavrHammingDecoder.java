@@ -3,7 +3,6 @@ package com.pivovarit.hamming.vavr;
 import io.vavr.Tuple;
 import io.vavr.collection.List;
 import io.vavr.collection.Stream;
-import io.vavr.control.Option;
 
 import static io.vavr.API.$;
 import static io.vavr.API.Case;
@@ -20,19 +19,14 @@ class VavrHammingDecoder implements HammingDecoder {
     }
 
     @Override
-    public Option<BinaryString> decode(EncodedString input) {
+    public BinaryString decode(EncodedString input) {
         List<Integer> result = indexesOfInvalidParityBits(input);
-        return Match(result.isEmpty()).of(
-          Case($(true), () -> Option.of(extractor.stripHammingMetadata(input))),
-          Case($(false), () -> {
-              int sum = result.reduce((a, b) -> a + b);
-              if (sum <= input.getValue().length()) {
-                  return Option.of(extractor.stripHammingMetadata(withBitFlippedAt(input, sum - 1)));
-              } else {
-                  return Option.none();
-              }
-          })
+        EncodedString corrected = Match(result.isEmpty()).of(
+          Case($(true), () -> input),
+          Case($(false), () -> withBitFlippedAt(input, result.reduce((a, b) -> a + b) - 1))
         );
+
+        return extractor.stripHammingMetadata(corrected);
     }
 
     private List<Integer> indexesOfInvalidParityBits(EncodedString input) {
