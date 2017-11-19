@@ -10,11 +10,10 @@ data class Foo(val nonNullable: String)
 class UnsafeTest {
 
     companion object {
-        private fun getUnsafe(): Unsafe {
-            return Unsafe::class.java.getDeclaredField("theUnsafe")
-                    .apply { isAccessible = true }
-                    .let { it.get(null) as Unsafe }
-        }
+        private fun getUnsafe(): Unsafe =
+          Unsafe::class.java.getDeclaredField("theUnsafe")
+                .apply { isAccessible = true }
+                .let { it.get(null) as Unsafe }
     }
 
     private val unsafe = getUnsafe()
