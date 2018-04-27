@@ -1,13 +1,13 @@
+dist: trusty
 language: java
-
-install: mvn -q test
-
-jdk:
-  - oraclejdk9
+install:
+  - wget https://download.java.net/java/GA/jdk10/10/binaries/openjdk-10_linux-x64_bin.tar.gz
+  - tar -xzf openjdk-10_linux-x64_bin.tar.gz
+  - export JAVA_HOME=$(pwd)/jdk-10
+script:
+  - mvn -q test
 
 cache:
   directories:
   - .autoconf
   - $HOME/.m2
-
-
