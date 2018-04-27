@@ -15,6 +15,7 @@
         <module>priorityqueue-stream-order</module>
         <module>sneaky-throws-lambda</module>
         <module>kotlin-type-inference</module>
+        <module>sliding-window-stream</module>
     </modules>
 
     <properties>
