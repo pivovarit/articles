@@ -5,18 +5,19 @@ import org.junit.jupiter.api.Test;
 import java.util.Collections;
 import java.util.List;
 
-import static com.pivovarit.stream.WindowSpliterator.windowed;
+import static com.pivovarit.stream.WindowSpliterator.sliding;
 import static java.util.Arrays.asList;
 import static java.util.stream.Collectors.toList;
 import static org.assertj.core.api.Assertions.assertThat;
 
-class WindowStreamTest {
+class WindowStreamCollectorTest {
 
     @Test
     void applySlidingWindow() {
         List<Integer> source = asList(1, 2, 3, 4);
 
-        List<List<Integer>> result = windowed(source.stream(), 3)
+        List<List<Integer>> result = source.stream()
+          .collect(sliding(3))
           .map(s -> s.collect(toList()))
           .collect(toList());
 
@@ -28,7 +29,8 @@ class WindowStreamTest {
     void applySlidingWindowToStreamSmallerThanWindow() {
         List<Integer> source = asList(1, 2);
 
-        List<List<Integer>> result = windowed(source.stream(), 3)
+        List<List<Integer>> result = source.stream()
+          .collect(sliding(3))
           .map(s -> s.collect(toList()))
           .collect(toList());
 
@@ -40,7 +42,8 @@ class WindowStreamTest {
     void applySlidingWindowToEmptyStream() {
         List<Integer> source = Collections.emptyList();
 
-        List<List<Integer>> result = windowed(source.stream(), 3)
+        List<List<Integer>> result = source.stream()
+          .collect(sliding(3))
           .map(s -> s.collect(toList()))
           .collect(toList());
 
@@ -51,7 +54,8 @@ class WindowStreamTest {
     void applyZeroSlidingWindow() {
         List<Integer> source = asList(1, 2, 3, 4);
 
-        List<List<Integer>> result = windowed(source.stream(), 0)
+        List<List<Integer>> result = source.stream()
+          .collect(sliding(0))
           .map(s -> s.collect(toList()))
           .collect(toList());
 
