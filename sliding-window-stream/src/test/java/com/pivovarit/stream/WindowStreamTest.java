@@ -3,7 +3,6 @@ package com.pivovarit.stream;
 import org.junit.jupiter.api.Test;
 
 import java.util.Collections;
-import java.util.List;
 
 import static com.pivovarit.stream.WindowSpliterator.windowed;
 import static java.util.Arrays.asList;
@@ -14,9 +13,9 @@ class WindowStreamTest {
 
     @Test
     void applySlidingWindow() {
-        List<Integer> source = asList(1, 2, 3, 4);
+        var source = asList(1, 2, 3, 4);
 
-        List<List<Integer>> result = windowed(source.stream(), 3)
+        var result = windowed(source.stream(), 3)
           .map(s -> s.collect(toList()))
           .collect(toList());
 
@@ -26,9 +25,9 @@ class WindowStreamTest {
 
     @Test
     void applySlidingWindowToStreamSmallerThanWindow() {
-        List<Integer> source = asList(1, 2);
+        var source = asList(1, 2);
 
-        List<List<Integer>> result = windowed(source.stream(), 3)
+        var result = windowed(source.stream(), 3)
           .map(s -> s.collect(toList()))
           .collect(toList());
 
@@ -38,9 +37,9 @@ class WindowStreamTest {
 
     @Test
     void applySlidingWindowToEmptyStream() {
-        List<Integer> source = Collections.emptyList();
+        var source = Collections.emptyList();
 
-        List<List<Integer>> result = windowed(source.stream(), 3)
+        var result = windowed(source.stream(), 3)
           .map(s -> s.collect(toList()))
           .collect(toList());
 
@@ -49,9 +48,9 @@ class WindowStreamTest {
 
     @Test
     void applyZeroSlidingWindow() {
-        List<Integer> source = asList(1, 2, 3, 4);
+        var source = asList(1, 2, 3, 4);
 
-        List<List<Integer>> result = windowed(source.stream(), 0)
+        var result = windowed(source.stream(), 0)
           .map(s -> s.collect(toList()))
           .collect(toList());
 
