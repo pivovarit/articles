@@ -11,6 +11,7 @@
 
     <modules>
         <module>kotlin-null-nonsafety</module>
+        <module>kotlin-collections</module>
         <module>hamming-error-correction</module>
         <module>priorityqueue-stream-order</module>
         <module>sneaky-throws-lambda</module>
