@@ -1,4 +1,4 @@
-package com.pivovarit.ti
+package com.pivovarit.inference
 
 
 fun main(args: Array<String>) {
@@ -8,5 +8,5 @@ fun main(args: Array<String>) {
     }
 
     listOf(42)
-      .forEach { foo(it) }
+      .forEach { foo(it).invoke() }
 }
