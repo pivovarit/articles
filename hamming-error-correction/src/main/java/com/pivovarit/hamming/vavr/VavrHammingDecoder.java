@@ -20,6 +20,7 @@ class VavrHammingDecoder implements HammingDecoder {
 
     @Override
     public BinaryString decode(EncodedString input) {
+
         List<Integer> result = indexesOfInvalidParityBits(input);
         EncodedString corrected = Match(result.isEmpty()).of(
           Case($(true), () -> input),

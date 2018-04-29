@@ -1,4 +1,4 @@
-package com.pivovarit.ti
+package com.pivovarit.inference
 
 
 fun main(args: Array<String>) {
