@@ -1,11 +1,9 @@
 dist: trusty
 language: java
-install:
-  - wget https://download.java.net/java/GA/jdk10/10/binaries/openjdk-10_linux-x64_bin.tar.gz
-  - tar -xzf openjdk-10_linux-x64_bin.tar.gz
-  - export JAVA_HOME=$(pwd)/jdk-10
+jdk:
+  - oraclejdk11
 script:
-  - mvn -q test
+  - mvn -q install
 
 cache:
   directories:
