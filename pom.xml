@@ -17,6 +17,7 @@
         <module>sneaky-throws-lambda</module>
         <module>kotlin-type-inference</module>
         <module>sliding-window-stream</module>
+        <module>java-lazy-initialization</module>
     </modules>
 
     <properties>
