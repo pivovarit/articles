@@ -1,12 +1,12 @@
-package com.pivovarit.sneaky;
+package com.pivovarit.lazy;
 
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.util.Optional;
 
-import static com.pivovarit.sneaky.ThrowingFunction.sneakyThrow;
-import static com.pivovarit.sneaky.ThrowingFunction.unchecked;
+import static com.pivovarit.lazy.ThrowingFunction.sneakyThrow;
+import static com.pivovarit.lazy.ThrowingFunction.unchecked;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class ThrowingFunctionTest {

@@ -1,4 +1,4 @@
-package com.pivovarit.sneaky;
+package com.pivovarit.lazy;
 
 import java.util.function.Function;
 
