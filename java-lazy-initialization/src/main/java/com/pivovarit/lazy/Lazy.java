@@ -7,12 +7,11 @@ import java.util.function.Predicate;
 import java.util.function.Supplier;
 
 public class Lazy<T> {
-    private Supplier<T> supplier;
+    private transient Supplier<T> supplier;
     private volatile T value;
 
     public Lazy(Supplier<T> supplier) {
-        Objects.requireNonNull(supplier);
-        this.supplier = supplier;
+        this.supplier = Objects.requireNonNull(supplier);
     }
 
     public T get() {
