@@ -1,5 +1,8 @@
 package com.pivovarit.lazy;
 
+import java.util.Optional;
+import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.function.Supplier;
 
 public class ThreadSafeLazy<T> {
@@ -20,4 +23,14 @@ public class ThreadSafeLazy<T> {
         }
         return value;
     }
+
+    public <R> ThreadSafeLazy<R> map(Function<T, R> mapper) {
+        return new ThreadSafeLazy<>(() -> mapper.apply(this.get()));
+    }
+
+    public ThreadSafeLazy<Optional<T>> filter(Predicate<T> predicate) {
+        return new ThreadSafeLazy<>(() -> Optional.of(this.get()).filter(predicate));
+    }
 }
+
+
