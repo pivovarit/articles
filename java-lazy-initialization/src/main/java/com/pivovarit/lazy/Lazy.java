@@ -35,6 +35,10 @@ public class Lazy<T> {
     public Lazy<Optional<T>> filter(Predicate<T> predicate) {
         return new Lazy<>(() -> Optional.of(get()).filter(predicate));
     }
+
+    public static <T> Lazy<T> of(Supplier<T> supplier) {
+        return new Lazy<>(supplier);
+    }
 }
 
 
