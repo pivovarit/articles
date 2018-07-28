@@ -5,11 +5,11 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 
-public class ThreadSafeLazy<T> {
+public class Lazy<T> {
     private final Supplier<T> supplier;
     private volatile T value;
 
-    public ThreadSafeLazy(Supplier<T> supplier) {
+    public Lazy(Supplier<T> supplier) {
         this.supplier = supplier;
     }
 
@@ -24,12 +24,16 @@ public class ThreadSafeLazy<T> {
         return value;
     }
 
-    public <R> ThreadSafeLazy<R> map(Function<T, R> mapper) {
-        return new ThreadSafeLazy<>(() -> mapper.apply(this.get()));
+    public <R> Lazy<R> map(Function<T, R> mapper) {
+        return new Lazy<>(() -> mapper.apply(this.get()));
     }
 
-    public ThreadSafeLazy<Optional<T>> filter(Predicate<T> predicate) {
-        return new ThreadSafeLazy<>(() -> Optional.of(this.get()).filter(predicate));
+    public <R> Lazy<R> flatMap(Function<T, Lazy<R>> mapper) {
+        return new Lazy<>(() -> mapper.apply(this.get()).get());
+    }
+
+    public Lazy<Optional<T>> filter(Predicate<T> predicate) {
+        return new Lazy<>(() -> Optional.of(get()).filter(predicate));
     }
 }
 
