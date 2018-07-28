@@ -1,15 +1,17 @@
 package com.pivovarit.lazy;
 
+import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 
 public class Lazy<T> {
-    private final Supplier<T> supplier;
+    private Supplier<T> supplier;
     private volatile T value;
 
     public Lazy(Supplier<T> supplier) {
+        Objects.requireNonNull(supplier);
         this.supplier = supplier;
     }
 
@@ -17,7 +19,8 @@ public class Lazy<T> {
         if (value == null) {
             synchronized (this) {
                 if (value == null) {
-                    value = supplier.get();
+                    value = Objects.requireNonNull(supplier.get());
+                    supplier = null;
                 }
             }
         }
