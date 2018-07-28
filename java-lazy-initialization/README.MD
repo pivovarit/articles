@@ -1,0 +1,1 @@
+http://4comprehension.com/leveraging-lambda-expressions-for-lazy-evaluation-in-java/
