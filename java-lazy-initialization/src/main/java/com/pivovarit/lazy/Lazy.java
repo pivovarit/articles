@@ -6,7 +6,7 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 
-public class Lazy<T> {
+public final class Lazy<T> implements Supplier<T> {
     private transient Supplier<T> supplier;
     private volatile T value;
 
@@ -14,6 +14,7 @@ public class Lazy<T> {
         this.supplier = Objects.requireNonNull(supplier);
     }
 
+    @Override
     public T get() {
         if (value == null) {
             synchronized (this) {
