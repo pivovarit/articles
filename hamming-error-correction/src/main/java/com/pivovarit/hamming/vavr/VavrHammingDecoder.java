@@ -1,6 +1,5 @@
 package com.pivovarit.hamming.vavr;
 
-import io.vavr.Tuple;
 import io.vavr.collection.List;
 import io.vavr.collection.Stream;
 
@@ -20,7 +19,6 @@ class VavrHammingDecoder implements HammingDecoder {
 
     @Override
     public BinaryString decode(EncodedString input) {
-
         List<Integer> result = indexesOfInvalidParityBits(input);
         EncodedString corrected = Match(result.isEmpty()).of(
           Case($(true), () -> input),
@@ -33,14 +31,9 @@ class VavrHammingDecoder implements HammingDecoder {
     private List<Integer> indexesOfInvalidParityBits(EncodedString input) {
         return Stream.iterate(1, i -> i * 2)
           .takeWhile(it -> it < input.getValue().length())
-          .map(it -> {
-              boolean result = helper.parityIndicesSequence(it - 1, input.getValue().length())
-                .map(v -> toBinaryInt(input, v))
-                .fold(toBinaryInt(input, it - 1), (a, b) -> a ^ b) == 0;
-              return Tuple.of(it, result);
-          })
-          .filter(t -> !t._2)
-          .map(t -> t._1)
+          .filter(it -> helper.parityIndicesSequence(it - 1, input.getValue().length())
+            .map(v -> toBinaryInt(input, v))
+            .fold(toBinaryInt(input, it - 1), (a, b) -> a ^ b) != 0)
           .toList();
     }
 
