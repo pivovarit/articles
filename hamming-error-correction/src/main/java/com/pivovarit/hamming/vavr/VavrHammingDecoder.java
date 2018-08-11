@@ -19,10 +19,9 @@ class VavrHammingDecoder implements HammingDecoder {
 
     @Override
     public BinaryString decode(EncodedString input) {
-        List<Integer> result = indexesOfInvalidParityBits(input);
-        EncodedString corrected = Match(result.isEmpty()).of(
+        EncodedString corrected = Match(indexesOfInvalidParityBits(input).isEmpty()).of(
           Case($(true), () -> input),
-          Case($(false), () -> withBitFlippedAt(input, result.reduce((a, b) -> a + b) - 1))
+          Case($(false), () -> withBitFlippedAt(input, indexesOfInvalidParityBits(input).reduce((a, b) -> a + b) - 1))
         );
 
         return extractor.stripHammingMetadata(corrected);
