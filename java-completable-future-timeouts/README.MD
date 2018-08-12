@@ -1,1 +1,0 @@
-http://4comprehension.com/simulating-sealed-classes-in-java/
