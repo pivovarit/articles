@@ -19,6 +19,7 @@
         <module>sliding-window-stream</module>
         <module>java-lazy-initialization</module>
         <module>java-sealed-classes</module>
+        <module>java-completable-future-timeouts</module>
         <module>java-nonuniform-random</module>
     </modules>
 
