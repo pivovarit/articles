@@ -1,7 +1,7 @@
 package com.pivovarit.stream;
 
 import java.util.ArrayDeque;
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Objects;
 import java.util.Queue;
@@ -28,10 +28,8 @@ public class WindowSpliterator<T> implements Spliterator<Stream<T>> {
     private final int windowSize;
 
     private WindowSpliterator(Stream<T> stream, int windowSize) {
-        Objects.requireNonNull(stream);
-
         this.buffer = new ArrayDeque<>(windowSize);
-        this.streamIterator = stream.iterator();
+        this.streamIterator = Objects.requireNonNull(stream).iterator();
         this.windowSize = windowSize;
     }
 
@@ -42,11 +40,10 @@ public class WindowSpliterator<T> implements Spliterator<Stream<T>> {
         }
 
         while (streamIterator.hasNext()) {
-            T next = streamIterator.next();
-            buffer.add(next);
+            buffer.add(streamIterator.next());
 
             if (buffer.size() == windowSize) {
-                action.accept(new ArrayList<>(buffer).stream());
+                action.accept(Arrays.stream((T[]) buffer.toArray(new Object[0])));
                 buffer.poll();
                 return streamIterator.hasNext();
             }
