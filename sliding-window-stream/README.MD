@@ -1,0 +1,1 @@
+https://4comprehension.com/sliding-window-stream-spliterator-in-java

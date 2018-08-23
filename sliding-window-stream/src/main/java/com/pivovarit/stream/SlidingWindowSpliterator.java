@@ -11,20 +11,20 @@ import java.util.function.Consumer;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
-public class WindowSpliterator<T> implements Spliterator<Stream<T>> {
+public class SlidingWindowSpliterator<T> implements Spliterator<Stream<T>> {
 
     static <T> Stream<Stream<T>> windowed(Collection<T> stream, int windowSize) {
-        return StreamSupport.stream(new WindowSpliterator<>(stream, windowSize), false);
+        return StreamSupport.stream(new SlidingWindowSpliterator<>(stream, windowSize), false);
     }
 
     private final Queue<T> buffer;
 
-    private final Iterator<T> streamIterator;
+    private final Iterator<T> sourceIterator;
     private final int windowSize;
 
-    private WindowSpliterator(Collection<T> stream, int windowSize) {
+    private SlidingWindowSpliterator(Collection<T> stream, int windowSize) {
         this.buffer = new ArrayDeque<>(windowSize);
-        this.streamIterator = Objects.requireNonNull(stream).iterator();
+        this.sourceIterator = Objects.requireNonNull(stream).iterator();
         this.windowSize = windowSize;
     }
 
@@ -34,13 +34,13 @@ public class WindowSpliterator<T> implements Spliterator<Stream<T>> {
             return false;
         }
 
-        while (streamIterator.hasNext()) {
-            buffer.add(streamIterator.next());
+        while (sourceIterator.hasNext()) {
+            buffer.add(sourceIterator.next());
 
             if (buffer.size() == windowSize) {
                 action.accept(Arrays.stream((T[]) buffer.toArray(new Object[0])));
                 buffer.poll();
-                return streamIterator.hasNext();
+                return sourceIterator.hasNext();
             }
         }
 
