@@ -60,7 +60,7 @@ public class SlidingWindowSpliterator<T> implements Spliterator<Stream<T>> {
 
     @Override
     public int characteristics() {
-        return ORDERED | NONNULL;
+        return ORDERED | NONNULL | SIZED;
     }
 
     private static int calculateSize(Collection<?> source, int windowSize) {
