@@ -18,19 +18,20 @@ public class SlidingWindowSpliterator<T> implements Spliterator<Stream<T>> {
     }
 
     private final Queue<T> buffer;
-
     private final Iterator<T> sourceIterator;
     private final int windowSize;
+    private final int size;
 
-    private SlidingWindowSpliterator(Collection<T> stream, int windowSize) {
+    private SlidingWindowSpliterator(Collection<T> source, int windowSize) {
         this.buffer = new ArrayDeque<>(windowSize);
-        this.sourceIterator = Objects.requireNonNull(stream).iterator();
+        this.sourceIterator = Objects.requireNonNull(source).iterator();
         this.windowSize = windowSize;
+        this.size = calculateSize(source, windowSize);
     }
 
     @Override
     public boolean tryAdvance(Consumer<? super Stream<T>> action) {
-        if (windowSize < 1) {
+        if (windowSize < 1 || size == 0) {
             return false;
         }
 
@@ -44,10 +45,6 @@ public class SlidingWindowSpliterator<T> implements Spliterator<Stream<T>> {
             }
         }
 
-        if (!buffer.isEmpty()) {
-            action.accept(buffer.stream());
-        }
-
         return false;
     }
 
@@ -58,11 +55,17 @@ public class SlidingWindowSpliterator<T> implements Spliterator<Stream<T>> {
 
     @Override
     public long estimateSize() {
-        return Long.MAX_VALUE;
+        return size;
     }
 
     @Override
     public int characteristics() {
         return ORDERED | NONNULL;
+    }
+
+    private static int calculateSize(Collection<?> source, int windowSize) {
+        return source.size() < windowSize
+          ? 0
+          : source.size() - windowSize + 1;
     }
 }

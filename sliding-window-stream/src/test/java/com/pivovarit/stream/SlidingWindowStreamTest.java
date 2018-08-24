@@ -9,7 +9,7 @@ import static com.pivovarit.stream.SlidingWindowSpliterator.windowed;
 import static java.util.stream.Collectors.toList;
 import static org.assertj.core.api.Assertions.assertThat;
 
-class WindowStreamTest {
+class SlidingWindowStreamTest {
 
     @Test
     void applySlidingWindow() {
@@ -31,8 +31,7 @@ class WindowStreamTest {
           .map(s -> s.collect(toList()))
           .collect(toList());
 
-        assertThat(result)
-          .containsExactly(List.of(1, 2));
+        assertThat(result).isEmpty();
     }
 
     @Test
