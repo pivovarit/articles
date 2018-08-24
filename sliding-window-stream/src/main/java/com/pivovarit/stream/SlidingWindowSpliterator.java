@@ -31,7 +31,7 @@ public class SlidingWindowSpliterator<T> implements Spliterator<Stream<T>> {
 
     @Override
     public boolean tryAdvance(Consumer<? super Stream<T>> action) {
-        if (windowSize < 1 || size == 0) {
+        if (windowSize < 1) {
             return false;
         }
 
