@@ -2,7 +2,8 @@ package com.pivovarit.unsafe
 
 import com.google.gson.Gson
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.Test
+import org.assertj.core.api.Assertions.assertThatThrownBy
+import org.junit.jupiter.api.Test
 import sun.misc.Unsafe
 
 data class Foo(val nonNullable: String)
@@ -18,9 +19,11 @@ class UnsafeTest {
 
     private val unsafe = getUnsafe()
 
-    @Test(expected = SecurityException::class)
+    @Test()
     fun unsafe_0() {
-        Unsafe.getUnsafe()
+        assertThatThrownBy { Unsafe.getUnsafe() }
+          .isInstanceOf(SecurityException::class.java)
+
     }
 
     @Test
