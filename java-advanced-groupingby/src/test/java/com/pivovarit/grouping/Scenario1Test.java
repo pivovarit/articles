@@ -3,6 +3,7 @@ package com.pivovarit.grouping;
 import org.junit.jupiter.api.Test;
 
 import java.util.Collection;
+import java.util.IntSummaryStatistics;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -18,6 +19,7 @@ import static java.util.stream.Collectors.flatMapping;
 import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.joining;
 import static java.util.stream.Collectors.reducing;
+import static java.util.stream.Collectors.summarizingInt;
 import static java.util.stream.Collectors.toCollection;
 import static java.util.stream.Collectors.toList;
 
@@ -77,6 +79,14 @@ class Scenario1Test {
     void customAggregation_averaging() {
         Map<Integer, Double> result = strings.stream()
           .collect(groupingBy(String::length, averagingInt(String::hashCode)));
+
+        System.out.println(result);
+    }
+
+    @Test
+    void customAggregation_summarizing() {
+        Map<Integer, IntSummaryStatistics> result = strings.stream()
+          .collect(groupingBy(String::length, summarizingInt(String::hashCode)));
 
         System.out.println(result);
     }
