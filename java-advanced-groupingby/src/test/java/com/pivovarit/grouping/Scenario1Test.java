@@ -9,6 +9,7 @@ import java.util.TreeSet;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+import static java.util.stream.Collectors.averagingInt;
 import static java.util.stream.Collectors.counting;
 import static java.util.stream.Collectors.filtering;
 import static java.util.stream.Collectors.groupingBy;
@@ -64,6 +65,14 @@ class Scenario1Test {
     void customAggregation_joining() {
         Map<Integer, String> result = strings.stream()
           .collect(groupingBy(String::length, joining(",", "[", "]")));
+
+        System.out.println(result);
+    }
+
+    @Test
+    void customAggregation_averaging() {
+        Map<Integer, Double> result = strings.stream()
+          .collect(groupingBy(String::length, averagingInt(String::hashCode)));
 
         System.out.println(result);
     }
