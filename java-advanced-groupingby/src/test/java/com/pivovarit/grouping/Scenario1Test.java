@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 import static java.util.stream.Collectors.counting;
 import static java.util.stream.Collectors.filtering;
 import static java.util.stream.Collectors.groupingBy;
+import static java.util.stream.Collectors.joining;
 import static java.util.stream.Collectors.toCollection;
 import static java.util.stream.Collectors.toList;
 
@@ -53,9 +54,16 @@ class Scenario1Test {
 
     @Test
     void customAggregation_filtering() {
-        Map<Integer, List<List<Character>>> result = strings.stream()
-          .map(toStringList())
-          .collect(groupingBy(List::size));
+        Map<Integer, List<String>> result = strings.stream()
+          .collect(groupingBy(String::length, filtering(s -> !s.contains("c"), toList())));
+
+        System.out.println(result);
+    }
+
+    @Test
+    void customAggregation_joining() {
+        Map<Integer, String> result = strings.stream()
+          .collect(groupingBy(String::length, joining(",", "[", "]")));
 
         System.out.println(result);
     }
