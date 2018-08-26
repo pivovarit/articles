@@ -3,6 +3,7 @@ package com.pivovarit.grouping;
 import org.junit.jupiter.api.Test;
 
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.IntSummaryStatistics;
 import java.util.List;
 import java.util.Map;
@@ -135,9 +136,17 @@ class Scenario1Test {
     }
 
     @Test
-    void customAggregation_summing() {
+    void customAggregation_max() {
         var result = strings.stream()
-          .collect(groupingBy(String::length, Collectors.));
+          .collect(groupingBy(String::length, Collectors.maxBy(Comparator.comparing(String::toUpperCase))));
+
+        System.out.println(result);
+    }
+
+    @Test
+    void customAggregation_min() {
+        var result = strings.stream()
+          .collect(groupingBy(String::length, Collectors.minBy(Comparator.comparing(String::toUpperCase))));
 
         System.out.println(result);
     }
