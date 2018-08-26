@@ -24,7 +24,7 @@ import static java.util.stream.Collectors.summarizingInt;
 import static java.util.stream.Collectors.toCollection;
 import static java.util.stream.Collectors.toList;
 
-class Scenario1Test {
+class SimpleGroupingTest {
 
     private List<String> strings = List.of("a", "bb", "cc", "ddd");
 
