@@ -118,6 +118,14 @@ class Scenario1Test {
         System.out.println(result);
     }
 
+    @Test
+    void customAggregation_summing() {
+        var result = strings.stream()
+          .collect(groupingBy(String::length, Collectors.summingInt(String::length)));
+
+        System.out.println(result);
+    }
+
     private static Function<String, List<Character>> toStringList() {
         return s -> s.chars().mapToObj(c -> (char) c).collect(toList());
     }
