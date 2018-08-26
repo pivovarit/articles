@@ -101,6 +101,14 @@ class Scenario1Test {
     }
 
     @Test
+    void customAggregation_mapping() {
+        var result = strings.stream()
+          .collect(groupingBy(String::length, Collectors.mapping(String::toUpperCase, Collectors.toList())));
+
+        System.out.println(result);
+    }
+
+    @Test
     void customAggregation_reducing() {
         var result = strings.stream()
           .map(toStringList())
@@ -122,6 +130,14 @@ class Scenario1Test {
     void customAggregation_summing() {
         var result = strings.stream()
           .collect(groupingBy(String::length, Collectors.summingInt(String::length)));
+
+        System.out.println(result);
+    }
+
+    @Test
+    void customAggregation_summing() {
+        var result = strings.stream()
+          .collect(groupingBy(String::length, Collectors.));
 
         System.out.println(result);
     }
