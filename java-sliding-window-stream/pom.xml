@@ -4,9 +4,9 @@
 
     <groupId>com.pivovarit</groupId>
     <version>1.0</version>
-    <artifactId>sliding-window-stream</artifactId>
+    <artifactId>java-sliding-window-stream</artifactId>
 
-    <name>sliding-window-stream</name>
+    <name>java-sliding-window-stream</name>
     <build>
         <plugins>
             <plugin>

@@ -16,7 +16,7 @@
         <module>priorityqueue-stream-order</module>
         <module>sneaky-throws-lambda</module>
         <module>kotlin-type-inference</module>
-        <module>sliding-window-stream</module>
+        <module>java-sliding-window-stream</module>
         <module>java-lazy-initialization</module>
         <module>java-sealed-classes</module>
         <module>java-completable-future-timeouts</module>
