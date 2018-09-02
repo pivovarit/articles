@@ -7,6 +7,7 @@ import java.util.Comparator;
 import java.util.IntSummaryStatistics;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.function.Function;
@@ -21,15 +22,16 @@ import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.joining;
 import static java.util.stream.Collectors.reducing;
 import static java.util.stream.Collectors.summarizingInt;
+import static java.util.stream.Collectors.summingInt;
 import static java.util.stream.Collectors.toCollection;
 import static java.util.stream.Collectors.toList;
 
 class SimpleGroupingTest {
 
-    private List<String> strings = List.of("a", "bb", "cc", "ddd");
-
     @Test
     void standardGrouping() {
+        List<String> strings = List.of("a", "bb", "cc", "ddd");
+
         Map<Integer, List<String>> result = strings.stream()
           .collect(groupingBy(String::length));
 
@@ -38,6 +40,8 @@ class SimpleGroupingTest {
 
     @Test
     void customMapImplementation() {
+        List<String> strings = List.of("a", "bb", "cc", "ddd");
+
         TreeMap<Integer, List<String>> result = strings.stream()
           .collect(groupingBy(String::length, TreeMap::new, toList()));
 
@@ -46,6 +50,8 @@ class SimpleGroupingTest {
 
     @Test
     void customAggregateImplementation() {
+        List<String> strings = List.of("a", "bb", "cc", "ddd");
+
         Map<Integer, TreeSet<String>> result = strings.stream()
           .collect(groupingBy(String::length, toCollection(TreeSet::new)));
 
@@ -54,6 +60,8 @@ class SimpleGroupingTest {
 
     @Test
     void customAggregation_counting() {
+        List<String> strings = List.of("a", "bb", "cc", "ddd");
+
         Map<Integer, Long> result = strings.stream()
           .collect(groupingBy(String::length, counting()));
 
@@ -62,6 +70,8 @@ class SimpleGroupingTest {
 
     @Test
     void customAggregation_filtering() {
+        List<String> strings = List.of("a", "bb", "cc", "ddd");
+
         Map<Integer, List<String>> result = strings.stream()
           .collect(groupingBy(String::length, filtering(s -> !s.contains("c"), toList())));
 
@@ -70,14 +80,18 @@ class SimpleGroupingTest {
 
     @Test
     void customAggregation_joining() {
+        List<String> strings = List.of("a", "bb", "cc", "ddd");
+
         Map<Integer, String> result = strings.stream()
           .collect(groupingBy(String::length, joining(",", "[", "]")));
 
-        System.out.println(result);
+        System.out.println(result); // {1=[a], 2=[bb,cc], 3=[ddd]}
     }
 
     @Test
     void customAggregation_averaging() {
+        List<String> strings = List.of("a", "bb", "cc", "ddd");
+
         Map<Integer, Double> result = strings.stream()
           .collect(groupingBy(String::length, averagingInt(String::hashCode)));
 
@@ -86,6 +100,8 @@ class SimpleGroupingTest {
 
     @Test
     void customAggregation_summarizing() {
+        List<String> strings = List.of("a", "bb", "cc", "ddd");
+
         Map<Integer, IntSummaryStatistics> result = strings.stream()
           .collect(groupingBy(String::length, summarizingInt(String::hashCode)));
 
@@ -94,7 +110,9 @@ class SimpleGroupingTest {
 
     @Test
     void customAggregation_flatmapping() {
-        var result = strings.stream()
+        List<String> strings = List.of("a", "bb", "cc", "ddd");
+
+        Map<Integer, List<Character>> result = strings.stream()
           .map(toStringList())
           .collect(groupingBy(List::size, flatMapping(Collection::stream, Collectors.toList())));
 
@@ -103,7 +121,9 @@ class SimpleGroupingTest {
 
     @Test
     void customAggregation_mapping() {
-        var result = strings.stream()
+        List<String> strings = List.of("a", "bb", "cc", "ddd");
+
+        Map<Integer, List<String>> result = strings.stream()
           .collect(groupingBy(String::length, Collectors.mapping(String::toUpperCase, Collectors.toList())));
 
         System.out.println(result);
@@ -111,16 +131,21 @@ class SimpleGroupingTest {
 
     @Test
     void customAggregation_reducing() {
-        var result = strings.stream()
+        List<String> strings = List.of("a", "bb", "cc", "ddd");
+
+        Map<Integer, List<Character>> result = strings.stream()
           .map(toStringList())
-          .collect(groupingBy(List::size, reducing(List.of(), (l1, l2) -> Stream.concat(l1.stream(), l2.stream()).collect(Collectors.toList()))));
+          .collect(groupingBy(List::size, reducing(List.of(), (l1, l2) -> Stream.concat(l1.stream(), l2.stream())
+            .collect(Collectors.toList()))));
 
         System.out.println(result);
     }
 
     @Test
     void customAggregation_reducing_optional() {
-        var result = strings.stream()
+        List<String> strings = List.of("a", "bb", "cc", "ddd");
+
+        Map<Integer, Optional<List<Character>>> result = strings.stream()
           .map(toStringList())
           .collect(groupingBy(List::size, reducing((l1, l2) -> Stream.concat(l1.stream(), l2.stream()).collect(Collectors.toList()))));
 
@@ -129,15 +154,19 @@ class SimpleGroupingTest {
 
     @Test
     void customAggregation_summing() {
-        var result = strings.stream()
-          .collect(groupingBy(String::length, Collectors.summingInt(String::length)));
+        List<String> strings = List.of("a", "bb", "cc", "ddd");
+
+        Map<Integer, Integer> result = strings.stream()
+          .collect(groupingBy(String::length, summingInt(String::hashCode)));
 
         System.out.println(result);
     }
 
     @Test
     void customAggregation_max() {
-        var result = strings.stream()
+        List<String> strings = List.of("a", "bb", "cc", "ddd");
+
+        Map<Integer, Optional<String>> result = strings.stream()
           .collect(groupingBy(String::length, Collectors.maxBy(Comparator.comparing(String::toUpperCase))));
 
         System.out.println(result);
@@ -145,7 +174,9 @@ class SimpleGroupingTest {
 
     @Test
     void customAggregation_min() {
-        var result = strings.stream()
+        List<String> strings = List.of("a", "bb", "cc", "ddd");
+
+        Map<Integer, Optional<String>> result = strings.stream()
           .collect(groupingBy(String::length, Collectors.minBy(Comparator.comparing(String::toUpperCase))));
 
         System.out.println(result);

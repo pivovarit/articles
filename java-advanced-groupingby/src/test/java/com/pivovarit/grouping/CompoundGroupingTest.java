@@ -39,7 +39,7 @@ class CompoundGroupingTest {
                 flatMapping(s -> s.stream().distinct(),
                   filtering(s -> s.length() > 0,
                     mapping(String::toUpperCase,
-                      reducing("", (s, s2) -> s + s2)))))));
+                      reducing("", String::concat)))))));
 
         System.out.println(result);
     }
