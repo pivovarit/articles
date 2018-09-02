@@ -4,8 +4,7 @@ import org.junit.jupiter.api.Test
 import java.time.Duration
 import java.time.LocalTime
 
-
-class CollectionsTest {
+internal class CollectionsTest {
 
     @Test
     fun example_1() {
