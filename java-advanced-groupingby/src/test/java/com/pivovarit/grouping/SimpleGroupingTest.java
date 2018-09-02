@@ -175,7 +175,7 @@ class SimpleGroupingTest {
     @Test
     void customAggregation_min() {
         List<String> strings = List.of("a", "bb", "cc", "ddd");
-1
+
         Map<Integer, Optional<String>> result = strings.stream()
           .collect(groupingBy(String::length, Collectors.minBy(Comparator.comparing(String::toUpperCase))));
 
