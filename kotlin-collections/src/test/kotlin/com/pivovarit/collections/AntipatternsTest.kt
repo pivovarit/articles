@@ -50,6 +50,19 @@ internal class AntipatternsTest {
     }
 
     @Test
+    internal fun example_chained_map_first() {
+        val list = listOf(1, 2, 3)
+
+        list
+          .map { it * 42 }
+          .first()
+
+        list
+          .first()
+          .let { it * 42 }
+    }
+
+    @Test
     internal fun example_chained_filter_count() {
         val list = listOf(1, 2, 3)
 
