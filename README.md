@@ -3,3 +3,5 @@ Code snippets for articles posted at 4comprehension.com provided "as-is" and org
 
 ## running 
 In most cases, I'm using a simple unit-testing infrastructure to squeeze multiple examples in a single file - it's enough to import the module in your IDE and run JUnit tests.
+
+However, there might be some exceptions - in such cases, you will find instructions in matching articles
