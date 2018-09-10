@@ -3,8 +3,6 @@ Code snippets for articles posted at 4comprehension.com provided "as-is" and org
 
 [Full Archive](https://4comprehension.com/archive/)
 
-## Snippets Navigation:
-
 - [Bypassing Kotlin’s Null-Safety](https://4comprehension.com/kotlin-null-nonsafety/) [(snippets)](https://github.com/pivovarit/articles/tree/master/kotlin-null-nonsafety)
 - [Maintaining PriorityQueue Order with Java Streams](https://4comprehension.com/maintaining-priorityqueue-order-with-java-streams/) [(snippets)](https://github.com/pivovarit/articles/tree/master/java-priorityqueue-stream-order)
 - [Sneakily Throwing Exceptions in Lambda Expressions in Java](https://4comprehension.com/sneakily-throwing-exceptions-in-lambda-expressions-in-java/) [(snippets)](https://github.com/pivovarit/articles/tree/master/java-sneaky-throws-lambda)
