@@ -3,11 +3,6 @@ Code snippets for articles posted at 4comprehension.com provided "as-is" and org
 
 [Full Archive](https://4comprehension.com/archive/)
 
-## Running 
-In most cases, I'm using a simple unit-testing infrastructure to squeeze multiple examples in a single file - it's enough to import the module in your IDE and run JUnit tests.
-
-However, there might be some exceptions - in such cases, you will find instructions in matching articles
-
 ## Snippets Navigation:
 
 - [Bypassing Kotlin’s Null-Safety](https://4comprehension.com/kotlin-null-nonsafety/) [(snippets)](https://github.com/pivovarit/articles/tree/master/kotlin-null-nonsafety)
@@ -20,3 +15,8 @@ However, there might be some exceptions - in such cases, you will find instructi
 - [Effectively Sealed Classes in Java](https://4comprehension.com/effectively-sealed-classes-in-java/) [(snippets)](https://github.com/pivovarit/articles/tree/master/java-sealed-classes)
 - [CompletableFuture Timeouts in Java](https://4comprehension.com/completablefuture-timeout/) [(snippets)](https://github.com/pivovarit/articles/tree/master/java-completable-future-timeouts)
 - [Implementing a Sliding Window Stream/Spliterator in Java](https://4comprehension.com/sliding-window-stream-spliterator-in-java/) [(snippets)](https://github.com/pivovarit/articles/tree/master/java-sliding-window-stream)
+
+## Running 
+In most cases, I'm using a simple unit-testing infrastructure to squeeze multiple examples in a single file - it's enough to import the module in your IDE and run JUnit tests.
+
+However, there might be some exceptions - in such cases, you will find instructions in matching articles
