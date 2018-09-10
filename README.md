@@ -12,6 +12,11 @@ However, there might be some exceptions - in such cases, you will find instructi
 
 - [Bypassing Kotlin’s Null-Safety](https://github.com/pivovarit/articles/tree/master/kotlin-null-nonsafety)
 - [Maintaining PriorityQueue Order with Java Streams](https://github.com/pivovarit/articles/tree/master/java-priorityqueue-stream-order)
-- [Sneakily Throwing Exceptions in Lambda Expressions in Java](https://github.com/pivovarit/articles/tree/master/sneaky-throws-lambda)
+- [Sneakily Throwing Exceptions in Lambda Expressions in Java](https://github.com/pivovarit/articles/tree/master/java-sneaky-throws-lambda)
 - [Hamming Error Correction with Kotlin Series](https://github.com/pivovarit/articles/tree/master/hamming-error-correction)
 - [A Kotlin Type-Inference Puzzler](https://github.com/pivovarit/articles/tree/master/kotlin-type-inference)
+- [Kotlin: Beware of Java Stream API Habits](https://github.com/pivovarit/articles/tree/master/kotlin-collections)
+- [Leveraging Lambda Expressions for Lazy Evaluation in Java](https://github.com/pivovarit/articles/tree/master/java-lazy-initialization)
+- [Effectively Sealed Classes in Java](https://github.com/pivovarit/articles/tree/master/java-sealed-classes)
+- [CompletableFuture Timeouts in Java](https://github.com/pivovarit/articles/tree/master/java-completable-future-timeouts)
+- [Implementing a Sliding Window Stream/Spliterator in Java](https://github.com/pivovarit/articles/tree/master/java-sliding-window-stream)
