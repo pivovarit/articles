@@ -13,6 +13,7 @@ Code snippets for articles posted at 4comprehension.com provided "as-is" and org
 - [Effectively Sealed Classes in Java](https://4comprehension.com/effectively-sealed-classes-in-java/) [(snippets)](https://github.com/pivovarit/articles/tree/master/java-sealed-classes)
 - [CompletableFuture Timeouts in Java](https://4comprehension.com/completablefuture-timeout/) [(snippets)](https://github.com/pivovarit/articles/tree/master/java-completable-future-timeouts)
 - [Implementing a Sliding Window Stream/Spliterator in Java](https://4comprehension.com/sliding-window-stream-spliterator-in-java/) [(snippets)](https://github.com/pivovarit/articles/tree/master/java-sliding-window-stream)
+- [The Ultimate Guide to the Java Stream API groupingBy() Collector](https://4comprehension.com/the-ultimate-guide-to-the-java-stream-api-groupingby-collector) [(snippets)](https://github.com/pivovarit/articles/tree/master/java-advanced-groupingby)
 
 ## Running 
 In most cases, I'm using a simple unit-testing infrastructure to squeeze multiple examples in a single file - it's enough to import the module in your IDE and run JUnit tests.
