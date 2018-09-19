@@ -40,7 +40,7 @@ class StringApiUpdatesTest {
 
     @Test
     void shouldStrip() {
-        assertThat(" ".strip()).isEmpty();
+        assertThat(" f oo  ".strip()).isEqualTo("f oo");
         assertThat("  foo  ".stripLeading()).isEqualTo("foo  ");
         assertThat("  foo  ".stripTrailing()).isEqualTo("  foo");
     }
