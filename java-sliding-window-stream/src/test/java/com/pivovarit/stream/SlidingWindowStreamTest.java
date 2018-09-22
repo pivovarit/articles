@@ -68,4 +68,22 @@ class SlidingWindowStreamTest {
 
         assertThat(s3.collect(toList())).containsExactly(3, 4);
     }
+
+    @Test
+    void shouldCalculateSize() {
+        var source = List.of(1, 2, 3, 4);
+
+        var result = windowed(source, 3).spliterator().estimateSize();
+
+        assertThat(result).isEqualTo(2);
+    }
+
+    @Test
+    void shouldEstimateSizeWhenWindowTooBig() {
+        var source = List.of(1, 2, 3, 4);
+
+        var result = windowed(source, source.size() + 1).spliterator().estimateSize();
+
+        assertThat(result).isEqualTo(0);
+    }
 }

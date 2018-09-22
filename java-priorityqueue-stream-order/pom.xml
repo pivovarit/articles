@@ -4,10 +4,10 @@
 
     <groupId>com.pivovarit</groupId>
     <version>1.0</version>
-    <artifactId>priorityqueue-stream-order</artifactId>
+    <artifactId>java-priorityqueue-stream-order</artifactId>
     <packaging>jar</packaging>
 
-    <name>priorityqueue-stream-order</name>
+    <name>java-priorityqueue-stream-order</name>
     <url>http://maven.apache.org</url>
     <build>
         <plugins>

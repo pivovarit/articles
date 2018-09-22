@@ -13,15 +13,16 @@
         <module>kotlin-null-nonsafety</module>
         <module>kotlin-collections</module>
         <module>hamming-error-correction</module>
-        <module>priorityqueue-stream-order</module>
-        <module>sneaky-throws-lambda</module>
         <module>kotlin-type-inference</module>
+        <module>java-sneaky-throws-lambda</module>
+        <module>java-priorityqueue-stream-order</module>
         <module>java-sliding-window-stream</module>
         <module>java-lazy-initialization</module>
         <module>java-sealed-classes</module>
         <module>java-completable-future-timeouts</module>
         <module>java-advanced-groupingby</module>
         <module>java-immutable-collectors</module>
+        <module>java-11-string-api-updates</module>
     </modules>
 
     <properties>

@@ -4,9 +4,9 @@
 
     <groupId>com.pivovarit</groupId>
     <version>1.0</version>
-    <artifactId>sneaky-throws-lambda</artifactId>
+    <artifactId>java-sneaky-throws-lambda</artifactId>
 
-    <name>sneaky-throws-lambda</name>
+    <name>java-sneaky-throws-lambda</name>
     <build>
         <plugins>
             <plugin>
