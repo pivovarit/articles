@@ -16,7 +16,7 @@ Code snippets for articles posted at 4comprehension.com provided "as-is" and org
 - [The Ultimate Guide to the Java Stream API groupingBy() Collector](https://4comprehension.com/the-ultimate-guide-to-the-java-stream-api-groupingby-collector) [(snippets)](https://github.com/pivovarit/articles/tree/master/java-advanced-groupingby)
 - [Java 11 String API Updates](https://4comprehension.com/java-11-string-api-updates) [(snippets)](https://github.com/pivovarit/articles/tree/master/java-11-string-api-updates)
 - [Java 10 Immutable/Unmodifiable Stream API Collectors](http://4comprehension.com/java-immutable-unmodifiable-stream-api-collectors) [(snippets)](https://github.com/pivovarit/articles/tree/master/java-immutable-collectors)
-- [https://4comprehension.com/kotlin-collections-api-performance-antipatterns/](https://4comprehension.com/kotlin-collections-api-performance-antipatterns/) [(snippets)](https://github.com/pivovarit/articles/tree/master/kotlin-collections)
+- [Kotlin Collections API Performance Antipatterns](https://4comprehension.com/kotlin-collections-api-performance-antipatterns/) [(snippets)](https://github.com/pivovarit/articles/tree/master/kotlin-collections)
 
 ## Running 
 In most cases, I'm using a simple unit-testing infrastructure to squeeze multiple examples in a single file - it's enough to import the module in your IDE and run JUnit tests.
