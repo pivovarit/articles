@@ -1,2 +1,2 @@
-https://4comprehension.com/kotlin-beware-of-java-stream-api-habits/
-https://4comprehension.com/kotlin-collections-api-performance-antipatterns/
+- https://4comprehension.com/kotlin-beware-of-java-stream-api-habits/
+- https://4comprehension.com/kotlin-collections-api-performance-antipatterns/
