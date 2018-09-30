@@ -14,4 +14,11 @@ final class TemplateMethodUtil {
         var after = LocalTime.now();
         System.out.printf("Execution took: %d ms%n", Duration.between(before, after).toMillis());
     }
+
+    static void orchestrate(Runnable step1, Runnable step2) {
+        System.out.println("starting...");
+        step1.run();
+        step2.run();
+        System.out.println("ending...");
+    }
 }

@@ -6,6 +6,10 @@ public class ExampleMain {
 
     public static void main(String[] args) {
         TemplateMethodUtil.runWithExecutionTimeLogging(() -> findById(42));
+
+        TemplateMethodUtil.orchestrate(
+          () -> System.out.println("a"),
+          () -> System.out.println("b"));
     }
 
     static int findById(int id) {
