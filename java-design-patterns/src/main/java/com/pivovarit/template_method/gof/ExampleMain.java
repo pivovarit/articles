@@ -11,8 +11,9 @@ public class ExampleMain {
                 findById(42);
             }
         };
-    }
 
+        fetchAndLog.runWithTimeLogging();
+    }
 
     static int findById(int id) {
         try {

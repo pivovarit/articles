@@ -11,6 +11,8 @@ abstract class AbstractTimeLoggingMethod {
         var before = LocalTime.now();
         run();
         var after = LocalTime.now();
-        System.out.printf("Execution took: %d ms%n", Duration.between(before, after).toMillis());
+        System.out.printf(
+          "Execution took: %d ms%n",
+          Duration.between(before, after).toMillis());
     }
 }

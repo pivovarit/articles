@@ -3,7 +3,7 @@ package com.pivovarit.template_method.lambda;
 import java.time.Duration;
 import java.time.LocalTime;
 
-public final class TemplateMethodUtil {
+final class TemplateMethodUtil {
 
     private TemplateMethodUtil() {
     }
