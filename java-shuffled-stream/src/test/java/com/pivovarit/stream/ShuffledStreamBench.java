@@ -14,18 +14,18 @@ import java.util.stream.IntStream;
 
 /*
     Benchmark                              (limit)   Mode  Cnt     Score     Error  Units
-    ShuffledStreamBench.naive_bench              1  thrpt    5   467.796 ±   9.074  ops/s
-    ShuffledStreamBench.naive_bench             10  thrpt    5   467.694 ±  17.166  ops/s
-    ShuffledStreamBench.naive_bench            100  thrpt    5   459.765 ±   8.048  ops/s
-    ShuffledStreamBench.naive_bench           1000  thrpt    5   467.934 ±  43.095  ops/s
-    ShuffledStreamBench.naive_bench          10000  thrpt    5   449.471 ±   5.549  ops/s
-    ShuffledStreamBench.naive_bench         100000  thrpt    5   331.111 ±   5.626  ops/s
-    ShuffledStreamBench.spliterator_bench        1  thrpt    5  1530.763 ±  72.096  ops/s
-    ShuffledStreamBench.spliterator_bench       10  thrpt    5  1462.305 ±  23.860  ops/s
-    ShuffledStreamBench.spliterator_bench      100  thrpt    5   823.212 ± 119.771  ops/s
-    ShuffledStreamBench.spliterator_bench     1000  thrpt    5   166.786 ±  16.306  ops/s
-    ShuffledStreamBench.spliterator_bench    10000  thrpt    5    19.475 ±   4.052  ops/s
-    ShuffledStreamBench.spliterator_bench   100000  thrpt    5     4.097 ±   0.416  ops/s
+    ShuffledStreamBench.eager_bench              1  thrpt    5   467.796 ±   9.074  ops/s
+    ShuffledStreamBench.eager_bench             10  thrpt    5   467.694 ±  17.166  ops/s
+    ShuffledStreamBench.eager_bench            100  thrpt    5   459.765 ±   8.048  ops/s
+    ShuffledStreamBench.eager_bench           1000  thrpt    5   467.934 ±  43.095  ops/s
+    ShuffledStreamBench.eager_bench          10000  thrpt    5   449.471 ±   5.549  ops/s
+    ShuffledStreamBench.eager_bench         100000  thrpt    5   331.111 ±   5.626  ops/s
+    ShuffledStreamBench.lazy_bench               1  thrpt    5  1530.763 ±  72.096  ops/s
+    ShuffledStreamBench.lazy_bench              10  thrpt    5  1462.305 ±  23.860  ops/s
+    ShuffledStreamBench.lazy_bench             100  thrpt    5   823.212 ± 119.771  ops/s
+    ShuffledStreamBench.lazy_bench            1000  thrpt    5   166.786 ±  16.306  ops/s
+    ShuffledStreamBench.lazy_bench           10000  thrpt    5    19.475 ±   4.052  ops/s
+    ShuffledStreamBench.lazy_bench          100000  thrpt    5     4.097 ±   0.416  ops/s
  */
 @State(Scope.Benchmark)
 public class ShuffledStreamBench {
@@ -39,17 +39,17 @@ public class ShuffledStreamBench {
       .collect(Collectors.toList());
 
     @Benchmark
-    public List<String> naive_bench() {
+    public List<String> eager_bench() {
         return source.stream()
-          .collect(ShuffledSpliterator.naiveShuffledStream())
+          .collect(ShuffledSpliterator.eagerShuffledStream())
           .limit(limit)
           .collect(Collectors.toList());
     }
 
     @Benchmark
-    public List<String> spliterator_bench() {
+    public List<String> lazy_bench() {
         return source.stream()
-          .collect(ShuffledSpliterator.shuffledStream())
+          .collect(ShuffledSpliterator.lazyShuffledStream())
           .limit(limit)
           .collect(Collectors.toList());
     }

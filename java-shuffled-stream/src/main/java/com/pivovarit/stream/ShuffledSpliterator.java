@@ -51,13 +51,13 @@ public class ShuffledSpliterator<T> implements Spliterator<T> {
         return SIZED;
     }
 
-    public static <T> Collector<T, ?, Stream<T>> shuffledStream() {
+    public static <T> Collector<T, ?, Stream<T>> lazyShuffledStream() {
         return Collectors.collectingAndThen(
           toCollection(ArrayList::new),
           list -> StreamSupport.stream(new ShuffledSpliterator<>(list), false));
     }
 
-    public static <T> Collector<T, ?, Stream<T>> naiveShuffledStream() {
+    public static <T> Collector<T, ?, Stream<T>> eagerShuffledStream() {
         return Collectors.collectingAndThen(
           toCollection(ArrayList::new),
           list -> {
