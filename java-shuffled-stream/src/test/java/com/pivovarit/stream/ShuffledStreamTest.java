@@ -19,7 +19,9 @@ class ShuffledStreamTest {
           .collect(shuffledStream())
           .collect(toList());
 
-        assertThat(result).doesNotContainSequence(source);
+        assertThat(result)
+          .hasSameSizeAs(source)
+          .doesNotContainSequence(source);
     }
 
     @Test

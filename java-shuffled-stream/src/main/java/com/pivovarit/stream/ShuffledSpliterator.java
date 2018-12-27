@@ -6,9 +6,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.RandomAccess;
 import java.util.Spliterator;
-import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.Consumer;
-import java.util.function.Supplier;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -23,21 +21,19 @@ public class ShuffledSpliterator<T> implements Spliterator<T> {
     private final List<T> source;
 
     private ShuffledSpliterator(List<T> source) {
-        if (!(source instanceof RandomAccess)) {
-            throw new IllegalArgumentException("passed list needs to provide random access!");
-        }
-        this.source = source;
+        this.source = source instanceof RandomAccess ? source : new ArrayList<>(source);
     }
 
     @Override
     public boolean tryAdvance(Consumer<? super T> action) {
         int remaining = source.size();
+
         if (remaining == 0) {
             return false;
+        } else {
+            action.accept(source.remove(random.nextInt(remaining)));
+            return remaining > 1;
         }
-        int nextIndex = random.nextInt(remaining);
-        action.accept(source.remove(nextIndex));
-        return remaining > 1;
     }
 
     @Override
