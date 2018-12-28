@@ -3,13 +3,12 @@ package com.pivovarit.stream;
 import org.junit.jupiter.api.Test;
 
 import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
-import static com.pivovarit.stream.ShuffledSpliterator.lazyShuffledStream;
+import static com.pivovarit.stream.RandomSpliterator.lazyShuffledStream;
 import static java.util.stream.Collectors.toList;
 import static org.assertj.core.api.Assertions.assertThat;
 
-class ShuffledStreamTest {
+class RandomStreamTest {
 
     @Test
     void should_shuffle() {
@@ -22,14 +21,5 @@ class ShuffledStreamTest {
         assertThat(result)
           .hasSameSizeAs(source)
           .doesNotContainSequence(source);
-    }
-
-    @Test
-    void should_shuffle_empty() {
-        var result = Stream.of()
-          .collect(lazyShuffledStream())
-          .collect(toList());
-
-        assertThat(result).isEmpty();
     }
 }
