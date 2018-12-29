@@ -11,6 +11,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 class RandomStreamTest {
 
     @Test
+    void example_1() throws Exception {
+        IntStream.range(0, 10).boxed()
+          .collect(RandomSpliterator.lazyShuffledStream())
+          .forEach(System.out::println);
+    }
+
+    @Test
     void should_shuffle() {
         var source = IntStream.range(0, 100_000).boxed().collect(toList());
 
