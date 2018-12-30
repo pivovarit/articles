@@ -25,6 +25,9 @@ public class RandomSpliterator<T> implements Spliterator<T> {
     }
 
     private RandomSpliterator(List<T> source, Supplier<? extends Random> random) {
+        if (source.isEmpty()) {
+            throw new IllegalArgumentException("RandomSpliterator can't be initialized with an empty collection");
+        }
         this.source = source instanceof RandomAccess ? source : new ArrayList<>(source);
         this.random = random.get();
     }
@@ -32,13 +35,8 @@ public class RandomSpliterator<T> implements Spliterator<T> {
     @Override
     public boolean tryAdvance(Consumer<? super T> action) {
         int remaining = source.size();
-
-        if (remaining == 0) {
-            return false;
-        }
-
         action.accept(source.remove(random.nextInt(remaining)));
-        return remaining > 1;
+        return remaining - 1 > 0;
     }
 
     @Override
@@ -56,13 +54,15 @@ public class RandomSpliterator<T> implements Spliterator<T> {
         return SIZED;
     }
 
-    public static <T> Collector<T, ?, Stream<T>> lazyShuffledStream() {
+    public static <T> Collector<T, ?, Stream<T>> toLazyShuffledStream() {
         return Collectors.collectingAndThen(
           toCollection(ArrayList::new),
-          list -> StreamSupport.stream(new RandomSpliterator<>(list), false));
+          list -> !list.isEmpty()
+            ? StreamSupport.stream(new RandomSpliterator<>(list), false)
+            : Stream.empty());
     }
 
-    public static <T> Collector<T, ?, Stream<T>> eagerShuffledStream() {
+    public static <T> Collector<T, ?, Stream<T>> toEagerShuffledStream() {
         return Collectors.collectingAndThen(
           toCollection(ArrayList::new),
           list -> {

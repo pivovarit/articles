@@ -14,113 +14,56 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-/*
-                (limit)   Mode  Cnt     Score     Error  Units
-    eager             1  thrpt    5   467.796 ±   9.074  ops/s
-    eager            10  thrpt    5   467.694 ±  17.166  ops/s
-    eager           100  thrpt    5   459.765 ±   8.048  ops/s
-    eager          1000  thrpt    5   467.934 ±  43.095  ops/s
-    eager         10000  thrpt    5   449.471 ±   5.549  ops/s
-    eager        100000  thrpt    5   331.111 ±   5.626  ops/s
-    lazy              1  thrpt    5  1530.763 ±  72.096  ops/s
-    lazy             10  thrpt    5  1462.305 ±  23.860  ops/s
-    lazy            100  thrpt    5   823.212 ± 119.771  ops/s
-    lazy           1000  thrpt    5   166.786 ±  16.306  ops/s
-    lazy          10000  thrpt    5    19.475 ±   4.052  ops/s
-    lazy         100000  thrpt    5     4.097 ±   0.416  ops/s
- */
-
 
 /*
-RandomSpliteratorBenchmark.eager        1      10  thrpt    3  3088788.851 ± 776219.338  ops/s
-RandomSpliteratorBenchmark.eager        1     100  thrpt    3   457729.043 ±  62472.238  ops/s
-RandomSpliteratorBenchmark.eager        1    1000  thrpt    3    56154.793 ±   1794.738  ops/s
-RandomSpliteratorBenchmark.eager        1   10000  thrpt    3     5100.502 ±    358.469  ops/s
-RandomSpliteratorBenchmark.eager        1  100000  thrpt    3      479.814 ±     38.217  ops/s
-RandomSpliteratorBenchmark.lazy         1      10  thrpt    3  3443751.580 ± 735571.026  ops/s
-RandomSpliteratorBenchmark.lazy         1     100  thrpt    3  1110333.616 ± 903763.469  ops/s
-RandomSpliteratorBenchmark.lazy         1    1000  thrpt    3   219199.808 ±  29025.663  ops/s
-RandomSpliteratorBenchmark.lazy         1   10000  thrpt    3    15148.461 ±   8724.768  ops/s
-RandomSpliteratorBenchmark.lazy         1  100000  thrpt    3     1647.194 ±    354.923  ops/s
- */
-/*
-RandomSpliteratorBenchmark.eager       10      10  thrpt    3  2338792.984 ± 300547.939  ops/s
-RandomSpliteratorBenchmark.eager       10     100  thrpt    3   346181.596 ±  38852.295  ops/s
-RandomSpliteratorBenchmark.eager       10    1000  thrpt    3    56338.044 ±   3147.049  ops/s
-RandomSpliteratorBenchmark.eager       10   10000  thrpt    3     5095.897 ±   1049.684  ops/s
-RandomSpliteratorBenchmark.eager       10  100000  thrpt    3      476.380 ±    191.963  ops/s
-RandomSpliteratorBenchmark.lazy        10      10  thrpt    3  1641058.303 ± 107292.827  ops/s
-RandomSpliteratorBenchmark.lazy        10     100  thrpt    3   708515.643 ± 176020.828  ops/s
-RandomSpliteratorBenchmark.lazy        10    1000  thrpt    3   178260.983 ±  60104.515  ops/s
-RandomSpliteratorBenchmark.lazy        10   10000  thrpt    3    14318.181 ±   1189.146  ops/s
-RandomSpliteratorBenchmark.lazy        10  100000  thrpt    3     1391.557 ±    599.166  ops/s
- */
-/*
-Benchmark                         (limit)  (size)   Mode  Cnt       Score       Error  Units
-RandomSpliteratorBenchmark.eager      100     100  thrpt    3  337366.984 ± 84329.753  ops/s
-RandomSpliteratorBenchmark.eager      100    1000  thrpt    3   49547.207 ± 10247.023  ops/s
-RandomSpliteratorBenchmark.eager      100   10000  thrpt    3    5107.400 ±   831.823  ops/s
-RandomSpliteratorBenchmark.eager      100  100000  thrpt    3     480.338 ±    28.043  ops/s
-RandomSpliteratorBenchmark.lazy       100     100  thrpt    3  153716.794 ± 18555.820  ops/s
-RandomSpliteratorBenchmark.lazy       100    1000  thrpt    3   59311.037 ± 41748.589  ops/s
-RandomSpliteratorBenchmark.lazy       100   10000  thrpt    3    8178.317 ±  8271.298  ops/s
-RandomSpliteratorBenchmark.lazy       100  100000  thrpt    3     780.395 ±   544.583  ops/s
- */
-/*
-Benchmark                         (limit)  (size)   Mode  Cnt      Score      Error  Units
-RandomSpliteratorBenchmark.eager     1000    1000  thrpt    3  28637.221 ± 1832.696  ops/s
-RandomSpliteratorBenchmark.eager     1000   10000  thrpt    3   4900.768 ±  233.069  ops/s
-RandomSpliteratorBenchmark.eager     1000  100000  thrpt    3    474.310 ±   40.493  ops/s
-RandomSpliteratorBenchmark.lazy      1000    1000  thrpt    3  11450.824 ± 1862.817  ops/s
-RandomSpliteratorBenchmark.lazy      1000   10000  thrpt    3   1978.120 ± 1816.602  ops/s
-RandomSpliteratorBenchmark.lazy      1000  100000  thrpt    3    166.114 ±  102.544  ops/s
- */
-/*
-Benchmark                         (limit)  (size)   Mode  Cnt        Score   Error  Units
-RandomSpliteratorBenchmark.eager        1     100  thrpt        339875.092          ops/s
-RandomSpliteratorBenchmark.eager       10     100  thrpt        333300.019          ops/s
-RandomSpliteratorBenchmark.eager       20     100  thrpt        332877.284          ops/s
-RandomSpliteratorBenchmark.eager       30     100  thrpt        411932.699          ops/s
-RandomSpliteratorBenchmark.eager       40     100  thrpt        318663.424          ops/s
-RandomSpliteratorBenchmark.eager       50     100  thrpt        400886.002          ops/s
-RandomSpliteratorBenchmark.eager       60     100  thrpt        388944.643          ops/s
-RandomSpliteratorBenchmark.eager       70     100  thrpt        377956.106          ops/s
-RandomSpliteratorBenchmark.eager       80     100  thrpt        366760.001          ops/s
-RandomSpliteratorBenchmark.eager       90     100  thrpt        279271.749          ops/s
-RandomSpliteratorBenchmark.eager      100     100  thrpt        332118.388          ops/s
-RandomSpliteratorBenchmark.lazy         1     100  thrpt       1058189.932          ops/s
-RandomSpliteratorBenchmark.lazy        10     100  thrpt        690327.305          ops/s
-RandomSpliteratorBenchmark.lazy        20     100  thrpt        479716.626          ops/s
-RandomSpliteratorBenchmark.lazy        30     100  thrpt        374586.487          ops/s
-RandomSpliteratorBenchmark.lazy        40     100  thrpt        302133.246          ops/s
-RandomSpliteratorBenchmark.lazy        50     100  thrpt        248947.257          ops/s
-RandomSpliteratorBenchmark.lazy        60     100  thrpt        230393.997          ops/s
-RandomSpliteratorBenchmark.lazy        70     100  thrpt        193400.913          ops/s
-RandomSpliteratorBenchmark.lazy        80     100  thrpt        183020.787          ops/s
-RandomSpliteratorBenchmark.lazy        90     100  thrpt        158960.987          ops/s
-RandomSpliteratorBenchmark.lazy       100     100  thrpt        153751.373          ops/s
- */
-/*
-Benchmark                         (limit)  (size)   Mode  Cnt      Score   Error  Units
-RandomSpliteratorBenchmark.eager      100    1000  thrpt       38157.139          ops/s
-RandomSpliteratorBenchmark.eager      200    1000  thrpt       47181.621          ops/s
-RandomSpliteratorBenchmark.eager      400    1000  thrpt       35021.957          ops/s
-RandomSpliteratorBenchmark.eager      600    1000  thrpt       41656.374          ops/s
-RandomSpliteratorBenchmark.eager      800    1000  thrpt       34852.124          ops/s
-RandomSpliteratorBenchmark.eager     1000    1000  thrpt       28942.122          ops/s
-RandomSpliteratorBenchmark.lazy       100    1000  thrpt       57753.113          ops/s
-RandomSpliteratorBenchmark.lazy       200    1000  thrpt       39394.122          ops/s
-RandomSpliteratorBenchmark.lazy       400    1000  thrpt       24236.017          ops/s
-RandomSpliteratorBenchmark.lazy       600    1000  thrpt       18157.620          ops/s
-RandomSpliteratorBenchmark.lazy       800    1000  thrpt       13806.402          ops/s
-RandomSpliteratorBenchmark.lazy      1000    1000  thrpt       11597.400          ops/s
+       (limit)  (size)   Mode  Cnt     Score     Error  Units
+eager        1  100000  thrpt    5   419.862 ±  65.420  ops/s
+eager       10  100000  thrpt    5   467.011 ±  39.829  ops/s
+eager      100  100000  thrpt    5   464.761 ±  38.811  ops/s
+eager     1000  100000  thrpt    5   429.169 ±  45.307  ops/s
+eager    10000  100000  thrpt    5   423.869 ±  73.094  ops/s
+eager   100000  100000  thrpt    5   342.603 ±   9.571  ops/s
+lazy         1  100000  thrpt    5  1572.274 ±  71.003  ops/s
+lazy        10  100000  thrpt    5  1449.313 ±  48.895  ops/s
+lazy       100  100000  thrpt    5   800.054 ± 144.649  ops/s
+lazy      1000  100000  thrpt    5   172.125 ±  34.346  ops/s
+lazy     10000  100000  thrpt    5    20.726 ±   2.487  ops/s
+lazy    100000  100000  thrpt    5     3.909 ±   0.807  ops/s
+
+       (limit)    (size)   Mode  Cnt  Score   Error  Units
+eager        1  10000000  thrpt    2  0.915          ops/s
+eager       10  10000000  thrpt    2  0.783          ops/s
+eager      100  10000000  thrpt    2  0.965          ops/s
+eager     1000  10000000  thrpt    2  0.936          ops/s
+eager    10000  10000000  thrpt    2  0.860          ops/s
+lazy         1  10000000  thrpt    2  4.338          ops/s
+lazy        10  10000000  thrpt    2  3.149          ops/s
+lazy       100  10000000  thrpt    2  2.060          ops/s
+lazy      1000  10000000  thrpt    2  0.370          ops/s
+lazy     10000  10000000  thrpt    2  0.054          ops/s
+
+       (limit)    (size)   Mode  Cnt       Score   Error  Units
+eager        2     128    thrpt    2  246439.459          ops/s
+eager        4     128    thrpt    2  333866.936          ops/s
+eager        8     128    thrpt    2  340296.188          ops/s
+eager       16     128    thrpt    2  345533.673          ops/s
+eager       32     128    thrpt    2  231725.156          ops/s
+eager       64     128    thrpt    2  314324.265          ops/s
+eager      128     128    thrpt    2  270451.992          ops/s
+lazy         2     128    thrpt    2  765989.718          ops/s
+lazy         4     128    thrpt    2  659421.041          ops/s
+lazy         8     128    thrpt    2  652685.515          ops/s
+lazy        16     128    thrpt    2  470346.570          ops/s
+lazy        32     128    thrpt    2  324174.691          ops/s
+lazy        64     128    thrpt    2  186472.090          ops/s
+lazy       128     128    thrpt    2  108105.699          ops/s
  */
 @State(Scope.Benchmark)
 public class RandomSpliteratorBenchmark {
 
     private List<String> source;
 
-    @Param({"1", "10", "100", "1000", "10000", "100000"})
+    @Param({"1", "10", "100", "1000", "10000"})
     public int limit;
 
     @Param({"100000"})
@@ -135,17 +78,10 @@ public class RandomSpliteratorBenchmark {
           .collect(Collectors.toList());
     }
 
-    // @Benchmark
-    public List<String> baseline() {
-        return source.stream()
-          .limit(limit)
-          .collect(Collectors.toList());
-    }
-
     @Benchmark
     public List<String> eager() {
         return source.stream()
-          .collect(RandomSpliterator.eagerShuffledStream())
+          .collect(RandomSpliterator.toEagerShuffledStream())
           .limit(limit)
           .collect(Collectors.toList());
     }
@@ -153,7 +89,7 @@ public class RandomSpliteratorBenchmark {
     @Benchmark
     public List<String> lazy() {
         return source.stream()
-          .collect(RandomSpliterator.lazyShuffledStream())
+          .collect(RandomSpliterator.toLazyShuffledStream())
           .limit(limit)
           .collect(Collectors.toList());
     }
@@ -162,8 +98,8 @@ public class RandomSpliteratorBenchmark {
         var result = new Runner(
           new OptionsBuilder()
             .include(RandomSpliteratorBenchmark.class.getSimpleName())
-            .warmupIterations(0)
-            .measurementIterations(1)
+            .warmupIterations(3)
+            .measurementIterations(2)
             .forks(1)
             .build()).run();
     }
