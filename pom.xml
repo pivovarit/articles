@@ -24,7 +24,7 @@
         <module>java-immutable-collectors</module>
         <module>java-11-string-api-updates</module>
         <module>java-design-patterns</module>
-        <module>java-shuffled-stream</module>
+        <module>java-random-stream</module>
     </modules>
 
     <properties>
