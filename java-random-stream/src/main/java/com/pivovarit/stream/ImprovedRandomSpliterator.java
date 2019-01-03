@@ -38,6 +38,7 @@ public class ImprovedRandomSpliterator<T> implements Spliterator<T> {
         int next = random.nextInt(size);
         action.accept(source[next]);
         source[next] = source[size - 1];
+        source[size - 1] = null; // let object be GCed
         size = size - 1;
         return size > 0;
     }
