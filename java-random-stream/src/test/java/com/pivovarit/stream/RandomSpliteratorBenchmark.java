@@ -63,7 +63,7 @@ public class RandomSpliteratorBenchmark {
 
     private List<String> source;
 
-    @Param({"1", "10", "100", "1000", "10000"})
+    @Param({"1", "10", "100", "1000", "10000", "100000"})
     public int limit;
 
     @Param({"100000"})

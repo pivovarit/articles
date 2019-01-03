@@ -61,7 +61,7 @@ public class ImprovedRandomSpliterator<T> implements Spliterator<T> {
         return Collectors.collectingAndThen(
           toCollection(ArrayList::new),
           list -> !list.isEmpty()
-            ? StreamSupport.stream(new RandomSpliterator<>(list), false)
+            ? StreamSupport.stream(new ImprovedRandomSpliterator<>(list), false)
             : Stream.empty());
     }
 
