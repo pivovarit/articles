@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
-import java.util.RandomAccess;
 import java.util.Spliterator;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
@@ -18,7 +17,8 @@ import static java.util.stream.Collectors.toCollection;
 public class RandomSpliterator<T> implements Spliterator<T> {
 
     private final Random random;
-    private final List<T> source;
+    private final T[] source;
+    private int size;
 
     private RandomSpliterator(List<T> source) {
         this(source, Random::new);
@@ -28,15 +28,18 @@ public class RandomSpliterator<T> implements Spliterator<T> {
         if (source.isEmpty()) {
             throw new IllegalArgumentException("RandomSpliterator can't be initialized with an empty collection");
         }
-        this.source = source instanceof RandomAccess ? source : new ArrayList<>(source);
+        this.source = (T[]) source.toArray(Object[]::new);
         this.random = random.get();
+        this.size = this.source.length;
     }
 
     @Override
     public boolean tryAdvance(Consumer<? super T> action) {
-        int remaining = source.size();
-        action.accept(source.remove(random.nextInt(remaining)));
-        return remaining - 1 > 0;
+        int next = random.nextInt(size);
+        action.accept(source[next]);
+        source[next] = source[size - 1];
+        size = size - 1;
+        return size > 0;
     }
 
     @Override
@@ -46,7 +49,7 @@ public class RandomSpliterator<T> implements Spliterator<T> {
 
     @Override
     public long estimateSize() {
-        return source.size();
+        return source.length;
     }
 
     @Override
