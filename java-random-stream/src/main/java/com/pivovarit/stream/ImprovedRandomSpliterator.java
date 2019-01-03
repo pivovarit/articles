@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
-import java.util.RandomAccess;
 import java.util.Spliterator;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
@@ -15,28 +14,32 @@ import java.util.stream.StreamSupport;
 
 import static java.util.stream.Collectors.toCollection;
 
-public class RandomSpliterator<T> implements Spliterator<T> {
+public class ImprovedRandomSpliterator<T> implements Spliterator<T> {
 
     private final Random random;
-    private final List<T> source;
+    private final T[] source;
+    private int size;
 
-    private RandomSpliterator(List<T> source) {
+    private ImprovedRandomSpliterator(List<T> source) {
         this(source, Random::new);
     }
 
-    private RandomSpliterator(List<T> source, Supplier<? extends Random> random) {
+    private ImprovedRandomSpliterator(List<T> source, Supplier<? extends Random> random) {
         if (source.isEmpty()) {
             throw new IllegalArgumentException("RandomSpliterator can't be initialized with an empty collection");
         }
-        this.source = source instanceof RandomAccess ? source : new ArrayList<>(source);
+        this.source = (T[]) source.toArray();
         this.random = random.get();
+        this.size = this.source.length;
     }
 
     @Override
     public boolean tryAdvance(Consumer<? super T> action) {
-        int remaining = source.size();
-        action.accept(source.remove(random.nextInt(remaining)));
-        return remaining - 1 > 0;
+        int next = random.nextInt(size);
+        action.accept(source[next]);
+        source[next] = source[size - 1];
+        size = size - 1;
+        return size > 0;
     }
 
     @Override
@@ -46,7 +49,7 @@ public class RandomSpliterator<T> implements Spliterator<T> {
 
     @Override
     public long estimateSize() {
-        return source.size();
+        return source.length;
     }
 
     @Override
@@ -58,7 +61,7 @@ public class RandomSpliterator<T> implements Spliterator<T> {
         return Collectors.collectingAndThen(
           toCollection(ArrayList::new),
           list -> !list.isEmpty()
-            ? StreamSupport.stream(new RandomSpliterator<>(list), false)
+            ? StreamSupport.stream(new ImprovedRandomSpliterator<>(list), false)
             : Stream.empty());
     }
 

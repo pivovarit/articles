@@ -63,7 +63,7 @@ public class RandomSpliteratorBenchmark {
 
     private List<String> source;
 
-    @Param({"1", "10", "100", "1000", "10000"})
+    @Param({"1", "10", "100", "1000", "10000", "100000"})
     public int limit;
 
     @Param({"100000"})
@@ -98,8 +98,8 @@ public class RandomSpliteratorBenchmark {
         var result = new Runner(
           new OptionsBuilder()
             .include(RandomSpliteratorBenchmark.class.getSimpleName())
-            .warmupIterations(3)
-            .measurementIterations(2)
+            .warmupIterations(5)
+            .measurementIterations(5)
             .forks(1)
             .build()).run();
     }
