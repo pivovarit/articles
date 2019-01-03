@@ -29,4 +29,17 @@ class RandomStreamTest {
           .hasSameSizeAs(source)
           .doesNotContainSequence(source);
     }
+
+    @Test
+    void should_shuffle_improved() {
+        var source = IntStream.range(0, 100_000).boxed().collect(toList());
+
+        var result = source.stream()
+          .collect(ImprovedRandomSpliterator.toLazyShuffledStream())
+          .collect(toList());
+
+        assertThat(result)
+          .hasSameSizeAs(source)
+          .doesNotContainSequence(source);
+    }
 }
