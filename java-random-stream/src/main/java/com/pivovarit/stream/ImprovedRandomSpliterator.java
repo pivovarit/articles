@@ -12,7 +12,7 @@ public class ImprovedRandomSpliterator<T> implements Spliterator<T> {
     private final T[] source;
     private int size;
 
-    private ImprovedRandomSpliterator(List<T> source, Supplier<? extends Random> random) {
+    ImprovedRandomSpliterator(List<T> source, Supplier<? extends Random> random) {
         if (source.isEmpty()) {
             throw new IllegalArgumentException("RandomSpliterator can't be initialized with an empty collection");
         }
