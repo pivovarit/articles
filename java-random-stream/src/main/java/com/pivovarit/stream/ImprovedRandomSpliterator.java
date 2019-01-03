@@ -23,12 +23,13 @@ public class ImprovedRandomSpliterator<T> implements Spliterator<T> {
 
     @Override
     public boolean tryAdvance(Consumer<? super T> action) {
-        int next = random.nextInt(size);
-        action.accept(source[next]);
-        source[next] = source[size - 1];
-        source[size - 1] = null; // let object be GCed
-        size = size - 1;
-        return size > 0;
+        int nextIdx = random.nextInt(size);
+        int lastIdx = size - 1;
+
+        action.accept(source[nextIdx]);
+        source[nextIdx] = source[lastIdx];
+        source[lastIdx] = null; // let object be GCed
+        return --size > 0;
     }
 
     @Override
