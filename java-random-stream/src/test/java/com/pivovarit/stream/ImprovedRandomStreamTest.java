@@ -4,16 +4,16 @@ import org.junit.jupiter.api.Test;
 
 import java.util.stream.IntStream;
 
-import static com.pivovarit.stream.RandomSpliterator.toLazyShuffledStream;
+import static com.pivovarit.stream.ImprovedRandomSpliterator.toLazyShuffledStream;
 import static java.util.stream.Collectors.toList;
 import static org.assertj.core.api.Assertions.assertThat;
 
-class RandomStreamTest {
+class ImprovedRandomStreamTest {
 
     @Test
     void example_1() {
         IntStream.range(0, 10).boxed()
-          .collect(RandomSpliterator.toLazyShuffledStream())
+          .collect(ImprovedRandomSpliterator.toLazyShuffledStream())
           .forEach(System.out::println);
     }
 
