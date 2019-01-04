@@ -8,7 +8,7 @@ import java.util.Spliterator;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
-public class RandomSpliterator<T> implements Spliterator<T> {
+class RandomSpliterator<T> implements Spliterator<T> {
 
     private final Random random;
     private final List<T> source;

@@ -6,7 +6,7 @@ import java.util.Spliterator;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
-public class ImprovedRandomSpliterator<T> implements Spliterator<T> {
+class ImprovedRandomSpliterator<T> implements Spliterator<T> {
 
     private final Random random;
     private final T[] source;
