@@ -4,7 +4,7 @@
 
     <groupId>com.pivovarit</groupId>
     <version>1.0</version>
-    <artifactId>java-shuffled-stream</artifactId>
+    <artifactId>java-parallel-collection-processing</artifactId>
 
     <name>java-parallel-collection-processing</name>
     <build>
