@@ -25,6 +25,7 @@
         <module>java-11-string-api-updates</module>
         <module>java-design-patterns</module>
         <module>java-random-stream</module>
+        <module>java-parallel-collection-processing</module>
     </modules>
 
     <properties>
