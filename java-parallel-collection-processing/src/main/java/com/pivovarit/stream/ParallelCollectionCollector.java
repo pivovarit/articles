@@ -42,9 +42,7 @@ public class ParallelCollectionCollector<T> implements Collector<Supplier<T>, Li
 
     @Override
     public Function<List<CompletableFuture<T>>, CompletableFuture<List<T>>> finisher() {
-        return futures -> futures.stream()
-          .reduce(
-            completedFuture(new ArrayList<>()),
+        return futures -> futures.stream().reduce(completedFuture(new ArrayList<>()),
             (list, object) -> list.thenCombine(object, (left, right) -> { left.add(right); return left; }),
             (f1, f2) -> f1.thenCombine(f2, (left, right) -> { left.addAll(right); return left; }));
     }
