@@ -1,7 +1,7 @@
 dist: trusty
 language: java
 jdk:
-  - oraclejdk11
+  - openjdk-ea
 script:
   - mvn -q install
 
