@@ -19,6 +19,7 @@ Code snippets for articles posted at 4comprehension.com provided "as-is" and org
 - [Kotlin Collections API Performance Antipatterns](https://4comprehension.com/kotlin-collections-api-performance-antipatterns/) [(snippets)](https://github.com/pivovarit/articles/tree/master/kotlin-collections)
 - [Revisiting the Template Method Design Pattern in Java](https://4comprehension.com/revisiting-the-template-method-design-pattern-in-java/) [(snippets)](https://github.com/pivovarit/articles/tree/master/java-design-patterns/src/main/java/com/pivovarit/template_method)
 - [A Case Study of Implementing an Efficient Shuffling Stream/Spliterator in Java](https://4comprehension.com/implementing-a-randomized-stream-spliterator-in-java/) [(snippets)](https://github.com/pivovarit/articles/tree/master/java-random-stream)
+- [A New JDK12 Stream API Collector – Collectors#teeing](https://4comprehension.com/a-new-jdk12-stream-api-collector-collectorsteeing/) [(snippets)](https://github.com/pivovarit/articles/tree/master/java-collectors-teeing)
 
 ## Running 
 In most cases, I'm using a simple unit-testing infrastructure to squeeze multiple examples in a single file - it's enough to import the module in your IDE and run JUnit tests.
