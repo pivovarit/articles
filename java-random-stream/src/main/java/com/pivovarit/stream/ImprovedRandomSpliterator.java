@@ -29,10 +29,9 @@ class ImprovedRandomSpliterator<T> implements Spliterator<T> {
     public boolean tryAdvance(Consumer<? super T> action) {
         if (size > 0) {
             int nextIdx = random.nextInt(size);
-            int lastIdx = size - 1;
+            int lastIdx = --size;
 
             action.accept(source.set(nextIdx, source.set(lastIdx, null)));
-            size--;
             return true;
         } else {
             return false;
