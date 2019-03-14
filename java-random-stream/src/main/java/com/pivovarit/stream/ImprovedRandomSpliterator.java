@@ -9,16 +9,20 @@ import java.util.function.Supplier;
 class ImprovedRandomSpliterator<T> implements Spliterator<T> {
 
     private final Random random;
-    private final T[] source;
+    private final List<T> source;
     private int size;
 
+    /**
+     * To be used only with {@link List} implementations supporting O(1) index access
+     */
     ImprovedRandomSpliterator(List<T> source, Supplier<? extends Random> random) {
         if (source.isEmpty()) {
             throw new IllegalArgumentException("RandomSpliterator can't be initialized with an empty collection");
         }
-        this.source = (T[]) source.toArray();
+
+        this.source = source;
         this.random = random.get();
-        this.size = this.source.length;
+        this.size = this.source.size();
     }
 
     @Override
@@ -27,9 +31,7 @@ class ImprovedRandomSpliterator<T> implements Spliterator<T> {
             int nextIdx = random.nextInt(size);
             int lastIdx = size - 1;
 
-            action.accept(source[nextIdx]);
-            source[nextIdx] = source[lastIdx];
-            source[lastIdx] = null; // let object be GCed
+            action.accept(source.set(nextIdx, source.set(lastIdx, null)));
             size--;
             return true;
         } else {
@@ -44,7 +46,7 @@ class ImprovedRandomSpliterator<T> implements Spliterator<T> {
 
     @Override
     public long estimateSize() {
-        return source.length;
+        return source.size();
     }
 
     @Override
