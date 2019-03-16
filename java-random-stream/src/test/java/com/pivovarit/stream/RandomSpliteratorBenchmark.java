@@ -97,7 +97,7 @@ lazy             10000  100000  thrpt    5    22.373 ±   0.927  ops/s
 lazy            100000  100000  thrpt    5     4.567 ±   0.226  ops/s
 lazy_improved        1  100000  thrpt    5  1512.144 ±  90.778  ops/s
 lazy_improved       10  100000  thrpt    5  1470.838 ±  46.537  ops/s
-lazy_improved      100  100000  thrpt    5  1621.704 ± 125.341  ops/s
+lkazy_improved      100  100000  thrpt    5  1621.704 ± 125.341  ops/s
 lazy_improved     1000  100000  thrpt    5  1486.026 ±  31.225  ops/s
 lazy_improved    10000  100000  thrpt    5  1123.391 ±  69.165  ops/s
 lazy_improved   100000  100000  thrpt    5   383.457 ±  98.229  ops/s
@@ -121,17 +121,38 @@ RandomSpliteratorBenchmark.lazy_improved      100  100000  thrpt    5  2241.723 
 RandomSpliteratorBenchmark.lazy_improved     1000  100000  thrpt    5  2143.909 ±  66.272  ops/s
 RandomSpliteratorBenchmark.lazy_improved    10000  100000  thrpt    5  1034.969 ±  38.865  ops/s
 RandomSpliteratorBenchmark.lazy_improved   100000  100000  thrpt    5   307.509 ± 168.192  ops/s
+
+
+Benchmark                             (limit)  (size)   Mode  Cnt     Score     Error  Units
+RandomSpliteratorBenchmark.eager            1  100000  thrpt    5   409.366 ±  11.738  ops/s
+RandomSpliteratorBenchmark.eager           10  100000  thrpt    5   397.840 ±  40.503  ops/s
+RandomSpliteratorBenchmark.eager          100  100000  thrpt    5   410.962 ±  11.420  ops/s
+RandomSpliteratorBenchmark.eager         1000  100000  thrpt    5   399.234 ±   7.590  ops/s
+RandomSpliteratorBenchmark.eager        10000  100000  thrpt    5   388.627 ±  12.116  ops/s
+RandomSpliteratorBenchmark.eager       100000  100000  thrpt    5   295.835 ±   4.156  ops/s
+RandomSpliteratorBenchmark.lazy             1  100000  thrpt    5  1278.842 ±  58.778  ops/s
+RandomSpliteratorBenchmark.lazy            10  100000  thrpt    5  1204.011 ±  34.525  ops/s
+RandomSpliteratorBenchmark.lazy           100  100000  thrpt    5   834.629 ±  65.923  ops/s
+RandomSpliteratorBenchmark.lazy          1000  100000  thrpt    5   149.520 ±  17.135  ops/s
+RandomSpliteratorBenchmark.lazy         10000  100000  thrpt    5    17.724 ±   0.375  ops/s
+RandomSpliteratorBenchmark.lazy        100000  100000  thrpt    5     3.606 ±   0.305  ops/s
+RandomSpliteratorBenchmark.optimized        1  100000  thrpt    5  1331.594 ±  32.923  ops/s
+RandomSpliteratorBenchmark.optimized       10  100000  thrpt    5  1331.188 ±  72.917  ops/s
+RandomSpliteratorBenchmark.optimized      100  100000  thrpt    5  1385.031 ±  42.205  ops/s
+RandomSpliteratorBenchmark.optimized     1000  100000  thrpt    5  1293.530 ±  38.505  ops/s
+RandomSpliteratorBenchmark.optimized    10000  100000  thrpt    5   955.748 ±  15.238  ops/s
+RandomSpliteratorBenchmark.optimized   100000  100000  thrpt    5   299.186 ±   7.071  ops/s
  */
 @State(Scope.Benchmark)
 public class RandomSpliteratorBenchmark {
 
-    private static final Collector<Integer, ?, Stream<Integer>> IMPROVED_LAZY = RandomCollectors.toImprovedLazyShuffledStream();
+    private static final Collector<Integer, ?, Stream<Integer>> OPTIMIZED = RandomCollectors.toOptimizedLazyShuffledStream();
     private static final Collector<Integer, ?, Stream<Integer>> LAZY = RandomCollectors.toLazyShuffledStream();
     private static final Collector<Integer, ?, Stream<Integer>> EAGER = RandomCollectors.toEagerShuffledStream();
 
     private List<Integer> source;
 
-    @Param({"1", "10", "100", "1000", "10000", "100000"})
+    @Param({/*"1", */"0", "1" /*"100", "1000", "10000", "100000"*/})
     public int limit;
 
     @Param({"100000"})
@@ -154,8 +175,8 @@ public class RandomSpliteratorBenchmark {
     }
 
     @Benchmark
-    public List<Integer> lazy_improved() {
-        return collectWith(IMPROVED_LAZY, source, limit);
+    public List<Integer> optimized() {
+        return collectWith(OPTIMIZED, source, limit);
     }
 
     private static List<Integer> collectWith(Collector<Integer, ?, Stream<Integer>> integerStreamCollector, List<Integer> source, long limit) {
