@@ -10,15 +10,8 @@ import org.openjdk.jmh.runner.Runner;
 import org.openjdk.jmh.runner.RunnerException;
 import org.openjdk.jmh.runner.options.OptionsBuilder;
 
-import java.util.Collections;
-import java.util.EnumSet;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
-import java.util.function.BiConsumer;
-import java.util.function.BinaryOperator;
-import java.util.function.Function;
-import java.util.function.Supplier;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -132,6 +125,10 @@ RandomSpliteratorBenchmark.lazy_improved   100000  100000  thrpt    5   307.509 
 @State(Scope.Benchmark)
 public class RandomSpliteratorBenchmark {
 
+    private static final Collector<Integer, ?, Stream<Integer>> IMPROVED_LAZY = RandomCollectors.toImprovedLazyShuffledStream();
+    private static final Collector<Integer, ?, Stream<Integer>> LAZY = RandomCollectors.toLazyShuffledStream();
+    private static final Collector<Integer, ?, Stream<Integer>> EAGER = RandomCollectors.toEagerShuffledStream();
+
     private List<Integer> source;
 
     @Param({"1", "10", "100", "1000", "10000", "100000"})
@@ -148,24 +145,22 @@ public class RandomSpliteratorBenchmark {
 
     @Benchmark
     public List<Integer> eager() {
-        return source.stream()
-          .collect(RandomCollectors.toEagerShuffledStream())
-          .limit(limit)
-          .collect(Collectors.toCollection(LinkedList::new));
+        return collectWith(EAGER, source, limit);
     }
 
     @Benchmark
     public List<Integer> lazy() {
-        return source.stream()
-          .collect(RandomCollectors.toLazyShuffledStream())
-          .limit(limit)
-          .collect(Collectors.toCollection(LinkedList::new));
+        return collectWith(LAZY, source, limit);
     }
 
     @Benchmark
     public List<Integer> lazy_improved() {
+        return collectWith(IMPROVED_LAZY, source, limit);
+    }
+
+    private static List<Integer> collectWith(Collector<Integer, ?, Stream<Integer>> integerStreamCollector, List<Integer> source, long limit) {
         return source.stream()
-          .collect(RandomCollectors.toImprovedLazyShuffledStream())
+          .collect(integerStreamCollector)
           .limit(limit)
           .collect(Collectors.toCollection(LinkedList::new));
     }
