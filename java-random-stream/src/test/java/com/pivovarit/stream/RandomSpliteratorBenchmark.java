@@ -10,9 +10,19 @@ import org.openjdk.jmh.runner.Runner;
 import org.openjdk.jmh.runner.RunnerException;
 import org.openjdk.jmh.runner.options.OptionsBuilder;
 
+import java.util.Collections;
+import java.util.EnumSet;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
+import java.util.function.BiConsumer;
+import java.util.function.BinaryOperator;
+import java.util.function.Function;
+import java.util.function.Supplier;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 /*
        (limit)  (size)   Mode  Cnt     Score     Error  Units
@@ -77,10 +87,32 @@ lazy_improved     1000  100000  thrpt    3  1451.007 ±  58.948  ops/s
 lazy_improved    10000  100000  thrpt    3  1148.581 ± 232.218  ops/s
 lazy_improved   100000  100000  thrpt    3   383.022 ±  97.082  ops/s
  */
+
+/*
+Benchmark      (limit)  (size)   Mode  Cnt     Score     Error  Units
+eager                1  100000  thrpt    5   449.943 ±  16.706  ops/s
+eager               10  100000  thrpt    5   447.505 ±  29.861  ops/s
+eager              100  100000  thrpt    5   449.688 ±  13.782  ops/s
+eager             1000  100000  thrpt    5   443.310 ±  10.854  ops/s
+eager            10000  100000  thrpt    5   430.474 ±  24.297  ops/s
+eager           100000  100000  thrpt    5   328.347 ±   3.828  ops/s
+lazy                 1  100000  thrpt    5  1589.508 ±  17.446  ops/s
+lazy                10  100000  thrpt    5  1424.915 ±  34.953  ops/s
+lazy               100  100000  thrpt    5   890.914 ±   4.042  ops/s
+lazy              1000  100000  thrpt    5   185.651 ±   9.161  ops/s
+lazy             10000  100000  thrpt    5    22.373 ±   0.927  ops/s
+lazy            100000  100000  thrpt    5     4.567 ±   0.226  ops/s
+lazy_improved        1  100000  thrpt    5  1512.144 ±  90.778  ops/s
+lazy_improved       10  100000  thrpt    5  1470.838 ±  46.537  ops/s
+lazy_improved      100  100000  thrpt    5  1621.704 ± 125.341  ops/s
+lazy_improved     1000  100000  thrpt    5  1486.026 ±  31.225  ops/s
+lazy_improved    10000  100000  thrpt    5  1123.391 ±  69.165  ops/s
+lazy_improved   100000  100000  thrpt    5   383.457 ±  98.229  ops/s
+ */
 @State(Scope.Benchmark)
 public class RandomSpliteratorBenchmark {
 
-    private List<String> source;
+    private List<Integer> source;
 
     @Param({"1", "10", "100", "1000", "10000", "100000"})
     public int limit;
@@ -91,33 +123,31 @@ public class RandomSpliteratorBenchmark {
     @Setup(Level.Iteration)
     public void setUp() {
         source = IntStream.range(0, size)
-          .boxed()
-          .map(Object::toString)
-          .collect(Collectors.toList());
+          .boxed().collect(Collectors.toList());
     }
 
     @Benchmark
-    public List<String> eager() {
+    public List<Integer> eager() {
         return source.stream()
           .collect(RandomCollectors.toEagerShuffledStream())
           .limit(limit)
-          .collect(Collectors.toList());
+          .collect(Collectors.toCollection(LinkedList::new));
     }
 
     @Benchmark
-    public List<String> lazy() {
+    public List<Integer> lazy() {
         return source.stream()
           .collect(RandomCollectors.toLazyShuffledStream())
           .limit(limit)
-          .collect(Collectors.toList());
+          .collect(Collectors.toCollection(LinkedList::new));
     }
 
     @Benchmark
-    public List<String> lazy_improved() {
+    public List<Integer> lazy_improved() {
         return source.stream()
           .collect(RandomCollectors.toImprovedLazyShuffledStream())
           .limit(limit)
-          .collect(Collectors.toList());
+          .collect(Collectors.toCollection(LinkedList::new));
     }
 
     public static void main(String[] args) throws RunnerException {
