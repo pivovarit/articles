@@ -108,6 +108,26 @@ lazy_improved      100  100000  thrpt    5  1621.704 ± 125.341  ops/s
 lazy_improved     1000  100000  thrpt    5  1486.026 ±  31.225  ops/s
 lazy_improved    10000  100000  thrpt    5  1123.391 ±  69.165  ops/s
 lazy_improved   100000  100000  thrpt    5   383.457 ±  98.229  ops/s
+
+Benchmark                                 (limit)  (size)   Mode  Cnt     Score     Error  Units
+RandomSpliteratorBenchmark.eager                1  100000  thrpt    5   432.621 ±   9.114  ops/s
+RandomSpliteratorBenchmark.eager               10  100000  thrpt    5   490.174 ±   9.263  ops/s
+RandomSpliteratorBenchmark.eager              100  100000  thrpt    5   444.178 ±  11.865  ops/s
+RandomSpliteratorBenchmark.eager             1000  100000  thrpt    5   437.328 ±  16.875  ops/s
+RandomSpliteratorBenchmark.eager            10000  100000  thrpt    5   418.864 ±   4.895  ops/s
+RandomSpliteratorBenchmark.eager           100000  100000  thrpt    5   288.879 ±   1.780  ops/s
+RandomSpliteratorBenchmark.lazy                 1  100000  thrpt    5  1463.682 ±  26.422  ops/s
+RandomSpliteratorBenchmark.lazy                10  100000  thrpt    5  1364.556 ± 114.212  ops/s
+RandomSpliteratorBenchmark.lazy               100  100000  thrpt    5   856.734 ±  37.250  ops/s
+RandomSpliteratorBenchmark.lazy              1000  100000  thrpt    5   184.142 ±   3.037  ops/s
+RandomSpliteratorBenchmark.lazy             10000  100000  thrpt    5    22.101 ±   0.547  ops/s
+RandomSpliteratorBenchmark.lazy            100000  100000  thrpt    5     4.533 ±   0.250  ops/s
+RandomSpliteratorBenchmark.lazy_improved        1  100000  thrpt    5  2285.904 ±  88.239  ops/s
+RandomSpliteratorBenchmark.lazy_improved       10  100000  thrpt    5  1366.590 ± 524.230  ops/s
+RandomSpliteratorBenchmark.lazy_improved      100  100000  thrpt    5  2241.723 ±  88.484  ops/s
+RandomSpliteratorBenchmark.lazy_improved     1000  100000  thrpt    5  2143.909 ±  66.272  ops/s
+RandomSpliteratorBenchmark.lazy_improved    10000  100000  thrpt    5  1034.969 ±  38.865  ops/s
+RandomSpliteratorBenchmark.lazy_improved   100000  100000  thrpt    5   307.509 ± 168.192  ops/s
  */
 @State(Scope.Benchmark)
 public class RandomSpliteratorBenchmark {
