@@ -116,7 +116,7 @@ RandomSpliteratorBenchmark.lazy              1000  100000  thrpt    5   184.142 
 RandomSpliteratorBenchmark.lazy             10000  100000  thrpt    5    22.101 ±   0.547  ops/s
 RandomSpliteratorBenchmark.lazy            100000  100000  thrpt    5     4.533 ±   0.250  ops/s
 RandomSpliteratorBenchmark.lazy_improved        1  100000  thrpt    5  2285.904 ±  88.239  ops/s
-RandomSpliteratorBenchmark.lazy_improved       10  100000  thrpt    5  1366.590 ± 524.230  ops/s
+RandomSpliteratorBenchmark.lazy_improved       10  100000  thrpt    5  2274.590 ±  84.230  ops/s
 RandomSpliteratorBenchmark.lazy_improved      100  100000  thrpt    5  2241.723 ±  88.484  ops/s
 RandomSpliteratorBenchmark.lazy_improved     1000  100000  thrpt    5  2143.909 ±  66.272  ops/s
 RandomSpliteratorBenchmark.lazy_improved    10000  100000  thrpt    5  1034.969 ±  38.865  ops/s
