@@ -34,7 +34,7 @@ class RandomStreamTest {
         var source = IntStream.range(0, 100_000).boxed().collect(toList());
 
         var result = source.stream()
-          .collect(RandomCollectors.toImprovedLazyShuffledStream())
+          .collect(RandomCollectors.toOptimizedLazyShuffledStream())
           .collect(toList());
 
         assertThat(result)

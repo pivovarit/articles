@@ -15,28 +15,24 @@ public final class RandomCollectors {
     private RandomCollectors() {
     }
 
-    public static <T> Collector<T, ?, Stream<T>> toImprovedLazyShuffledStream() {
+    public static <T> Collector<T, ?, Stream<T>> toOptimizedLazyShuffledStream() {
         return Collectors.collectingAndThen(
-          toCollection(ArrayList::new),
-          list -> !list.isEmpty()
-            ? StreamSupport.stream(new ImprovedRandomSpliterator<>(list, Random::new), false)
-            : Stream.empty());
+            toCollection(ArrayList::new),
+            list -> StreamSupport.stream(new ImprovedRandomSpliterator<>(list, Random::new), false));
     }
 
     public static <T> Collector<T, ?, Stream<T>> toLazyShuffledStream() {
         return Collectors.collectingAndThen(
-          toCollection(ArrayList::new),
-          list -> !list.isEmpty()
-            ? StreamSupport.stream(new RandomSpliterator<>(list, Random::new), false)
-            : Stream.empty());
+            toCollection(ArrayList::new),
+            list -> StreamSupport.stream(new RandomSpliterator<>(list, Random::new), false));
     }
 
     public static <T> Collector<T, ?, Stream<T>> toEagerShuffledStream() {
         return Collectors.collectingAndThen(
-          toCollection(ArrayList::new),
-          list -> {
-              Collections.shuffle(list);
-              return list.stream();
-          });
+            toCollection(ArrayList::new),
+            list -> {
+                Collections.shuffle(list);
+                return list.stream();
+            });
     }
 }
