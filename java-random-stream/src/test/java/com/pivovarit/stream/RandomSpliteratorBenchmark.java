@@ -124,8 +124,8 @@ public class RandomSpliteratorBenchmark {
         var result = new Runner(
           new OptionsBuilder()
             .include(RandomSpliteratorBenchmark.class.getSimpleName())
-            .warmupIterations(5)
-            .measurementIterations(5)
+            .warmupIterations(3)
+            .measurementIterations(3)
             .forks(1)
             .build()).run();
     }

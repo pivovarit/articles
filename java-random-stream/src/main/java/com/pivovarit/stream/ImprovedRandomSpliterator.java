@@ -1,24 +1,22 @@
 package com.pivovarit.stream;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Random;
+import java.util.RandomAccess;
 import java.util.Spliterator;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
-class ImprovedRandomSpliterator<T> implements Spliterator<T> {
+class ImprovedRandomSpliterator<T, LIST extends RandomAccess & List<T>> implements Spliterator<T> {
 
     private final Random random;
     private final List<T> source;
     private int size;
 
-    /**
-     * To be used only with {@link List} implementations supporting O(1) index access
-     */
-    ImprovedRandomSpliterator(List<T> source, Supplier<? extends Random> random) {
-        if (source.isEmpty()) {
-            throw new IllegalArgumentException("RandomSpliterator can't be initialized with an empty collection");
-        }
+    ImprovedRandomSpliterator(LIST source, Supplier<? extends Random> random) {
+        Objects.requireNonNull(source, "source can't be null");
+        Objects.requireNonNull(random, "random can't be null");
 
         this.source = source;
         this.random = random.get();
