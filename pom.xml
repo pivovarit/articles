@@ -20,6 +20,7 @@
         <module>java-lazy-initialization</module>
         <module>java-sealed-classes</module>
         <module>java-completable-future-timeouts</module>
+        <module>java-completable-future-all-of</module>
         <module>java-advanced-groupingby</module>
         <module>java-immutable-collectors</module>
         <module>java-11-string-api-updates</module>
