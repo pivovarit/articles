@@ -1,11 +1,6 @@
-dist: trusty
+dist: xenial
 language: java
 jdk:
   - openjdk-ea
 script:
   - mvn -q install
-
-cache:
-  directories:
-  - .autoconf
-  - $HOME/.m2
