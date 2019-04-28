@@ -4,9 +4,9 @@
 
     <groupId>com.pivovarit</groupId>
     <version>1.0</version>
-    <artifactId>java-sliding-window-stream</artifactId>
+    <artifactId>java-completion-order-spliterator</artifactId>
 
-    <name>java-sliding-window-stream</name>
+    <name>java-completion-order-spliterator</name>
     <build>
         <plugins>
             <plugin>
