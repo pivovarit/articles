@@ -1,1 +1,1 @@
-https://4comprehension.com/sliding-window-stream-spliterator-in-java
+https://4comprehension.com/streaming-completablefutures-in-completion-order/
