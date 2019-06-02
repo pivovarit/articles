@@ -29,7 +29,7 @@ class ImprovedRandomSpliterator<T, LIST extends RandomAccess & List<T>> implemen
             int nextIdx = random.nextInt(size);
             int lastIdx = --size;
 
-            T last = source.set(lastIdx, null);
+            T last = source.get(lastIdx);
             T elem = source.set(nextIdx, last);
             action.accept(elem);
             return true;

@@ -2,6 +2,7 @@ package com.pivovarit.stream;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.HashSet;
 import java.util.stream.IntStream;
 
 import static java.util.stream.Collectors.toList;
@@ -12,13 +13,13 @@ class RandomStreamTest {
     @Test
     void example_1() {
         IntStream.range(0, 10).boxed()
-          .collect(RandomCollectors.toLazyShuffledStream())
+          .collect(RandomCollectors.toOptimizedLazyShuffledStream())
           .forEach(System.out::println);
     }
 
     @Test
     void should_shuffle() {
-        var source = IntStream.range(0, 100_000).boxed().collect(toList());
+        var source = IntStream.range(0, 100).boxed().collect(toList());
 
         var result = source.stream()
           .collect(RandomCollectors.toLazyShuffledStream())
@@ -31,14 +32,16 @@ class RandomStreamTest {
 
     @Test
     void should_shuffle_improved() {
-        var source = IntStream.range(0, 100_000).boxed().collect(toList());
+        var source = IntStream.range(0, 100).boxed().collect(toList());
 
         var result = source.stream()
           .collect(RandomCollectors.toOptimizedLazyShuffledStream())
           .collect(toList());
 
         assertThat(result)
+          .doesNotContainNull()
           .hasSameSizeAs(source)
+          .containsOnlyElementsOf(source)
           .doesNotContainSequence(source);
     }
 }
