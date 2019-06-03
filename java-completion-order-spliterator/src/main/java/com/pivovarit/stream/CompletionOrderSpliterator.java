@@ -98,7 +98,7 @@ final class CompletionOrderSpliterator<T> implements Spliterator<T> {
 
     @Override
     public int characteristics() {
-        return SIZED & IMMUTABLE & NONNULL;
+        return SIZED | IMMUTABLE | NONNULL;
     }
 
     private static <T> Map<Integer, CompletableFuture<Map.Entry<Integer, T>>> toIndexedFutures(Collection<CompletableFuture<T>> futures) {
