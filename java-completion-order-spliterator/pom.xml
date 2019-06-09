@@ -7,6 +7,11 @@
     <artifactId>java-completion-order-spliterator</artifactId>
 
     <name>java-completion-order-spliterator</name>
+
+    <properties>
+        <jmh.version>1.21</jmh.version>
+    </properties>
+
     <build>
         <plugins>
             <plugin>
@@ -43,6 +48,17 @@
             <artifactId>assertj-core</artifactId>
             <version>3.8.0</version>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.openjdk.jmh</groupId>
+            <artifactId>jmh-core</artifactId>
+            <version>${jmh.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.openjdk.jmh</groupId>
+            <artifactId>jmh-generator-annprocess</artifactId>
+            <version>${jmh.version}</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 </project>
