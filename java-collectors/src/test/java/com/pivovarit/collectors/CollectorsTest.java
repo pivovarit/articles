@@ -8,6 +8,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
 import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.collectingAndThen;
@@ -106,7 +107,34 @@ class CollectorsTest {
     }
 
     @Test
-    void E7_collectingAndThen() {
+    void E_toMap_conflict_resolution() {
+        List<String> list = List.of("one", "two", "three");
+
+        Map<Integer, String> result = list.stream()
+          .collect(toMap(String::length, e -> e, String::concat));
+
+        assertThat(result)
+          .hasSize(2)
+          .containsEntry(3, "onetwo")
+          .containsEntry(5, "three");
+    }
+
+    @Test
+    void E_toMap_conflict_resolution_custom_map() {
+        List<String> list = List.of("one", "two", "three");
+
+        Map<Integer, String> result = list.stream()
+          .collect(toMap(String::length, e -> e, String::concat, TreeMap::new));
+
+        assertThat(result)
+          .isExactlyInstanceOf(TreeMap.class)
+          .hasSize(2)
+          .containsEntry(3, "onetwo")
+          .containsEntry(5, "three");
+    }
+
+    @Test
+    void E8_collectingAndThen() {
         List<String> list = List.of("one", "two", "three");
 
         List<String> result = list.stream()
