@@ -21,6 +21,7 @@ Code snippets for articles posted at 4comprehension.com provided "as-is" and org
 - [A Case Study of Implementing an Efficient Shuffling Stream/Spliterator in Java](https://4comprehension.com/implementing-a-randomized-stream-spliterator-in-java/) [(snippets)](https://github.com/pivovarit/articles/tree/master/java-random-stream)
 - [A New JDK12 Stream API Collector – Collectors#teeing](https://4comprehension.com/a-new-jdk12-stream-api-collector-collectorsteeing/) [(snippets)](https://github.com/pivovarit/articles/tree/master/java-collectors-teeing)
 - [Streaming Java CompletableFutures in Completion Order](https://4comprehension.com/streaming-completablefutures-in-completion-order/) [(snippets)](https://github.com/pivovarit/articles/tree/master/java-completion-order-spliterator)
+- [An Ultimate Guide to Java Stream API Collectors](https://4comprehension.com/an-ultimate-guide-to-java-stream-api-collectors/) [(snippets)](https://github.com/pivovarit/articles/tree/master/java-collectors)
 
 ## Running 
 In most cases, I'm using a simple unit-testing infrastructure to squeeze multiple examples in a single file - it's enough to import the module in your IDE and run JUnit tests.
