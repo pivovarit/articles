@@ -17,7 +17,6 @@ import static java.util.stream.Collectors.toList;
 import static java.util.stream.Collectors.toMap;
 import static java.util.stream.Collectors.toSet;
 import static java.util.stream.Collectors.toUnmodifiableList;
-import static java.util.stream.Collectors.toUnmodifiableMap;
 import static java.util.stream.Collectors.toUnmodifiableSet;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -25,7 +24,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 class CollectorsTest {
 
     @Test
-    void E1_toList() {
+    void E_toList() {
         List<Integer> list = List.of(1, 2, 3);
 
         List<Integer> result = list.stream()
@@ -37,7 +36,7 @@ class CollectorsTest {
     }
 
     @Test
-    void E2_toUnmodifiableList() {
+    void E_toUnmodifiableList() {
         List<Integer> list = List.of(1, 2, 3);
 
         List<Integer> result = list.stream()
@@ -52,7 +51,7 @@ class CollectorsTest {
     }
 
     @Test
-    void E3_toSet() {
+    void E_toSet() {
         List<Integer> list = List.of(1, 2, 3, 3);
 
         Set<Integer> result = list.stream()
@@ -64,7 +63,7 @@ class CollectorsTest {
     }
 
     @Test
-    void E4_toUnmodifiableSet() {
+    void E_toUnmodifiableSet() {
         List<Integer> list = List.of(1, 2, 3, 3);
 
         Set<Integer> result = list.stream()
@@ -79,7 +78,7 @@ class CollectorsTest {
     }
 
     @Test
-    void E5_toCollection() {
+    void E_toCollection() {
         List<Integer> list = List.of(1, 2, 3);
 
         Collection<Integer> result = list.stream()
@@ -91,9 +90,8 @@ class CollectorsTest {
           .containsOnly(1, 2, 3);
     }
 
-
     @Test
-    void E6_toMap() {
+    void E_toMap() {
         List<String> list = List.of("one", "two", "three");
 
         Map<String, Integer> result = list.stream()
@@ -134,7 +132,7 @@ class CollectorsTest {
     }
 
     @Test
-    void E8_collectingAndThen() {
+    void E_collectingAndThen() {
         List<String> list = List.of("one", "two", "three");
 
         List<String> result = list.stream()
@@ -148,4 +146,33 @@ class CollectorsTest {
           .isExactlyInstanceOf(UnsupportedOperationException.class);
     }
 
+    @Test
+    void E_joining() {
+        List<String> list = List.of("one", "two", "three");
+
+        String result = list.stream()
+          .collect(Collectors.joining());
+
+        assertThat(result).isEqualTo("onetwothree");
+    }
+
+    @Test
+    void E_joining_separator() {
+        List<String> list = List.of("one", "two", "three");
+
+        String result = list.stream()
+          .collect(Collectors.joining(","));
+
+        assertThat(result).isEqualTo("one,two,three");
+    }
+
+    @Test
+    void E_joining_separator_prefix_suffix() {
+        List<String> list = List.of("one", "two", "three");
+
+        String result = list.stream()
+          .collect(Collectors.joining(",", "[", "]"));
+
+        assertThat(result).isEqualTo("[one,two,three]");
+    }
 }
