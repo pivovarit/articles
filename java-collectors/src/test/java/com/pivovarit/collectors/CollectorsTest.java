@@ -12,6 +12,8 @@ import java.util.TreeMap;
 import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.collectingAndThen;
+import static java.util.stream.Collectors.groupingBy;
+import static java.util.stream.Collectors.partitioningBy;
 import static java.util.stream.Collectors.toCollection;
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.Collectors.toMap;
@@ -151,6 +153,7 @@ class CollectorsTest {
         List<String> list = List.of("one", "two", "three");
 
         String result = list.stream()
+
           .collect(Collectors.joining());
 
         assertThat(result).isEqualTo("onetwothree");
@@ -174,5 +177,30 @@ class CollectorsTest {
           .collect(Collectors.joining(",", "[", "]"));
 
         assertThat(result).isEqualTo("[one,two,three]");
+    }
+
+    @Test
+    void E_partitioningBy() {
+        List<String> list = List.of("one", "two", "three");
+
+        Map<Boolean, List<String>> result = list.stream()
+          .collect(partitioningBy(i -> i.length() == 3));
+
+        assertThat(result)
+          .hasSize(2)
+          .containsEntry(true, List.of("one", "two"))
+          .containsEntry(false, List.of("three"));
+    }
+
+    @Test
+    void E_partitioningBy_downstream() {
+        List<String> list = List.of("one", "two", "three");
+
+        Map<Boolean, Set<String>> result = list.stream()
+          .collect(partitioningBy(i -> i.length() == 3, toSet()));
+
+        assertThat(result)
+          .hasSize(2)
+          .containsEntry(true, Set.of("one", "two"));
     }
 }
