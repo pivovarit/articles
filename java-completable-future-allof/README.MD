@@ -1,1 +1,1 @@
-http://4comprehension.com/completablefuture-timeout/
+http://4comprehension.com/fixing-completablefuture-allof/
