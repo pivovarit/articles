@@ -1,4 +1,4 @@
-package com.pivovarit.timeouts;
+package com.pivovarit.allof;
 
 import org.junit.jupiter.api.Test;
 
