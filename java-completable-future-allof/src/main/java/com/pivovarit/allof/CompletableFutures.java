@@ -35,12 +35,6 @@ public final class CompletableFutures {
         return result;
     }
 
-    public static <T> List<T> allOfSync(Collection<CompletableFuture<T>> futures) {
-        return futures.stream()
-          .map(CompletableFuture::join)
-          .collect(Collectors.toList());
-    }
-
     public static <T> CompletableFuture<T> anyOf(List<CompletableFuture<T>> cfs) {
         return CompletableFuture.anyOf(cfs.toArray(new CompletableFuture[0])).thenApply(o -> (T) o);
     }

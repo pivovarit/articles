@@ -37,17 +37,6 @@ class CompletableFutureAllOfTest {
     }
 
     @Test
-    void example_allof_sync() {
-        var executorService = Executors.newFixedThreadPool(3);
-        var cfs = Stream.of(3, 1, 2)
-          .map(i -> supplyAsync(() -> returnWithDelay(i, Duration.ofSeconds(i)), executorService))
-          .collect(Collectors.toList());
-
-        var result = CompletableFutures.allOfSync(cfs);
-        assertThat(result).containsExactlyInAnyOrder(1, 2, 3);
-    }
-
-    @Test
     void example_allof_shortcircuiting() {
         var executorService = Executors.newFixedThreadPool(3);
         var cfs = Stream.of(10, 1, 5)
