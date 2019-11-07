@@ -1,6 +1,0 @@
-dist: xenial
-language: java
-jdk:
-  - openjdk-ea
-script:
-  - mvn -q install
