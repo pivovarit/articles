@@ -29,6 +29,7 @@
         <module>java-random-stream</module>
         <module>java-collectors-teeing</module>
         <module>java-collectors</module>
+        <module>java-category-theory</module>
     </modules>
 
     <properties>
