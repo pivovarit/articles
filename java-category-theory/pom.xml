@@ -37,17 +37,6 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.openjdk.jmh</groupId>
-            <artifactId>jmh-core</artifactId>
-            <version>${jmh.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.openjdk.jmh</groupId>
-            <artifactId>jmh-generator-annprocess</artifactId>
-            <version>${jmh.version}</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
             <version>5.5.2</version>
