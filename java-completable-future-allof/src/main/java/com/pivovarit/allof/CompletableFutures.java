@@ -29,8 +29,7 @@ public final class CompletableFutures {
             f.handle((__, ex) -> ex == null || result.completeExceptionally(ex));
         }
 
-        allOf(futures)
-          .handle((r, ex) -> ex != null ? result.completeExceptionally(ex) : result.complete(r));
+        allOf(futures).thenAccept(result::complete);
 
         return result;
     }
