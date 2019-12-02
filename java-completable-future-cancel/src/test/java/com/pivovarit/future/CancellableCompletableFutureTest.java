@@ -15,15 +15,18 @@ class CancellableCompletableFutureTest {
 
     @Test
     void shouldInterruptBackingTask() throws Exception {
+        // given
         AtomicBoolean result = new AtomicBoolean(false);
         CompletableFuture<Integer> future = CancellableCompletableFuture
           .supplyAsyncCancellable(interruptibleTask(result), Executors.newSingleThreadExecutor());
 
+        // when
         future.cancel(true);
         try {
             future.join();
         } catch (Exception e) { }
 
+        // then
         await()
           .atMost(1, TimeUnit.SECONDS)
           .until(result::get);
@@ -31,15 +34,18 @@ class CancellableCompletableFutureTest {
 
     @Test
     void shouldNotInterruptBackingTask() throws Exception {
+        // given
         AtomicBoolean result = new AtomicBoolean(false);
         CompletableFuture<Integer> future = CompletableFuture
           .supplyAsync(interruptibleTask(result), Executors.newSingleThreadExecutor());
 
+        // when
         future.cancel(true);
         try {
             future.join();
         } catch (Exception e) { }
 
+        //then
         Thread.sleep(100);
         assertThat(result).isFalse();
     }
