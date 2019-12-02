@@ -16,8 +16,8 @@ class CancellableCompletableFutureTest {
     @Test
     void shouldInterruptBackingTask() throws Exception {
         // given
-        AtomicBoolean result = new AtomicBoolean(false);
-        CompletableFuture<Integer> future = CancellableCompletableFuture
+        var result = new AtomicBoolean(false);
+        var future = CancellableCompletableFuture
           .supplyAsyncCancellable(interruptibleTask(result), Executors.newSingleThreadExecutor());
 
         // when
@@ -35,8 +35,8 @@ class CancellableCompletableFutureTest {
     @Test
     void shouldNotInterruptBackingTask() throws Exception {
         // given
-        AtomicBoolean result = new AtomicBoolean(false);
-        CompletableFuture<Integer> future = CompletableFuture
+        var result = new AtomicBoolean(false);
+        var future = CompletableFuture
           .supplyAsync(interruptibleTask(result), Executors.newSingleThreadExecutor());
 
         // when
