@@ -7,30 +7,25 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.function.Supplier;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.awaitility.Awaitility.await;
 
 class CancellableCompletableFutureTest {
 
     @Test
     void shouldInterruptBackingTask() throws Exception {
         AtomicBoolean result = new AtomicBoolean(false);
-        CompletableFuture<Integer> future = CancellableCompletableFuture.supplyAsyncCancellable(() -> {
-            try {
-                Thread.sleep(Integer.MAX_VALUE);
-            } catch (InterruptedException ex) {
-                result.set(true);
-            }
-            return 42;
-        }, Executors.newSingleThreadExecutor());
+        CompletableFuture<Integer> future = CancellableCompletableFuture
+          .supplyAsyncCancellable(interruptibleTask(result), Executors.newSingleThreadExecutor());
 
         future.cancel(true);
         try {
             future.join();
-        } catch (Exception e) {
-        }
+        } catch (Exception e) { }
 
-        Awaitility.await()
+        await()
           .atMost(1, TimeUnit.SECONDS)
           .until(result::get);
     }
@@ -38,22 +33,26 @@ class CancellableCompletableFutureTest {
     @Test
     void shouldNotInterruptBackingTask() throws Exception {
         AtomicBoolean result = new AtomicBoolean(false);
-        CompletableFuture<Integer> future = CompletableFuture.supplyAsync(() -> {
+        CompletableFuture<Integer> future = CompletableFuture
+          .supplyAsync(interruptibleTask(result), Executors.newSingleThreadExecutor());
+
+        future.cancel(true);
+        try {
+            future.join();
+        } catch (Exception e) { }
+
+        Thread.sleep(100);
+        assertThat(result).isFalse();
+    }
+
+    private static Supplier<Integer> interruptibleTask(AtomicBoolean result) {
+        return () -> {
             try {
                 Thread.sleep(Integer.MAX_VALUE);
             } catch (InterruptedException ex) {
                 result.set(true);
             }
-
             return 42;
-        }, Executors.newSingleThreadExecutor());
-
-        future.cancel(true);
-        try {
-            future.join();
-        } catch (Exception e) {
-        }
-        Thread.sleep(100);
-        assertThat(result).isFalse();
+        };
     }
 }
