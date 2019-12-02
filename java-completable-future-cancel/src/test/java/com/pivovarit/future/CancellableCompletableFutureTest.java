@@ -1,6 +1,5 @@
 package com.pivovarit.future;
 
-import org.awaitility.Awaitility;
 import org.junit.jupiter.api.Test;
 
 import java.util.concurrent.CompletableFuture;
