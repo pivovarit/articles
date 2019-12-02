@@ -3,11 +3,11 @@ package com.pivovarit.future;
 import org.junit.jupiter.api.Test;
 
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Supplier;
 
+import static java.util.concurrent.Executors.newSingleThreadExecutor;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.awaitility.Awaitility.await;
 
@@ -18,7 +18,7 @@ class CancellableCompletableFutureTest {
         // given
         var result = new AtomicBoolean(false);
         var future = CancellableCompletableFuture
-          .supplyAsyncCancellable(interruptibleTask(result), Executors.newSingleThreadExecutor());
+          .supplyAsyncCancellable(interruptibleTask(result), newSingleThreadExecutor());
 
         // when
         future.cancel(true);
@@ -37,7 +37,7 @@ class CancellableCompletableFutureTest {
         // given
         var result = new AtomicBoolean(false);
         var future = CompletableFuture
-          .supplyAsync(interruptibleTask(result), Executors.newSingleThreadExecutor());
+          .supplyAsync(interruptibleTask(result), newSingleThreadExecutor());
 
         // when
         future.cancel(true);
