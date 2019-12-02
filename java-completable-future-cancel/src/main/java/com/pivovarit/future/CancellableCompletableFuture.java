@@ -1,12 +1,17 @@
 package com.pivovarit.future;
 
+import java.util.Queue;
 import java.util.concurrent.CancellationException;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionException;
+import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.Executor;
+import java.util.concurrent.FutureTask;
 import java.util.function.Supplier;
 
-public class CancellableFuture<T> extends CompletableFuture<T> {
+public class CancellableCompletableFuture<T> extends CompletableFuture<T> {
+
+    private final Queue<FutureTask<?>> backingTasks = new ConcurrentLinkedQueue<>();
 
     /**
      * Returns a new cancellable CompletableFuture that is asynchronously completed
@@ -20,10 +25,20 @@ public class CancellableFuture<T> extends CompletableFuture<T> {
      *
      * @return the new CompletableFuture
      */
-    public static <U> CompletableFuture<U> supplyAsync(
+    public static <U> CompletableFuture<U> supplyAsyncCancellable(
       Supplier<U> supplier,
       Executor executor) {
-        return null; // TODO
+        CancellableCompletableFuture<U> future = new CancellableCompletableFuture<U>();
+        FutureTask<Void> backingTask = new FutureTask<>(() -> {
+            try {
+                future.complete(supplier.get());
+            } catch (Throwable ex) {
+                future.completeExceptionally(ex);
+            }
+        }, null);
+        future.addCompletingTask(backingTask);
+        executor.execute(backingTask);
+        return future;
     }
 
     /**
@@ -41,6 +56,11 @@ public class CancellableFuture<T> extends CompletableFuture<T> {
      */
     @Override
     public boolean cancel(boolean mayInterruptIfRunning) {
+        backingTasks.forEach(task -> task.cancel(mayInterruptIfRunning));
         return super.cancel(mayInterruptIfRunning);
+    }
+
+    private void addCompletingTask(FutureTask<?> task) {
+        backingTasks.add(task);
     }
 }
