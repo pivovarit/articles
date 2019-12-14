@@ -41,7 +41,7 @@ public class SlidingWindowSpliterator<T> implements Spliterator<Stream<T>> {
             if (buffer.size() == windowSize) {
                 action.accept(Arrays.stream((T[]) buffer.toArray(new Object[0])));
                 buffer.poll();
-                return sourceIterator.hasNext();
+                return true;
             }
         }
 
