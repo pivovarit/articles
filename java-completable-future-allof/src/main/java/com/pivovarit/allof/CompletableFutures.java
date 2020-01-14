@@ -23,13 +23,11 @@ public final class CompletableFutures {
     }
 
     public static <T> CompletableFuture<List<T>> allOfShortcircuiting(Collection<CompletableFuture<T>> futures) {
-        CompletableFuture<List<T>> result = new CompletableFuture<>();
+        CompletableFuture<List<T>> result = allOf(futures);
 
         for (CompletableFuture<?> f : futures) {
             f.handle((__, ex) -> ex == null || result.completeExceptionally(ex));
         }
-
-        allOf(futures).thenAccept(result::complete);
 
         return result;
     }
