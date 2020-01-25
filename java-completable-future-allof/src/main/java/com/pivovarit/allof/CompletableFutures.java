@@ -22,7 +22,7 @@ public final class CompletableFutures {
             .collect(Collectors.toList()));
     }
 
-    public static <T> CompletableFuture<List<T>> allOfShortcircuiting(Collection<CompletableFuture<T>> futures) {
+    public static <T> CompletableFuture<List<T>> allOfOrException(Collection<CompletableFuture<T>> futures) {
         CompletableFuture<List<T>> result = allOf(futures);
 
         for (CompletableFuture<?> f : futures) {
