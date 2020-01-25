@@ -38,16 +38,16 @@ class PreJava8Test {
     void example_parallel_ordered() throws Exception {
         ExecutorService executor = Executors.newFixedThreadPool(10);
 
-        List<Future<Integer>> tasks = new ArrayList<>();
+        List<Future<Integer>> futures = new ArrayList<>();
 
         for (Integer integer : integers) {
             Future<Integer> result = executor.submit(() -> Utils.process(integer));
-            tasks.add(result);
+            futures.add(result);
         }
 
         List<Integer> results = new ArrayList<>();
 
-        for (Future<Integer> task : tasks) {
+        for (Future<Integer> task : futures) {
             results.add(task.get());
         }
 
