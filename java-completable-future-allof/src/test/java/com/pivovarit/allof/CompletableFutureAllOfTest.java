@@ -46,7 +46,7 @@ class CompletableFutureAllOfTest {
           }, executorService))
           .collect(Collectors.toList());
 
-        var result = CompletableFutures.allOfShortcircuiting(cfs);
+        var result = CompletableFutures.allOfOrException(cfs);
 
         await()
           .atMost(2, TimeUnit.SECONDS)
