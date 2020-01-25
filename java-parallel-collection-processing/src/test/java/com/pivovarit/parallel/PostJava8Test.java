@@ -3,6 +3,7 @@ package com.pivovarit.parallel;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Spliterator;
 import java.util.concurrent.BlockingQueue;
@@ -12,6 +13,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.function.Consumer;
 import java.util.stream.Collector;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
@@ -59,24 +61,71 @@ class PostJava8Test {
     }
 
     @Test
+    void example_no_shortcircuit() throws Exception {
+        ExecutorService executor = Executors.newFixedThreadPool(10);
+
+        List<Integer> results = IntStream.range(0, 10).boxed()
+          .map(i -> CompletableFuture.supplyAsync(() -> {
+              if (i != 9) {
+                  try {
+                      Thread.sleep(10000);
+                  } catch (InterruptedException e) {
+                      throw new RuntimeException(e);
+                  }
+                  return i;
+              } else {
+                  throw new RuntimeException();
+              }
+          }, executor))
+          .collect(collectingAndThen(toList(), list -> list.stream()
+            .map(CompletableFuture::join)
+            .collect(toList())));
+    }
+
+    @Test
+    void example_shortcircuit() throws Exception {
+        ExecutorService executor = Executors.newFixedThreadPool(10);
+
+        List<Integer> results = IntStream.range(0, 10).boxed()
+          .map(i -> CompletableFuture.supplyAsync(() -> {
+              if (i != 9) {
+                  try {
+                      Thread.sleep(10000);
+                  } catch (InterruptedException e) {
+                      throw new RuntimeException(e);
+                  }
+                  return i;
+              } else {
+                  throw new RuntimeException();
+              }
+          }, executor))
+          .collect(collectingAndThen(toList(), list -> allOfOrException(list).join()));
+    }
+
+    @Test
+    void example_parallel_ordered_shortcircuiting() throws Exception {
+        ExecutorService executor = Executors.newFixedThreadPool(10);
+
+        List<Integer> results = integers.stream()
+          .map(i -> CompletableFuture.supplyAsync(() -> Utils.process(i), executor))
+          .collect(collectingAndThen(toList(), list -> allOfOrException(list).join()));
+
+        assertThat(results)
+          .containsExactlyElementsOf(integers);
+    }
+
+    @Test
     void example_parallel_ordered_async() throws Exception {
         ExecutorService executor = Executors.newFixedThreadPool(10);
 
         CompletableFuture<List<Integer>> results = integers.stream()
           .map(i -> CompletableFuture.supplyAsync(() -> Utils.process(i), executor))
-          .collect(toFuture());
+          .collect(collectingAndThen(toList(), l -> allOfOrException(l)));
 
         assertThat(results.join())
           .containsExactlyElementsOf(integers);
     }
 
-    private Collector<CompletableFuture<Integer>, Object, CompletableFuture<List<Integer>>> toFuture() {
-        return collectingAndThen(toList(), list -> {
-            return CompletableFuture.allOf(list.toArray(new CompletableFuture[0]))
-              .thenApply(__ -> list.stream().map(CompletableFuture::join)
-                .collect(toList()));
-        });
-    }
 
     @Test
     void example_parallel_completion_order() throws Exception {
@@ -89,6 +138,22 @@ class PostJava8Test {
 
         assertThat(results)
           .containsExactlyInAnyOrderElementsOf(integers);
+    }
+
+    static <T> CompletableFuture<List<T>> allOfOrException(Collection<CompletableFuture<T>> futures) {
+        CompletableFuture<List<T>> result = futures.stream()
+          .collect(collectingAndThen(
+            toList(),
+            l -> CompletableFuture.allOf(l.toArray(new CompletableFuture[0]))
+              .thenApply(__1 -> l.stream()
+                .map(CompletableFuture::join)
+                .collect(Collectors.toList()))));
+
+        for (CompletableFuture<?> f : futures) {
+            f.handle((__, ex) -> ex == null || result.completeExceptionally(ex));
+        }
+
+        return result;
     }
 
     private Collector<CompletableFuture<Integer>, Object, Stream<Integer>> toUnorderedStream() {
