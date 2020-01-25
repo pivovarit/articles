@@ -1,5 +1,6 @@
 package com.pivovarit.parallel;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -21,6 +22,7 @@ class PreJava8Test {
       .collect(Collectors.toList());
 
     @Test
+    @Disabled
     void example_sequential() throws Exception {
         List<Integer> results = new ArrayList<>();
 
