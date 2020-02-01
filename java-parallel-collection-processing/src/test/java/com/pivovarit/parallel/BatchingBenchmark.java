@@ -51,7 +51,7 @@ public class BatchingBenchmark {
 
     @Benchmark
     public List<Integer> with_batching(BenchmarkState state) {
-        return ParallelStreams.inParallelBatching(source, i -> i, state.executor).join(); // TODO
+        return ParallelStreams.inParallelBatching(source, i -> i, state.executor, state.threads).join();
     }
 
     public static void main(String[] args) throws RunnerException {
