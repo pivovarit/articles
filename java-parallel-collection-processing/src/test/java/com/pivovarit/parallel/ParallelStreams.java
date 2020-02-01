@@ -22,9 +22,13 @@ class ParallelStreams {
         return BatchingStream.partitioned(source, batches)
           .map(batch -> CompletableFuture.supplyAsync(() -> batching(mapper).apply(batch), executor))
           .collect(collectingAndThen(toList(), ParallelStreams::allOfOrException))
-          .thenApply(list -> list.stream()
-            .flatMap(Collection::stream)
-            .collect(toList()));
+          .thenApply(list -> {
+              List<R> result = new ArrayList<>(source.size());
+              for (List<R> rs : list) {
+                  result.addAll(rs);
+              }
+              return result;
+          });
     }
 
     static <T> CompletableFuture<List<T>> allOfOrException(Collection<CompletableFuture<T>> futures) {
@@ -45,7 +49,7 @@ class ParallelStreams {
 
     private static <T, R> Function<List<T>, List<R>> batching(Function<T, R> mapper) {
         return batch -> {
-            List<R> list = new ArrayList<>();
+            List<R> list = new ArrayList<>(batch.size());
             for (T t : batch) {
                 list.add(mapper.apply(t));
             }

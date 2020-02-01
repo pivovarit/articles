@@ -2,6 +2,7 @@ package com.pivovarit.parallel;
 
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.Level;
+import org.openjdk.jmh.annotations.Mode;
 import org.openjdk.jmh.annotations.Param;
 import org.openjdk.jmh.annotations.Scope;
 import org.openjdk.jmh.annotations.Setup;
@@ -15,6 +16,7 @@ import org.openjdk.jmh.runner.options.OptionsBuilder;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.IntStream;
 
 import static java.util.stream.Collectors.toList;
@@ -46,18 +48,32 @@ public class BatchingBenchmark {
 
     @Benchmark
     public List<Integer> no_batching(BenchmarkState state) {
-        return ParallelStreams.inParallel(source, i -> i, state.executor).join();
+        return ParallelStreams.inParallel(source, i -> {
+            try {
+                Thread.sleep(10);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } return i;
+        }, state.executor).join();
     }
 
     @Benchmark
     public List<Integer> with_batching(BenchmarkState state) {
-        return ParallelStreams.inParallelBatching(source, i -> i, state.executor, state.threads).join();
+        return ParallelStreams.inParallelBatching(source, i -> {
+            try {
+                Thread.sleep(10);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } return i;
+        }, state.executor, state.threads).join();
     }
 
     public static void main(String[] args) throws RunnerException {
         new Runner(
           new OptionsBuilder()
             .include(BatchingBenchmark.class.getSimpleName())
+//            .mode(Mode.AverageTime)
+//            .timeUnit(TimeUnit.MILLISECONDS)
             .resultFormat(ResultFormatType.JSON)
             .result(System.currentTimeMillis() + ".json")
             .warmupIterations(5)
