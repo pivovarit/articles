@@ -2,7 +2,6 @@ package com.pivovarit.parallel;
 
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.Level;
-import org.openjdk.jmh.annotations.Mode;
 import org.openjdk.jmh.annotations.Param;
 import org.openjdk.jmh.annotations.Scope;
 import org.openjdk.jmh.annotations.Setup;
@@ -15,7 +14,8 @@ import org.openjdk.jmh.runner.options.OptionsBuilder;
 
 import java.util.List;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.IntStream;
 
@@ -33,7 +33,9 @@ public class BatchingBenchmark {
 
         @Setup(Level.Trial)
         public void setup() {
-            executor = Executors.newFixedThreadPool(threads);
+            executor = new ThreadPoolExecutor(threads, threads,
+              0L, TimeUnit.MILLISECONDS,
+              new LinkedBlockingQueue<>());
         }
 
         @TearDown(Level.Trial)
@@ -48,23 +50,63 @@ public class BatchingBenchmark {
 
     @Benchmark
     public List<Integer> no_batching(BenchmarkState state) {
+        return ParallelStreams.inParallel(source, i -> i, state.executor).join();
+    }
+
+    @Benchmark
+    public List<Integer> with_batching(BenchmarkState state) {
+        return ParallelStreams.inParallelBatching(source, i -> i, state.executor, state.threads).join();
+    }
+
+    @Benchmark
+    public List<Integer> no_batching_1ms(BenchmarkState state) {
+        return ParallelStreams.inParallel(source, i -> {
+            try {
+                Thread.sleep(1);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            return i;
+        }, state.executor).join();
+    }
+
+    @Benchmark
+    public List<Integer> with_batching_1ms(BenchmarkState state) {
+        return ParallelStreams.inParallelBatching(source, i -> {
+            try {
+                Thread.sleep(1);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            return i;
+        }, state.executor, state.threads).join();
+    }
+
+    @Benchmark
+    public List<Integer> no_batching_10ms(BenchmarkState state) {
         return ParallelStreams.inParallel(source, i -> {
             try {
                 Thread.sleep(10);
             } catch (InterruptedException e) {
                 e.printStackTrace();
-            } return i;
+            }
+
+            return i;
         }, state.executor).join();
     }
 
     @Benchmark
-    public List<Integer> with_batching(BenchmarkState state) {
+    public List<Integer> with_batching_10ms(BenchmarkState state) {
         return ParallelStreams.inParallelBatching(source, i -> {
             try {
                 Thread.sleep(10);
             } catch (InterruptedException e) {
                 e.printStackTrace();
-            } return i;
+            }
+
+            return i;
         }, state.executor, state.threads).join();
     }
 

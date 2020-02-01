@@ -1,0 +1,901 @@
+[
+    {
+        "jmhVersion" : "1.23",
+        "benchmark" : "com.pivovarit.parallel.BatchingBenchmark.no_batching",
+        "mode" : "thrpt",
+        "threads" : 1,
+        "forks" : 1,
+        "jvm" : "/Users/pivovarit/.sdkman/candidates/java/13.0.0.hs-adpt/bin/java",
+        "jvmArgs" : [
+            "-javaagent:/Users/pivovarit/Library/Application Support/JetBrains/Toolbox/apps/IDEA-U/ch-0/201.3803.71/IntelliJ IDEA 2020.1 EAP.app/Contents/lib/idea_rt.jar=57566:/Users/pivovarit/Library/Application Support/JetBrains/Toolbox/apps/IDEA-U/ch-0/201.3803.71/IntelliJ IDEA 2020.1 EAP.app/Contents/bin",
+            "-Dfile.encoding=UTF-8"
+        ],
+        "jdkVersion" : "13",
+        "vmName" : "OpenJDK 64-Bit Server VM",
+        "vmVersion" : "13+33",
+        "warmupIterations" : 5,
+        "warmupTime" : "10 s",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 5,
+        "measurementTime" : "10 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "threads" : "1"
+        },
+        "primaryMetric" : {
+            "score" : 4272.29906204329,
+            "scoreError" : 69.29935528910917,
+            "scoreConfidence" : [
+                4202.999706754181,
+                4341.5984173324
+            ],
+            "scorePercentiles" : {
+                "0.0" : 4256.9094973774745,
+                "50.0" : 4264.38541482071,
+                "90.0" : 4298.930159169369,
+                "95.0" : 4298.930159169369,
+                "99.0" : 4298.930159169369,
+                "99.9" : 4298.930159169369,
+                "99.99" : 4298.930159169369,
+                "99.999" : 4298.930159169369,
+                "99.9999" : 4298.930159169369,
+                "100.0" : 4298.930159169369
+            },
+            "scoreUnit" : "ops/s",
+            "rawData" : [
+                [
+                    4298.930159169369,
+                    4264.38541482071,
+                    4258.774992463367,
+                    4256.9094973774745,
+                    4282.495246385531
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    },
+    {
+        "jmhVersion" : "1.23",
+        "benchmark" : "com.pivovarit.parallel.BatchingBenchmark.no_batching",
+        "mode" : "thrpt",
+        "threads" : 1,
+        "forks" : 1,
+        "jvm" : "/Users/pivovarit/.sdkman/candidates/java/13.0.0.hs-adpt/bin/java",
+        "jvmArgs" : [
+            "-javaagent:/Users/pivovarit/Library/Application Support/JetBrains/Toolbox/apps/IDEA-U/ch-0/201.3803.71/IntelliJ IDEA 2020.1 EAP.app/Contents/lib/idea_rt.jar=57566:/Users/pivovarit/Library/Application Support/JetBrains/Toolbox/apps/IDEA-U/ch-0/201.3803.71/IntelliJ IDEA 2020.1 EAP.app/Contents/bin",
+            "-Dfile.encoding=UTF-8"
+        ],
+        "jdkVersion" : "13",
+        "vmName" : "OpenJDK 64-Bit Server VM",
+        "vmVersion" : "13+33",
+        "warmupIterations" : 5,
+        "warmupTime" : "10 s",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 5,
+        "measurementTime" : "10 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "threads" : "10"
+        },
+        "primaryMetric" : {
+            "score" : 3519.135191399916,
+            "scoreError" : 91.16723804791606,
+            "scoreConfidence" : [
+                3427.9679533519998,
+                3610.3024294478323
+            ],
+            "scorePercentiles" : {
+                "0.0" : 3498.864257002296,
+                "50.0" : 3506.836518543974,
+                "90.0" : 3548.73555886586,
+                "95.0" : 3548.73555886586,
+                "99.0" : 3548.73555886586,
+                "99.9" : 3548.73555886586,
+                "99.99" : 3548.73555886586,
+                "99.999" : 3548.73555886586,
+                "99.9999" : 3548.73555886586,
+                "100.0" : 3548.73555886586
+            },
+            "scoreUnit" : "ops/s",
+            "rawData" : [
+                [
+                    3548.73555886586,
+                    3540.6126091833353,
+                    3498.864257002296,
+                    3500.627013404115,
+                    3506.836518543974
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    },
+    {
+        "jmhVersion" : "1.23",
+        "benchmark" : "com.pivovarit.parallel.BatchingBenchmark.no_batching",
+        "mode" : "thrpt",
+        "threads" : 1,
+        "forks" : 1,
+        "jvm" : "/Users/pivovarit/.sdkman/candidates/java/13.0.0.hs-adpt/bin/java",
+        "jvmArgs" : [
+            "-javaagent:/Users/pivovarit/Library/Application Support/JetBrains/Toolbox/apps/IDEA-U/ch-0/201.3803.71/IntelliJ IDEA 2020.1 EAP.app/Contents/lib/idea_rt.jar=57566:/Users/pivovarit/Library/Application Support/JetBrains/Toolbox/apps/IDEA-U/ch-0/201.3803.71/IntelliJ IDEA 2020.1 EAP.app/Contents/bin",
+            "-Dfile.encoding=UTF-8"
+        ],
+        "jdkVersion" : "13",
+        "vmName" : "OpenJDK 64-Bit Server VM",
+        "vmVersion" : "13+33",
+        "warmupIterations" : 5,
+        "warmupTime" : "10 s",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 5,
+        "measurementTime" : "10 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "threads" : "100"
+        },
+        "primaryMetric" : {
+            "score" : 2900.6901090895763,
+            "scoreError" : 39.18900003602376,
+            "scoreConfidence" : [
+                2861.5011090535527,
+                2939.8791091256
+            ],
+            "scorePercentiles" : {
+                "0.0" : 2884.0531722054534,
+                "50.0" : 2905.84184684004,
+                "90.0" : 2908.0024030773493,
+                "95.0" : 2908.0024030773493,
+                "99.0" : 2908.0024030773493,
+                "99.9" : 2908.0024030773493,
+                "99.99" : 2908.0024030773493,
+                "99.999" : 2908.0024030773493,
+                "99.9999" : 2908.0024030773493,
+                "100.0" : 2908.0024030773493
+            },
+            "scoreUnit" : "ops/s",
+            "rawData" : [
+                [
+                    2884.0531722054534,
+                    2907.716304003134,
+                    2908.0024030773493,
+                    2897.836819321902,
+                    2905.84184684004
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    },
+    {
+        "jmhVersion" : "1.23",
+        "benchmark" : "com.pivovarit.parallel.BatchingBenchmark.no_batching",
+        "mode" : "thrpt",
+        "threads" : 1,
+        "forks" : 1,
+        "jvm" : "/Users/pivovarit/.sdkman/candidates/java/13.0.0.hs-adpt/bin/java",
+        "jvmArgs" : [
+            "-javaagent:/Users/pivovarit/Library/Application Support/JetBrains/Toolbox/apps/IDEA-U/ch-0/201.3803.71/IntelliJ IDEA 2020.1 EAP.app/Contents/lib/idea_rt.jar=57566:/Users/pivovarit/Library/Application Support/JetBrains/Toolbox/apps/IDEA-U/ch-0/201.3803.71/IntelliJ IDEA 2020.1 EAP.app/Contents/bin",
+            "-Dfile.encoding=UTF-8"
+        ],
+        "jdkVersion" : "13",
+        "vmName" : "OpenJDK 64-Bit Server VM",
+        "vmVersion" : "13+33",
+        "warmupIterations" : 5,
+        "warmupTime" : "10 s",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 5,
+        "measurementTime" : "10 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "threads" : "1000"
+        },
+        "primaryMetric" : {
+            "score" : 1061.101998329712,
+            "scoreError" : 109.92426655284483,
+            "scoreConfidence" : [
+                951.1777317768671,
+                1171.0262648825567
+            ],
+            "scorePercentiles" : {
+                "0.0" : 1014.1921961381427,
+                "50.0" : 1063.0106352051268,
+                "90.0" : 1090.1887599358472,
+                "95.0" : 1090.1887599358472,
+                "99.0" : 1090.1887599358472,
+                "99.9" : 1090.1887599358472,
+                "99.99" : 1090.1887599358472,
+                "99.999" : 1090.1887599358472,
+                "99.9999" : 1090.1887599358472,
+                "100.0" : 1090.1887599358472
+            },
+            "scoreUnit" : "ops/s",
+            "rawData" : [
+                [
+                    1062.622015976515,
+                    1075.4963843929277,
+                    1063.0106352051268,
+                    1014.1921961381427,
+                    1090.1887599358472
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    },
+    {
+        "jmhVersion" : "1.23",
+        "benchmark" : "com.pivovarit.parallel.BatchingBenchmark.with_batching",
+        "mode" : "thrpt",
+        "threads" : 1,
+        "forks" : 1,
+        "jvm" : "/Users/pivovarit/.sdkman/candidates/java/13.0.0.hs-adpt/bin/java",
+        "jvmArgs" : [
+            "-javaagent:/Users/pivovarit/Library/Application Support/JetBrains/Toolbox/apps/IDEA-U/ch-0/201.3803.71/IntelliJ IDEA 2020.1 EAP.app/Contents/lib/idea_rt.jar=57566:/Users/pivovarit/Library/Application Support/JetBrains/Toolbox/apps/IDEA-U/ch-0/201.3803.71/IntelliJ IDEA 2020.1 EAP.app/Contents/bin",
+            "-Dfile.encoding=UTF-8"
+        ],
+        "jdkVersion" : "13",
+        "vmName" : "OpenJDK 64-Bit Server VM",
+        "vmVersion" : "13+33",
+        "warmupIterations" : 5,
+        "warmupTime" : "10 s",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 5,
+        "measurementTime" : "10 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "threads" : "1"
+        },
+        "primaryMetric" : {
+            "score" : 66431.58699861461,
+            "scoreError" : 379.96823490837426,
+            "scoreConfidence" : [
+                66051.61876370624,
+                66811.55523352299
+            ],
+            "scorePercentiles" : {
+                "0.0" : 66354.24824380733,
+                "50.0" : 66363.73854357134,
+                "90.0" : 66555.08284374411,
+                "95.0" : 66555.08284374411,
+                "99.0" : 66555.08284374411,
+                "99.9" : 66555.08284374411,
+                "99.99" : 66555.08284374411,
+                "99.999" : 66555.08284374411,
+                "99.9999" : 66555.08284374411,
+                "100.0" : 66555.08284374411
+            },
+            "scoreUnit" : "ops/s",
+            "rawData" : [
+                [
+                    66354.24824380733,
+                    66363.73854357134,
+                    66555.08284374411,
+                    66522.6731447466,
+                    66362.19221720366
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    },
+    {
+        "jmhVersion" : "1.23",
+        "benchmark" : "com.pivovarit.parallel.BatchingBenchmark.with_batching",
+        "mode" : "thrpt",
+        "threads" : 1,
+        "forks" : 1,
+        "jvm" : "/Users/pivovarit/.sdkman/candidates/java/13.0.0.hs-adpt/bin/java",
+        "jvmArgs" : [
+            "-javaagent:/Users/pivovarit/Library/Application Support/JetBrains/Toolbox/apps/IDEA-U/ch-0/201.3803.71/IntelliJ IDEA 2020.1 EAP.app/Contents/lib/idea_rt.jar=57566:/Users/pivovarit/Library/Application Support/JetBrains/Toolbox/apps/IDEA-U/ch-0/201.3803.71/IntelliJ IDEA 2020.1 EAP.app/Contents/bin",
+            "-Dfile.encoding=UTF-8"
+        ],
+        "jdkVersion" : "13",
+        "vmName" : "OpenJDK 64-Bit Server VM",
+        "vmVersion" : "13+33",
+        "warmupIterations" : 5,
+        "warmupTime" : "10 s",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 5,
+        "measurementTime" : "10 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "threads" : "10"
+        },
+        "primaryMetric" : {
+            "score" : 49994.486786710426,
+            "scoreError" : 1676.6331667344698,
+            "scoreConfidence" : [
+                48317.853619975955,
+                51671.1199534449
+            ],
+            "scorePercentiles" : {
+                "0.0" : 49496.4379344259,
+                "50.0" : 49993.81564387796,
+                "90.0" : 50507.91314176768,
+                "95.0" : 50507.91314176768,
+                "99.0" : 50507.91314176768,
+                "99.9" : 50507.91314176768,
+                "99.99" : 50507.91314176768,
+                "99.999" : 50507.91314176768,
+                "99.9999" : 50507.91314176768,
+                "100.0" : 50507.91314176768
+            },
+            "scoreUnit" : "ops/s",
+            "rawData" : [
+                [
+                    49993.81564387796,
+                    50507.91314176768,
+                    50338.26148827599,
+                    49636.00572520459,
+                    49496.4379344259
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    },
+    {
+        "jmhVersion" : "1.23",
+        "benchmark" : "com.pivovarit.parallel.BatchingBenchmark.with_batching",
+        "mode" : "thrpt",
+        "threads" : 1,
+        "forks" : 1,
+        "jvm" : "/Users/pivovarit/.sdkman/candidates/java/13.0.0.hs-adpt/bin/java",
+        "jvmArgs" : [
+            "-javaagent:/Users/pivovarit/Library/Application Support/JetBrains/Toolbox/apps/IDEA-U/ch-0/201.3803.71/IntelliJ IDEA 2020.1 EAP.app/Contents/lib/idea_rt.jar=57566:/Users/pivovarit/Library/Application Support/JetBrains/Toolbox/apps/IDEA-U/ch-0/201.3803.71/IntelliJ IDEA 2020.1 EAP.app/Contents/bin",
+            "-Dfile.encoding=UTF-8"
+        ],
+        "jdkVersion" : "13",
+        "vmName" : "OpenJDK 64-Bit Server VM",
+        "vmVersion" : "13+33",
+        "warmupIterations" : 5,
+        "warmupTime" : "10 s",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 5,
+        "measurementTime" : "10 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "threads" : "100"
+        },
+        "primaryMetric" : {
+            "score" : 12529.186071647851,
+            "scoreError" : 247.81347724711563,
+            "scoreConfidence" : [
+                12281.372594400736,
+                12776.999548894966
+            ],
+            "scorePercentiles" : {
+                "0.0" : 12460.29542572461,
+                "50.0" : 12501.10825894847,
+                "90.0" : 12624.978524699885,
+                "95.0" : 12624.978524699885,
+                "99.0" : 12624.978524699885,
+                "99.9" : 12624.978524699885,
+                "99.99" : 12624.978524699885,
+                "99.999" : 12624.978524699885,
+                "99.9999" : 12624.978524699885,
+                "100.0" : 12624.978524699885
+            },
+            "scoreUnit" : "ops/s",
+            "rawData" : [
+                [
+                    12499.3126167872,
+                    12624.978524699885,
+                    12501.10825894847,
+                    12560.235532079085,
+                    12460.29542572461
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    },
+    {
+        "jmhVersion" : "1.23",
+        "benchmark" : "com.pivovarit.parallel.BatchingBenchmark.with_batching",
+        "mode" : "thrpt",
+        "threads" : 1,
+        "forks" : 1,
+        "jvm" : "/Users/pivovarit/.sdkman/candidates/java/13.0.0.hs-adpt/bin/java",
+        "jvmArgs" : [
+            "-javaagent:/Users/pivovarit/Library/Application Support/JetBrains/Toolbox/apps/IDEA-U/ch-0/201.3803.71/IntelliJ IDEA 2020.1 EAP.app/Contents/lib/idea_rt.jar=57566:/Users/pivovarit/Library/Application Support/JetBrains/Toolbox/apps/IDEA-U/ch-0/201.3803.71/IntelliJ IDEA 2020.1 EAP.app/Contents/bin",
+            "-Dfile.encoding=UTF-8"
+        ],
+        "jdkVersion" : "13",
+        "vmName" : "OpenJDK 64-Bit Server VM",
+        "vmVersion" : "13+33",
+        "warmupIterations" : 5,
+        "warmupTime" : "10 s",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 5,
+        "measurementTime" : "10 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "threads" : "1000"
+        },
+        "primaryMetric" : {
+            "score" : 1040.7110178218181,
+            "scoreError" : 98.49612057814018,
+            "scoreConfidence" : [
+                942.2148972436779,
+                1139.2071383999582
+            ],
+            "scorePercentiles" : {
+                "0.0" : 1014.452152755544,
+                "50.0" : 1034.3034479552732,
+                "90.0" : 1075.3163220914487,
+                "95.0" : 1075.3163220914487,
+                "99.0" : 1075.3163220914487,
+                "99.9" : 1075.3163220914487,
+                "99.99" : 1075.3163220914487,
+                "99.999" : 1075.3163220914487,
+                "99.9999" : 1075.3163220914487,
+                "100.0" : 1075.3163220914487
+            },
+            "scoreUnit" : "ops/s",
+            "rawData" : [
+                [
+                    1075.3163220914487,
+                    1058.2777083325238,
+                    1034.3034479552732,
+                    1021.2054579743004,
+                    1014.452152755544
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    },
+    {
+        "jmhVersion" : "1.23",
+        "benchmark" : "com.pivovarit.parallel.BatchingBenchmark.no_batching_10ms",
+        "mode" : "thrpt",
+        "threads" : 1,
+        "forks" : 1,
+        "jvm" : "/Users/pivovarit/.sdkman/candidates/java/13.0.0.hs-adpt/bin/java",
+        "jvmArgs" : [
+            "-javaagent:/Users/pivovarit/Library/Application Support/JetBrains/Toolbox/apps/IDEA-U/ch-0/201.3803.71/IntelliJ IDEA 2020.1 EAP.app/Contents/lib/idea_rt.jar=57566:/Users/pivovarit/Library/Application Support/JetBrains/Toolbox/apps/IDEA-U/ch-0/201.3803.71/IntelliJ IDEA 2020.1 EAP.app/Contents/bin",
+            "-Dfile.encoding=UTF-8"
+        ],
+        "jdkVersion" : "13",
+        "vmName" : "OpenJDK 64-Bit Server VM",
+        "vmVersion" : "13+33",
+        "warmupIterations" : 5,
+        "warmupTime" : "10 s",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 5,
+        "measurementTime" : "10 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "threads" : "1"
+        },
+        "primaryMetric" : {
+            "score" : 0.08226886603187522,
+            "scoreError" : 0.014267775699695633,
+            "scoreConfidence" : [
+                0.06800109033217959,
+                0.09653664173157085
+            ],
+            "scorePercentiles" : {
+                "0.0" : 0.07743662271397724,
+                "50.0" : 0.08386516942802526,
+                "90.0" : 0.08563108311156498,
+                "95.0" : 0.08563108311156498,
+                "99.0" : 0.08563108311156498,
+                "99.9" : 0.08563108311156498,
+                "99.99" : 0.08563108311156498,
+                "99.999" : 0.08563108311156498,
+                "99.9999" : 0.08563108311156498,
+                "100.0" : 0.08563108311156498
+            },
+            "scoreUnit" : "ops/s",
+            "rawData" : [
+                [
+                    0.08386516942802526,
+                    0.08518109619538043,
+                    0.08563108311156498,
+                    0.07923035871042823,
+                    0.07743662271397724
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    },
+    {
+        "jmhVersion" : "1.23",
+        "benchmark" : "com.pivovarit.parallel.BatchingBenchmark.no_batching_10ms",
+        "mode" : "thrpt",
+        "threads" : 1,
+        "forks" : 1,
+        "jvm" : "/Users/pivovarit/.sdkman/candidates/java/13.0.0.hs-adpt/bin/java",
+        "jvmArgs" : [
+            "-javaagent:/Users/pivovarit/Library/Application Support/JetBrains/Toolbox/apps/IDEA-U/ch-0/201.3803.71/IntelliJ IDEA 2020.1 EAP.app/Contents/lib/idea_rt.jar=57566:/Users/pivovarit/Library/Application Support/JetBrains/Toolbox/apps/IDEA-U/ch-0/201.3803.71/IntelliJ IDEA 2020.1 EAP.app/Contents/bin",
+            "-Dfile.encoding=UTF-8"
+        ],
+        "jdkVersion" : "13",
+        "vmName" : "OpenJDK 64-Bit Server VM",
+        "vmVersion" : "13+33",
+        "warmupIterations" : 5,
+        "warmupTime" : "10 s",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 5,
+        "measurementTime" : "10 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "threads" : "10"
+        },
+        "primaryMetric" : {
+            "score" : 0.7551007255966767,
+            "scoreError" : 0.016541683946294686,
+            "scoreConfidence" : [
+                0.738559041650382,
+                0.7716424095429715
+            ],
+            "scorePercentiles" : {
+                "0.0" : 0.749092530674664,
+                "50.0" : 0.7560886351210625,
+                "90.0" : 0.7602552848866972,
+                "95.0" : 0.7602552848866972,
+                "99.0" : 0.7602552848866972,
+                "99.9" : 0.7602552848866972,
+                "99.99" : 0.7602552848866972,
+                "99.999" : 0.7602552848866972,
+                "99.9999" : 0.7602552848866972,
+                "100.0" : 0.7602552848866972
+            },
+            "scoreUnit" : "ops/s",
+            "rawData" : [
+                [
+                    0.749092530674664,
+                    0.7572878630488482,
+                    0.7602552848866972,
+                    0.7527793142521118,
+                    0.7560886351210625
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    },
+    {
+        "jmhVersion" : "1.23",
+        "benchmark" : "com.pivovarit.parallel.BatchingBenchmark.no_batching_10ms",
+        "mode" : "thrpt",
+        "threads" : 1,
+        "forks" : 1,
+        "jvm" : "/Users/pivovarit/.sdkman/candidates/java/13.0.0.hs-adpt/bin/java",
+        "jvmArgs" : [
+            "-javaagent:/Users/pivovarit/Library/Application Support/JetBrains/Toolbox/apps/IDEA-U/ch-0/201.3803.71/IntelliJ IDEA 2020.1 EAP.app/Contents/lib/idea_rt.jar=57566:/Users/pivovarit/Library/Application Support/JetBrains/Toolbox/apps/IDEA-U/ch-0/201.3803.71/IntelliJ IDEA 2020.1 EAP.app/Contents/bin",
+            "-Dfile.encoding=UTF-8"
+        ],
+        "jdkVersion" : "13",
+        "vmName" : "OpenJDK 64-Bit Server VM",
+        "vmVersion" : "13+33",
+        "warmupIterations" : 5,
+        "warmupTime" : "10 s",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 5,
+        "measurementTime" : "10 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "threads" : "100"
+        },
+        "primaryMetric" : {
+            "score" : 7.47784512881599,
+            "scoreError" : 0.18382859473739388,
+            "scoreConfidence" : [
+                7.2940165340785965,
+                7.661673723553384
+            ],
+            "scorePercentiles" : {
+                "0.0" : 7.432766224839066,
+                "50.0" : 7.468611042502071,
+                "90.0" : 7.53996841444332,
+                "95.0" : 7.53996841444332,
+                "99.0" : 7.53996841444332,
+                "99.9" : 7.53996841444332,
+                "99.99" : 7.53996841444332,
+                "99.999" : 7.53996841444332,
+                "99.9999" : 7.53996841444332,
+                "100.0" : 7.53996841444332
+            },
+            "scoreUnit" : "ops/s",
+            "rawData" : [
+                [
+                    7.432766224839066,
+                    7.434511959464024,
+                    7.513368002831471,
+                    7.53996841444332,
+                    7.468611042502071
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    },
+    {
+        "jmhVersion" : "1.23",
+        "benchmark" : "com.pivovarit.parallel.BatchingBenchmark.no_batching_10ms",
+        "mode" : "thrpt",
+        "threads" : 1,
+        "forks" : 1,
+        "jvm" : "/Users/pivovarit/.sdkman/candidates/java/13.0.0.hs-adpt/bin/java",
+        "jvmArgs" : [
+            "-javaagent:/Users/pivovarit/Library/Application Support/JetBrains/Toolbox/apps/IDEA-U/ch-0/201.3803.71/IntelliJ IDEA 2020.1 EAP.app/Contents/lib/idea_rt.jar=57566:/Users/pivovarit/Library/Application Support/JetBrains/Toolbox/apps/IDEA-U/ch-0/201.3803.71/IntelliJ IDEA 2020.1 EAP.app/Contents/bin",
+            "-Dfile.encoding=UTF-8"
+        ],
+        "jdkVersion" : "13",
+        "vmName" : "OpenJDK 64-Bit Server VM",
+        "vmVersion" : "13+33",
+        "warmupIterations" : 5,
+        "warmupTime" : "10 s",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 5,
+        "measurementTime" : "10 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "threads" : "1000"
+        },
+        "primaryMetric" : {
+            "score" : 33.97164994648886,
+            "scoreError" : 2.233871250562281,
+            "scoreConfidence" : [
+                31.73777869592658,
+                36.20552119705114
+            ],
+            "scorePercentiles" : {
+                "0.0" : 33.41722315226211,
+                "50.0" : 33.7446871631981,
+                "90.0" : 34.649203149014284,
+                "95.0" : 34.649203149014284,
+                "99.0" : 34.649203149014284,
+                "99.9" : 34.649203149014284,
+                "99.99" : 34.649203149014284,
+                "99.999" : 34.649203149014284,
+                "99.9999" : 34.649203149014284,
+                "100.0" : 34.649203149014284
+            },
+            "scoreUnit" : "ops/s",
+            "rawData" : [
+                [
+                    34.53485541378072,
+                    34.649203149014284,
+                    33.7446871631981,
+                    33.41722315226211,
+                    33.51228085418907
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    },
+
+    {
+        "jmhVersion" : "1.23",
+        "benchmark" : "com.pivovarit.parallel.BatchingBenchmark.with_batching_10ms",
+        "mode" : "thrpt",
+        "threads" : 1,
+        "forks" : 1,
+        "jvm" : "/Users/pivovarit/.sdkman/candidates/java/13.0.0.hs-adpt/bin/java",
+        "jvmArgs" : [
+            "-javaagent:/Users/pivovarit/Library/Application Support/JetBrains/Toolbox/apps/IDEA-U/ch-0/201.3803.71/IntelliJ IDEA 2020.1 EAP.app/Contents/lib/idea_rt.jar=57566:/Users/pivovarit/Library/Application Support/JetBrains/Toolbox/apps/IDEA-U/ch-0/201.3803.71/IntelliJ IDEA 2020.1 EAP.app/Contents/bin",
+            "-Dfile.encoding=UTF-8"
+        ],
+        "jdkVersion" : "13",
+        "vmName" : "OpenJDK 64-Bit Server VM",
+        "vmVersion" : "13+33",
+        "warmupIterations" : 5,
+        "warmupTime" : "10 s",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 5,
+        "measurementTime" : "10 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "threads" : "1"
+        },
+        "primaryMetric" : {
+            "score" : 0.08400536161026688,
+            "scoreError" : 0.001513561461914982,
+            "scoreConfidence" : [
+                0.08249180014835189,
+                0.08551892307218187
+            ],
+            "scorePercentiles" : {
+                "0.0" : 0.08348073843850554,
+                "50.0" : 0.08407123763441238,
+                "90.0" : 0.08438260134874817,
+                "95.0" : 0.08438260134874817,
+                "99.0" : 0.08438260134874817,
+                "99.9" : 0.08438260134874817,
+                "99.99" : 0.08438260134874817,
+                "99.999" : 0.08438260134874817,
+                "99.9999" : 0.08438260134874817,
+                "100.0" : 0.08438260134874817
+            },
+            "scoreUnit" : "ops/s",
+            "rawData" : [
+                [
+                    0.08435660390117967,
+                    0.08348073843850554,
+                    0.08438260134874817,
+                    0.08373562672848865,
+                    0.08407123763441238
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    },
+    {
+        "jmhVersion" : "1.23",
+        "benchmark" : "com.pivovarit.parallel.BatchingBenchmark.with_batching_10ms",
+        "mode" : "thrpt",
+        "threads" : 1,
+        "forks" : 1,
+        "jvm" : "/Users/pivovarit/.sdkman/candidates/java/13.0.0.hs-adpt/bin/java",
+        "jvmArgs" : [
+            "-javaagent:/Users/pivovarit/Library/Application Support/JetBrains/Toolbox/apps/IDEA-U/ch-0/201.3803.71/IntelliJ IDEA 2020.1 EAP.app/Contents/lib/idea_rt.jar=57566:/Users/pivovarit/Library/Application Support/JetBrains/Toolbox/apps/IDEA-U/ch-0/201.3803.71/IntelliJ IDEA 2020.1 EAP.app/Contents/bin",
+            "-Dfile.encoding=UTF-8"
+        ],
+        "jdkVersion" : "13",
+        "vmName" : "OpenJDK 64-Bit Server VM",
+        "vmVersion" : "13+33",
+        "warmupIterations" : 5,
+        "warmupTime" : "10 s",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 5,
+        "measurementTime" : "10 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "threads" : "10"
+        },
+        "primaryMetric" : {
+            "score" : 0.8368515440511468,
+            "scoreError" : 0.026921043382546507,
+            "scoreConfidence" : [
+                0.8099305006686003,
+                0.8637725874336933
+            ],
+            "scorePercentiles" : {
+                "0.0" : 0.8295985559130005,
+                "50.0" : 0.8351741610397184,
+                "90.0" : 0.8478839098559028,
+                "95.0" : 0.8478839098559028,
+                "99.0" : 0.8478839098559028,
+                "99.9" : 0.8478839098559028,
+                "99.99" : 0.8478839098559028,
+                "99.999" : 0.8478839098559028,
+                "99.9999" : 0.8478839098559028,
+                "100.0" : 0.8478839098559028
+            },
+            "scoreUnit" : "ops/s",
+            "rawData" : [
+                [
+                    0.8351741610397184,
+                    0.8478839098559028,
+                    0.8295985559130005,
+                    0.8386441268602155,
+                    0.8329569665868967
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    },
+    {
+        "jmhVersion" : "1.23",
+        "benchmark" : "com.pivovarit.parallel.BatchingBenchmark.with_batching_10ms",
+        "mode" : "thrpt",
+        "threads" : 1,
+        "forks" : 1,
+        "jvm" : "/Users/pivovarit/.sdkman/candidates/java/13.0.0.hs-adpt/bin/java",
+        "jvmArgs" : [
+            "-javaagent:/Users/pivovarit/Library/Application Support/JetBrains/Toolbox/apps/IDEA-U/ch-0/201.3803.71/IntelliJ IDEA 2020.1 EAP.app/Contents/lib/idea_rt.jar=57566:/Users/pivovarit/Library/Application Support/JetBrains/Toolbox/apps/IDEA-U/ch-0/201.3803.71/IntelliJ IDEA 2020.1 EAP.app/Contents/bin",
+            "-Dfile.encoding=UTF-8"
+        ],
+        "jdkVersion" : "13",
+        "vmName" : "OpenJDK 64-Bit Server VM",
+        "vmVersion" : "13+33",
+        "warmupIterations" : 5,
+        "warmupTime" : "10 s",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 5,
+        "measurementTime" : "10 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "threads" : "100"
+        },
+        "primaryMetric" : {
+            "score" : 8.26468362952495,
+            "scoreError" : 0.07316466454152472,
+            "scoreConfidence" : [
+                8.191518964983425,
+                8.337848294066474
+            ],
+            "scorePercentiles" : {
+                "0.0" : 8.245788679114158,
+                "50.0" : 8.263959643145444,
+                "90.0" : 8.287034164355688,
+                "95.0" : 8.287034164355688,
+                "99.0" : 8.287034164355688,
+                "99.9" : 8.287034164355688,
+                "99.99" : 8.287034164355688,
+                "99.999" : 8.287034164355688,
+                "99.9999" : 8.287034164355688,
+                "100.0" : 8.287034164355688
+            },
+            "scoreUnit" : "ops/s",
+            "rawData" : [
+                [
+                    8.280395233568104,
+                    8.245788679114158,
+                    8.287034164355688,
+                    8.263959643145444,
+                    8.246240427441341
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    },
+    {
+        "jmhVersion" : "1.23",
+        "benchmark" : "com.pivovarit.parallel.BatchingBenchmark.with_batching_10ms",
+        "mode" : "thrpt",
+        "threads" : 1,
+        "forks" : 1,
+        "jvm" : "/Users/pivovarit/.sdkman/candidates/java/13.0.0.hs-adpt/bin/java",
+        "jvmArgs" : [
+            "-javaagent:/Users/pivovarit/Library/Application Support/JetBrains/Toolbox/apps/IDEA-U/ch-0/201.3803.71/IntelliJ IDEA 2020.1 EAP.app/Contents/lib/idea_rt.jar=57566:/Users/pivovarit/Library/Application Support/JetBrains/Toolbox/apps/IDEA-U/ch-0/201.3803.71/IntelliJ IDEA 2020.1 EAP.app/Contents/bin",
+            "-Dfile.encoding=UTF-8"
+        ],
+        "jdkVersion" : "13",
+        "vmName" : "OpenJDK 64-Bit Server VM",
+        "vmVersion" : "13+33",
+        "warmupIterations" : 5,
+        "warmupTime" : "10 s",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 5,
+        "measurementTime" : "10 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "threads" : "1000"
+        },
+        "primaryMetric" : {
+            "score" : 36.606483543321545,
+            "scoreError" : 1.0014744720680064,
+            "scoreConfidence" : [
+                35.60500907125354,
+                37.60795801538955
+            ],
+            "scorePercentiles" : {
+                "0.0" : 36.291189457287174,
+                "50.0" : 36.58279233978694,
+                "90.0" : 36.86894189461262,
+                "95.0" : 36.86894189461262,
+                "99.0" : 36.86894189461262,
+                "99.9" : 36.86894189461262,
+                "99.99" : 36.86894189461262,
+                "99.999" : 36.86894189461262,
+                "99.9999" : 36.86894189461262,
+                "100.0" : 36.86894189461262
+            },
+            "scoreUnit" : "ops/s",
+            "rawData" : [
+                [
+                    36.291189457287174,
+                    36.86894189461262,
+                    36.866987511333456,
+                    36.42250651358752,
+                    36.58279233978694
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    }
+]
+
+
