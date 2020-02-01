@@ -3,7 +3,6 @@ package com.pivovarit.parallel;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Spliterator;
 import java.util.concurrent.BlockingQueue;
@@ -13,11 +12,11 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.function.Consumer;
 import java.util.stream.Collector;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
+import static com.pivovarit.parallel.ParallelStreams.allOfOrException;
 import static java.util.stream.Collectors.collectingAndThen;
 import static java.util.stream.Collectors.toList;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -126,7 +125,6 @@ class PostJava8Test {
           .containsExactlyElementsOf(integers);
     }
 
-
     @Test
     void example_parallel_completion_order() throws Exception {
         ExecutorService executor = Executors.newFixedThreadPool(10);
@@ -138,22 +136,6 @@ class PostJava8Test {
 
         assertThat(results)
           .containsExactlyInAnyOrderElementsOf(integers);
-    }
-
-    static <T> CompletableFuture<List<T>> allOfOrException(Collection<CompletableFuture<T>> futures) {
-        CompletableFuture<List<T>> result = futures.stream()
-          .collect(collectingAndThen(
-            toList(),
-            l -> CompletableFuture.allOf(l.toArray(new CompletableFuture[0]))
-              .thenApply(__1 -> l.stream()
-                .map(CompletableFuture::join)
-                .collect(Collectors.toList()))));
-
-        for (CompletableFuture<?> f : futures) {
-            f.handle((__, ex) -> ex == null || result.completeExceptionally(ex));
-        }
-
-        return result;
     }
 
     private Collector<CompletableFuture<Integer>, Object, Stream<Integer>> toUnorderedStream() {
