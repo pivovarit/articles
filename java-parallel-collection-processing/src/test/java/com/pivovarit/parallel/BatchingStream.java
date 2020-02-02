@@ -1,11 +1,13 @@
 package com.pivovarit.parallel;
 
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Stream;
 
 import static java.util.Spliterator.ORDERED;
 import static java.util.Spliterators.spliterator;
+import static java.util.stream.Stream.*;
 import static java.util.stream.StreamSupport.stream;
 
 final class BatchingStream<T> implements Iterator<List<T>> {
@@ -31,7 +33,17 @@ final class BatchingStream<T> implements Iterator<List<T>> {
     }
 
     static <T> Stream<List<T>> partitioned(List<T> list, int numberOfParts) {
-        return stream(spliterator(from(list, numberOfParts), numberOfParts, ORDERED), false);
+        int size = list.size();
+
+        if (size == numberOfParts) {
+            return list.stream().map(Collections::singletonList);
+        } else if (size == 0) {
+            return empty();
+        } else if (numberOfParts == 1) {
+            return of(list);
+        } else {
+            return stream(spliterator(from(list, numberOfParts), numberOfParts, ORDERED), false);
+        }
     }
 
     @Override
