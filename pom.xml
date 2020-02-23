@@ -30,6 +30,7 @@
         <module>java-collectors-teeing</module>
         <module>java-collectors</module>
         <module>java-parallel-collection-processing</module>
+        <module>quarkus/quarkus-hello</module>
     </modules>
 
     <properties>
