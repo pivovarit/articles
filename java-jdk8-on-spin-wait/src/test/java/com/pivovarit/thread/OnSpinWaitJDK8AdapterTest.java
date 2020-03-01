@@ -19,7 +19,9 @@ class OnSpinWaitJDK8AdapterTest {
     @Test
     void example_2() throws Exception {
         while (!flag.compareAndSet(false, true)) {
-            OnSpinWaitThreadYieldFallbackJDK8Adapter.onSpinWaitOrYield();
+            if (!OnSpinWaitJDK8Adapter.onSpinWaitOrNothing()) {
+                Thread.yield();
+            }
         }
     }
 
