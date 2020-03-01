@@ -20,7 +20,7 @@ class OnSpinWaitJDK8AdapterTest {
     void example_2() throws Exception {
         while (!flag.compareAndSet(false, true)) {
             if (!OnSpinWaitJDK8Adapter.onSpinWaitOrNothing()) {
-                Thread.yield();
+                // Thread.yield();
             }
         }
     }
