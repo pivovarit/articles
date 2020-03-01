@@ -20,12 +20,14 @@ class OnSpinWaitJDK8Adapter {
         return null;
     }
 
-    static void onSpinWaitOrNothing() {
+    static boolean onSpinWaitOrNothing() {
         if (ON_SPIN_WAIT_HANDLE != null) {
             try {
                 ON_SPIN_WAIT_HANDLE.invokeExact();
+                return true;
             } catch (Throwable ignore) {
             }
         }
+        return false;
     }
 }
