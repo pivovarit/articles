@@ -25,6 +25,7 @@
         <module>java-completion-order-spliterator</module>
         <module>java-immutable-collectors</module>
         <module>java-11-string-api-updates</module>
+        <module>java-jdk8-on-spin-wait</module>
         <module>java-design-patterns</module>
         <module>java-random-stream</module>
         <module>java-collectors-teeing</module>
