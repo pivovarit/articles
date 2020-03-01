@@ -25,7 +25,7 @@ class OnSpinWaitThreadYieldFallbackJDK8Adapter {
         return null;
     }
 
-    static void onSpinWait() {
+    static void onSpinWaitOrYield() {
         if (ON_SPIN_WAIT_HANDLE != null) {
             try {
                 ON_SPIN_WAIT_HANDLE.invokeExact();
