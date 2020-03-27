@@ -13,7 +13,7 @@ internal class AntipatternsTest {
           .map { it.toString() }
 
         list
-          .mapNotNull { it.toString() }
+          .mapNotNull { it?.toString() }
     }
 
     @Test
