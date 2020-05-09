@@ -4,9 +4,9 @@
 
     <groupId>com.pivovarit</groupId>
     <version>1.0</version>
-    <artifactId>java-shuffled-stream</artifactId>
+    <artifactId>java-random-stream</artifactId>
 
-    <name>java-shuffled-stream</name>
+    <name>java-random-stream</name>
     <build>
         <plugins>
             <plugin>
