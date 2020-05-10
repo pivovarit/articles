@@ -7,9 +7,6 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.concurrent.atomic.AtomicInteger;
 
-/**
- * snapshottable cache-aware lock-free concurrent retaining list
- */
 public class ESList<T> implements List<T> {
 
     private static final int INITIAL_VERSION = -1;
@@ -17,14 +14,11 @@ public class ESList<T> implements List<T> {
     private static final com.pivovarit.es.InitOp<?> EMPTY_INIT = new com.pivovarit.es.InitOp<>();
 
     private final AtomicInteger version = new AtomicInteger(INITIAL_VERSION);
-    private final AtomicInteger ecViewVersion = new AtomicInteger(INITIAL_VERSION);
 
     /**
      * append-only bin log (infinite retention for now)
      */
     private final List<com.pivovarit.es.ListOp<T>> binLog = new ArrayList<>();
-
-    private final List<T> ecView = new ArrayList<>();
 
     private ESList() {
         handle((com.pivovarit.es.InitOp<T>) EMPTY_INIT);
@@ -36,32 +30,32 @@ public class ESList<T> implements List<T> {
 
     @Override
     public int size() {
-        return ecView.size();
+        return snapshot().size();
     }
 
     @Override
     public boolean isEmpty() {
-        return ecView.isEmpty();
+        return snapshot().isEmpty();
     }
 
     @Override
     public boolean contains(Object o) {
-        return ecView.contains(o);
+        return snapshot().contains(o);
     }
 
     @Override
     public Iterator<T> iterator() {
-        return ecView.iterator();
+        return snapshot().iterator();
     }
 
     @Override
     public Object[] toArray() {
-        return ecView.toArray();
+        return snapshot().toArray();
     }
 
     @Override
     public <T1> T1[] toArray(T1[] a) {
-        return ecView.toArray(a);
+        return snapshot().toArray(a);
     }
 
     @Override
@@ -76,7 +70,7 @@ public class ESList<T> implements List<T> {
 
     @Override
     public boolean containsAll(Collection<?> c) {
-        return ecView.containsAll(c);
+        return snapshot().containsAll(c);
     }
 
     @Override
@@ -106,7 +100,7 @@ public class ESList<T> implements List<T> {
 
     @Override
     public T get(int index) {
-        return ecView.get(index);
+        return snapshot().get(index);
     }
 
     @Override
@@ -126,12 +120,12 @@ public class ESList<T> implements List<T> {
 
     @Override
     public int indexOf(Object o) {
-        return ecView.indexOf(o);
+        return snapshot().indexOf(o);
     }
 
     @Override
     public int lastIndexOf(Object o) {
-        return ecView.lastIndexOf(o);
+        return snapshot().lastIndexOf(o);
     }
 
     @Override
@@ -162,7 +156,8 @@ public class ESList<T> implements List<T> {
         for (int i = 0; i < version; i++) {
             try {
                 binLog.get(i).apply(snapshot);
-            } catch (Exception ignored) { }
+            } catch (Exception ignored) {
+            }
         }
         return snapshot;
     }
@@ -174,18 +169,8 @@ public class ESList<T> implements List<T> {
     }
 
     private Object handle(com.pivovarit.es.ListOp<T> op) {
-        return updateEcView(op, append(op));
-    }
-
-    private Object updateEcView(com.pivovarit.es.ListOp<T> op, int version) {
-        while (version != ecViewVersion.get() + 1) {
-            Thread.onSpinWait();
-        }
-        try {
-            return op.apply(ecView);
-        } finally {
-            ecViewVersion.incrementAndGet();
-        }
+        int append = append(op);
+        return op.apply(snapshot());
     }
 
     private int append(com.pivovarit.es.ListOp<T> op) {
@@ -195,5 +180,22 @@ public class ESList<T> implements List<T> {
         int nextVersion = this.version.incrementAndGet();
         binLog.set(nextVersion, op);
         return nextVersion;
+    }
+
+    @Override
+    public String toString() {
+        Iterator<T> it = iterator();
+        if (! it.hasNext())
+            return "[]";
+
+        StringBuilder sb = new StringBuilder();
+        sb.append('[');
+        for (;;) {
+            T e = it.next();
+            sb.append(e == this ? "(this Collection)" : e);
+            if (! it.hasNext())
+                return sb.append(']').toString();
+            sb.append(',').append(' ');
+        }
     }
 }
