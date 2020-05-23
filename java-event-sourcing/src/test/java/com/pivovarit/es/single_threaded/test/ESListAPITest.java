@@ -1,5 +1,6 @@
-package com.pivovarit.es.single_threaded;
+package com.pivovarit.es.single_threaded.test;
 
+import com.pivovarit.es.single_threaded.ESList;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
