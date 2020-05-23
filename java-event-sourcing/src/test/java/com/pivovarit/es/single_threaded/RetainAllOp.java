@@ -1,23 +1,23 @@
-package com.pivovarit.es;
+package com.pivovarit.es.single_threaded;
 
 import java.util.Collection;
 import java.util.List;
 
-class RemoveAllOp<T> implements com.pivovarit.es.ListOp<T> {
+class RetainAllOp<T> implements ListOp<T> {
 
     private final Collection<?> elem;
 
-    RemoveAllOp(Collection<?> elem) {
+    RetainAllOp(Collection<?> elem) {
         this.elem = elem;
     }
 
     @Override
     public Object apply(List<T> list) {
-        return list.removeAll(elem);
+        return list.retainAll(elem);
     }
 
     @Override
     public String toString() {
-        return String.format("removeAll(%s)", elem);
+        return String.format("retainAll(%s)", elem);
     }
 }

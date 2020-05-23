@@ -1,8 +1,8 @@
-package com.pivovarit.es;
+package com.pivovarit.es.single_threaded;
 
 import java.util.List;
 
-class ClearOp<T> implements com.pivovarit.es.ListOp<T> {
+class ClearOp<T> implements ListOp<T> {
     @Override
     public Object apply(List<T> list) {
         list.clear();

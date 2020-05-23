@@ -1,4 +1,4 @@
-package com.pivovarit.es;
+package com.pivovarit.es.single_threaded;
 
 class Demo {
     public static void main(String[] args) {

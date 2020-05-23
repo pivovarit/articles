@@ -1,24 +1,24 @@
-package com.pivovarit.es;
+package com.pivovarit.es.single_threaded;
 
 import java.util.List;
 
-class SetOp<T> implements com.pivovarit.es.ListOp<T> {
-
+class AddIdxOp<T> implements ListOp<T> {
     private final int idx;
     private final T elem;
 
-    SetOp(int idx, T elem) {
+    AddIdxOp(int idx, T elem) {
         this.idx = idx;
         this.elem = elem;
     }
 
     @Override
     public Object apply(List<T> list) {
-        return list.set(idx, elem);
+        list.add(idx, elem);
+        return null;
     }
 
     @Override
     public String toString() {
-        return String.format("set{idx=%d, elem=%s}", idx, elem);
+        return String.format("add(%d, %s)", idx, elem);
     }
 }

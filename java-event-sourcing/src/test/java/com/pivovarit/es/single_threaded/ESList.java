@@ -1,29 +1,26 @@
-package com.pivovarit.es;
+package com.pivovarit.es.single_threaded;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class ESList<T> implements List<T> {
 
-    private static final int INITIAL_VERSION = -1;
-
-    private static final com.pivovarit.es.InitOp<?> EMPTY_INIT = new com.pivovarit.es.InitOp<>();
+    private static final InitOp<?> EMPTY_INIT = new InitOp<>();
 
     /**
      * append-only bin log (infinite retention for now)
      */
-    private final List<com.pivovarit.es.ListOp<T>> binLog = new ArrayList<>();
+    private final List<ListOp<T>> binLog = new ArrayList<>();
 
     private ESList() {
-        handle((com.pivovarit.es.InitOp<T>) EMPTY_INIT);
+        handle((InitOp<T>) EMPTY_INIT);
     }
 
-    public static <T> com.pivovarit.es.ESList<T> newInstance() {
-        return new com.pivovarit.es.ESList<>();
+    public static <T> ESList<T> newInstance() {
+        return new ESList<>();
     }
 
     @Override
@@ -58,12 +55,12 @@ public class ESList<T> implements List<T> {
 
     @Override
     public boolean add(T t) {
-        return (boolean) handle(new com.pivovarit.es.AddOp<>(t));
+        return (boolean) handle(new AddOp<>(t));
     }
 
     @Override
     public boolean remove(Object o) {
-        return (boolean) handle(new com.pivovarit.es.RemoveOp<T>(o));
+        return (boolean) handle(new RemoveOp<T>(o));
     }
 
     @Override
@@ -73,12 +70,12 @@ public class ESList<T> implements List<T> {
 
     @Override
     public boolean addAll(Collection<? extends T> c) {
-        return (boolean) handle(new com.pivovarit.es.AddAllOp<>(c));
+        return (boolean) handle(new AddAllOp<>(c));
     }
 
     @Override
     public boolean addAll(int index, Collection<? extends T> c) {
-        return (boolean) handle(new com.pivovarit.es.AddAllIdxOp<>(index, c));
+        return (boolean) handle(new AddAllIdxOp<>(index, c));
     }
 
     @Override
@@ -88,12 +85,12 @@ public class ESList<T> implements List<T> {
 
     @Override
     public boolean retainAll(Collection<?> c) {
-        return (boolean) handle(new com.pivovarit.es.RetainAllOp<>(c));
+        return (boolean) handle(new RetainAllOp<>(c));
     }
 
     @Override
     public void clear() {
-        handle(new com.pivovarit.es.ClearOp<>());
+        handle(new ClearOp<>());
     }
 
     @Override
@@ -108,12 +105,12 @@ public class ESList<T> implements List<T> {
 
     @Override
     public void add(int index, T element) {
-        handle(new com.pivovarit.es.AddIdxOp<>(index, element));
+        handle(new AddIdxOp<>(index, element));
     }
 
     @Override
     public T remove(int index) {
-        return (T) handle(new com.pivovarit.es.RemoveIdxOp<T>(index));
+        return (T) handle(new RemoveIdxOp<T>(index));
     }
 
     @Override
@@ -162,14 +159,10 @@ public class ESList<T> implements List<T> {
         }
     }
 
-    private Object handle(com.pivovarit.es.ListOp<T> op) {
+    private Object handle(ListOp<T> op) {
         List<T> snapshot = snapshot();
-        append(op);
-        return op.apply(snapshot);
-    }
-
-    private void append(com.pivovarit.es.ListOp<T> op) {
         binLog.add(op);
+        return op.apply(snapshot);
     }
 
     @Override

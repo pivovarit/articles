@@ -1,8 +1,8 @@
-package com.pivovarit.es;
+package com.pivovarit.es.single_threaded;
 
 import java.util.List;
 
-class RemoveIdxOp<T> implements com.pivovarit.es.ListOp<T> {
+class RemoveIdxOp<T> implements ListOp<T> {
 
     private final int idx;
 
