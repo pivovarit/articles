@@ -8,6 +8,13 @@ class Demo {
         objects.add(2);
         objects.add(3);
         objects.displayLog();
-        System.out.println(objects.snapshot());
+
+        System.out.println("\n");
+
+        System.out.println("v0 :" + objects.snapshot(0));
+        System.out.println("v1 :" + objects.snapshot(1));
+        System.out.println("v2 :" + objects.snapshot(2));
+        System.out.println("v3 :" + objects.snapshot(3));
+
     }
 }
