@@ -13,8 +13,6 @@ public class ESList<T> implements List<T> {
 
     private static final com.pivovarit.es.InitOp<?> EMPTY_INIT = new com.pivovarit.es.InitOp<>();
 
-    private final AtomicInteger version = new AtomicInteger(INITIAL_VERSION);
-
     /**
      * append-only bin log (infinite retention for now)
      */
@@ -143,17 +141,13 @@ public class ESList<T> implements List<T> {
         return snapshot().subList(fromIndex, toIndex);
     }
 
-    public int version() {
-        return version.get();
-    }
-
     public List<T> snapshot() {
-        return snapshot(version.get() + 1);
+        return snapshot(binLog.size());
     }
 
     public List<T> snapshot(int version) {
         var snapshot = new ArrayList<T>();
-        for (int i = 0; i < version; i++) {
+        for (int i = 0; i <= version; i++) {
             try {
                 binLog.get(i).apply(snapshot);
             } catch (Exception ignored) {
@@ -163,37 +157,33 @@ public class ESList<T> implements List<T> {
     }
 
     public void displayLog() {
-        for (int i = 0; i < version.get() + 1; i++) {
+        for (int i = 0; i < binLog.size(); i++) {
             System.out.printf("v%d :: %s%n", i, binLog.get(i).toString());
         }
     }
 
     private Object handle(com.pivovarit.es.ListOp<T> op) {
-        int append = append(op);
-        return op.apply(snapshot());
+        List<T> snapshot = snapshot();
+        append(op);
+        return op.apply(snapshot);
     }
 
-    private int append(com.pivovarit.es.ListOp<T> op) {
-        synchronized (binLog) {
-            binLog.add(null); // resize before serializing writes
-        }
-        int nextVersion = this.version.incrementAndGet();
-        binLog.set(nextVersion, op);
-        return nextVersion;
+    private void append(com.pivovarit.es.ListOp<T> op) {
+        binLog.add(op);
     }
 
     @Override
     public String toString() {
         Iterator<T> it = iterator();
-        if (! it.hasNext())
+        if (!it.hasNext())
             return "[]";
 
         StringBuilder sb = new StringBuilder();
         sb.append('[');
-        for (;;) {
+        for (; ; ) {
             T e = it.next();
             sb.append(e == this ? "(this Collection)" : e);
-            if (! it.hasNext())
+            if (!it.hasNext())
                 return sb.append(']').toString();
             sb.append(',').append(' ');
         }
