@@ -10,9 +10,6 @@ public class ESList<T> implements List<T> {
 
     private static final InitOp<?> EMPTY_INIT = new InitOp<>();
 
-    /**
-     * append-only bin log (infinite retention for now)
-     */
     private final List<ListOp<T>> binLog = new ArrayList<>();
 
     private ESList() {
