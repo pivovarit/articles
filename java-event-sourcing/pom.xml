@@ -4,17 +4,17 @@
 
     <groupId>com.pivovarit</groupId>
     <version>1.0</version>
-    <artifactId>java-random-stream</artifactId>
+    <artifactId>java-event-sourcing</artifactId>
 
-    <name>java-random-stream</name>
+    <name>java-event-sourcing</name>
     <build>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
-                    <source>11</source>
-                    <target>11</target>
+                    <source>13</source>
+                    <target>13</target>
                 </configuration>
             </plugin>
             <plugin>
@@ -31,32 +31,17 @@
         </plugins>
     </build>
 
-    <properties>
-        <jmh.version>1.23</jmh.version>
-    </properties>
-
     <dependencies>
-        <dependency>
-            <groupId>org.openjdk.jmh</groupId>
-            <artifactId>jmh-core</artifactId>
-            <version>${jmh.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.openjdk.jmh</groupId>
-            <artifactId>jmh-generator-annprocess</artifactId>
-            <version>${jmh.version}</version>
-            <scope>provided</scope>
-        </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
-            <version>5.6.2</version>
+            <version>5.6.1</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.assertj</groupId>
             <artifactId>assertj-core</artifactId>
-            <version>3.16.1</version>
+            <version>3.15.0</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
