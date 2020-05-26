@@ -5,12 +5,13 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Optional;
 
 public class ESList<T> implements List<T> {
 
     private static final InitOp<?> EMPTY_INIT = new InitOp<>();
 
-    private final List<ListOp<T>> binLog = new ArrayList<>();
+    private final List<ListOp<T>> opLog = new ArrayList<>();
 
     private ESList() {
         handle((InitOp<T>) EMPTY_INIT);
@@ -136,29 +137,32 @@ public class ESList<T> implements List<T> {
     }
 
     public List<T> snapshot() {
-        return snapshot(binLog.size());
+        return snapshot(opLog.size()).orElseThrow(IllegalStateException::new);
     }
 
-    public List<T> snapshot(int version) {
+    public Optional<List<T>> snapshot(int version) {
+        if (version > opLog.size()) {
+            return Optional.empty();
+        }
         var snapshot = new ArrayList<T>();
         for (int i = 0; i <= version; i++) {
             try {
-                binLog.get(i).apply(snapshot);
+                opLog.get(i).apply(snapshot);
             } catch (Exception ignored) {
             }
         }
-        return snapshot;
+        return Optional.of(snapshot);
     }
 
     public void displayLog() {
-        for (int i = 0; i < binLog.size(); i++) {
-            System.out.printf("v%d :: %s%n", i, binLog.get(i).toString());
+        for (int i = 0; i < opLog.size(); i++) {
+            System.out.printf("v%d :: %s%n", i, opLog.get(i).toString());
         }
     }
 
     private Object handle(ListOp<T> op) {
         List<T> snapshot = snapshot();
-        binLog.add(op);
+        opLog.add(op);
         return op.apply(snapshot);
     }
 
