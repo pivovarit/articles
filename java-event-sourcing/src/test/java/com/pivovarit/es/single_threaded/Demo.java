@@ -1,5 +1,7 @@
 package com.pivovarit.es.single_threaded;
 
+import java.util.List;
+
 class Demo {
     public static void main(String[] args) {
         ESList<Integer> objects = ESList.newInstance();
@@ -7,14 +9,15 @@ class Demo {
         objects.add(1);
         objects.add(2);
         objects.add(3);
+        objects.addAll(List.of(4, 5));
+        objects.remove(Integer.valueOf(1));
+        objects.clear();
         objects.displayLog();
 
-        System.out.println("\n");
+        System.out.println();
 
-        System.out.println("v0 :" + objects.snapshot(0));
-        System.out.println("v1 :" + objects.snapshot(1));
-        System.out.println("v2 :" + objects.snapshot(2));
-        System.out.println("v3 :" + objects.snapshot(3));
-
+        for (int i = 0; i < objects.version(); i++) {
+            System.out.println("v" + i + " :" + objects.snapshot(i).get());
+        }
     }
 }
