@@ -145,7 +145,7 @@ public class ESList<T> implements List<T> {
     }
 
     public Optional<List<T>> snapshot(int version) {
-        if (version > opLog.size()) {
+        if (version > opLog.size() || version < 0) {
             return Optional.empty();
         }
         var snapshot = new ArrayList<T>();
