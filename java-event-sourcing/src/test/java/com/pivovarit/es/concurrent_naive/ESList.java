@@ -137,7 +137,9 @@ public class ESList<T> implements List<T> {
     }
 
     public int version() {
-        return opLog.size();
+        synchronized (opLog) {
+            return opLog.size();
+        }
     }
 
     public List<T> snapshot() {
@@ -162,8 +164,10 @@ public class ESList<T> implements List<T> {
     }
 
     public void displayLog() {
-        for (int i = 0; i < opLog.size(); i++) {
-            System.out.printf("v%d :: %s%n", i, opLog.get(i).toString());
+        synchronized (opLog) {
+            for (int i = 0; i < opLog.size(); i++) {
+                System.out.printf("v%d :: %s%n", i, opLog.get(i).toString());
+            }
         }
     }
 
