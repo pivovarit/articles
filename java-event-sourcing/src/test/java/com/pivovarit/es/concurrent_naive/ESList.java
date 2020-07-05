@@ -136,14 +136,14 @@ public class ESList<T> implements List<T> {
         return snapshot().subList(fromIndex, toIndex);
     }
 
+    public List<T> snapshot() {
+        return snapshot(opLog.size()).orElseThrow(IllegalStateException::new);
+    }
+
     public int version() {
         synchronized (opLog) {
             return opLog.size();
         }
-    }
-
-    public List<T> snapshot() {
-        return snapshot(opLog.size()).orElseThrow(IllegalStateException::new);
     }
 
     public Optional<List<T>> snapshot(int version) {
