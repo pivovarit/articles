@@ -1,0 +1,7 @@
+DROP TABLE IF EXISTS "movies";
+
+CREATE TABLE "movies"
+(
+    id BIGSERIAL NOT NULL PRIMARY KEY,
+    title TEXT NOT NULL
+);
