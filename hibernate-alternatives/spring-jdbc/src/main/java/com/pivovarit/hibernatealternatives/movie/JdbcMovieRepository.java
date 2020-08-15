@@ -19,7 +19,7 @@ class JdbcMovieRepository implements MovieRepository {
     public Optional<Movie> findOneById(long id) {
         try {
             return Optional.ofNullable(jdbcTemplate.queryForObject(
-              "SELECT * FROM movies WHERE id = ?",
+              "SELECT * FROM MOVIES WHERE id = ?",
               (rs, rowId) -> new Movie(rs.getLong("id"), rs.getString("title")), id));
         } catch (EmptyResultDataAccessException e) {
             return Optional.empty();
@@ -28,6 +28,6 @@ class JdbcMovieRepository implements MovieRepository {
 
     @Override
     public void save(Movie movie) {
-        jdbcTemplate.update("INSERT INTO movies(id, title) VALUES(?, ?)", movie.getId(), movie.getTitle());
+        jdbcTemplate.update("INSERT INTO MOVIES(id, title) VALUES(?, ?)", movie.getId(), movie.getTitle());
     }
 }

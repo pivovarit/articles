@@ -11,16 +11,16 @@ class Runner implements CommandLineRunner {
 
     private final MovieRepository movieRepository;
 
-    private final JdbcAggregateTemplate jdbcTemplate;
+    private final JdbcAggregateTemplate jdbcAggregateTemplate;
 
-    public Runner(MovieRepository movieRepository, JdbcAggregateTemplate jdbcTemplate) {
+    public Runner(MovieRepository movieRepository, JdbcAggregateTemplate jdbcAggregateTemplate) {
         this.movieRepository = movieRepository;
-        this.jdbcTemplate = jdbcTemplate;
+        this.jdbcAggregateTemplate = jdbcAggregateTemplate;
     }
 
     @Override
     public void run(String... args) {
-        jdbcTemplate.insert(new Movie(42, "The Hitchhiker's Guide to the Galaxy"));
+        jdbcAggregateTemplate.insert(new Movie(42, "The Hitchhiker's Guide to the Galaxy"));
         movieRepository.findById(42L).ifPresent(System.out::println);
     }
 }
