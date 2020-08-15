@@ -1,6 +1,11 @@
 package com.pivovarit.hibernatealternatives.movie;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.relational.core.mapping.Table;
+
+@Table("movies")
 public class Movie {
+    @Id
     private long id;
     private String title;
 
