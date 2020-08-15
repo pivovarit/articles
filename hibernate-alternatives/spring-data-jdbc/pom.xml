@@ -9,9 +9,9 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.pivovarit</groupId>
-    <artifactId>hibernate-alternatives</artifactId>
+    <artifactId>hibernate-alternatives-spring-data-jdbc</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>hibernate-alternatives</name>
+    <name>hibernate-alternatives-spring-data-jdbc</name>
 
     <properties>
         <java.version>11</java.version>
@@ -23,6 +23,15 @@
             <artifactId>spring-boot-starter</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-jdbc</artifactId>
+        </dependency>
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>

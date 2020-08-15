@@ -1,0 +1,8 @@
+DROP TABLE movies;
+
+CREATE TABLE movies
+(
+    id BIGSERIAL NOT NULL PRIMARY KEY,
+    title TEXT NOT NULL,
+    type  TEXT NOT NULL
+);
