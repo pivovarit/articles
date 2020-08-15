@@ -1,4 +1,4 @@
-DROP TABLE movies;
+DROP TABLE movies IF EXISTS;
 
 CREATE TABLE movies
 (
