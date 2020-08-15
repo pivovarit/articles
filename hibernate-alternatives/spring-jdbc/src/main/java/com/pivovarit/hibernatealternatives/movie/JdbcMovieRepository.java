@@ -1,5 +1,6 @@
 package com.pivovarit.hibernatealternatives.movie;
 
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -16,11 +17,17 @@ class JdbcMovieRepository implements MovieRepository {
 
     @Override
     public Optional<Movie> findOneById(long id) {
-        return Optional.empty(); // TODO
+        try {
+            return Optional.ofNullable(jdbcTemplate.queryForObject(
+              "SELECT * FROM movies WHERE id = ?",
+              (rs, rowId) -> new Movie(rs.getLong("id"), rs.getString("title")), id));
+        } catch (EmptyResultDataAccessException e) {
+            return Optional.empty();
+        }
     }
 
     @Override
-    public long save(Movie movie) {
-        return 0; // TODO
+    public void save(Movie movie) {
+        jdbcTemplate.update("INSERT INTO movies(id, title) VALUES(?, ?)", movie.getId(), movie.getTitle());
     }
 }
