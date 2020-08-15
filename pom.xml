@@ -33,6 +33,7 @@
         <module>java-collectors</module>
         <module>java-parallel-collection-processing</module>
         <module>quarkus/quarkus-hello</module>
+        <module>hibernate-alternatives/hibernate-alternatives-spring-jdbc</module>
     </modules>
 
     <properties>
