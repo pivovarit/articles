@@ -2,6 +2,6 @@
 ====
 You can wire-up your own database instance easily by using Docker:
 ----
-docker run -p 5432:5432 -e POSTGRES_PASSWORD=mysecretpassword -d postgres:13
+docker run -p 5432:5432 -e POSTGRES_PASSWORD=postgres -d postgres:13
 ----
 ====
