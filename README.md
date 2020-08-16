@@ -27,6 +27,8 @@ Code snippets for articles posted at 4comprehension.com provided "as-is" and org
 - [Parallel Collection Processing: Leveraging Batching (2/3)](https://4comprehension.com/parallel-collection-processing-2/) [(snippets)](https://github.com/pivovarit/articles/tree/master/java-parallel-collection-processing)
 - [Parallel Collection Processing: With Parallel Collectors (3/3)](https://4comprehension.com/parallel-collection-processing-3/) [(snippets)](https://github.com/pivovarit/articles/tree/master/java-parallel-collection-processing)
 - [Backward-Compatible Thread#onSpinWait with MethodHandles](https://4comprehension.com/jdk8-on-spin-wait/) [(snippets)](https://github.com/pivovarit/articles/tree/master/java-jdk8-on-spin-wait)
+- [Explaining Event Sourcing with Data Structures (1/3)](https://4comprehension.com/explaining-event-sourcing-with-data-structures-1-3/) [(snippets)](https://github.com/pivovarit/articles/tree/master/java-event-sourcing)
+- [Spring's Lightweight JPA/Hibernate Alternatives](https://4comprehension.com/lightweight-jpa-hibernate-alternatives/) [(snippets)](https://github.com/pivovarit/articles/tree/master/hibernate-alternatives)
 
 ## Running 
 In most cases, I'm using a simple unit-testing infrastructure to squeeze multiple examples in a single file - it's enough to import the module in your IDE and run JUnit tests.
