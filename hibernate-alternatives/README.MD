@@ -1,1 +1,1 @@
-http://4comprehension.com/lightweight-hibernate-alternatives/®
+http://4comprehension.com/lightweight-hibernate-alternatives
