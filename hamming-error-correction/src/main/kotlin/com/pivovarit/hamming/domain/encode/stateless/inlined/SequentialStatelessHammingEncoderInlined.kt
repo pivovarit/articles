@@ -10,7 +10,7 @@ internal class SequentialStatelessHammingEncoderInlined : HammingEncoder {
     override fun encode(input: BinaryString) = generateSequence(0) { it + 1 }
       .take(generateSequence(2) { it + 1 }
         .first { r -> input.length + r + 1 <= (1 shl r) } + input.length)
-      .map {
+      .map { it ->
           when ((it + 1).isPowerOfTwo()) {
               true -> generateSequence(it) { it + 1 }
                 .take(generateSequence(2) { it + 1 }
