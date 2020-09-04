@@ -32,7 +32,7 @@
     </build>
 
     <properties>
-        <jmh.version>1.25.1</jmh.version>
+        <jmh.version>1.25.2</jmh.version>
     </properties>
 
     <dependencies>
