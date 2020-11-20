@@ -295,7 +295,7 @@
     </build>
 
     <properties>
-        <kotlin.version>1.4.10</kotlin.version>
+        <kotlin.version>1.4.20</kotlin.version>
         <junit.version>5.7.0</junit.version>
         <jmh.version>1.26</jmh.version>
         <jmh.generator>default</jmh.generator>
