@@ -8,7 +8,7 @@
     <version>1.0</version>
 
     <properties>
-        <kotlin.version>1.4.21</kotlin.version>
+        <kotlin.version>1.4.21-2</kotlin.version>
         <junit.version>5.7.0</junit.version>
         <mockito.version>2.8.0</mockito.version>
     </properties>
