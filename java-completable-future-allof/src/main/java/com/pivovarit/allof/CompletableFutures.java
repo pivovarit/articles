@@ -13,6 +13,19 @@ public final class CompletableFutures {
     private CompletableFutures() {
     }
 
+    public static <T> CompletableFuture<T> either(CompletableFuture<T> f1, CompletableFuture<T> f2) {
+        CompletableFuture<T> result = new CompletableFuture<>();
+        CompletableFuture.allOf(f1, f2).whenComplete((__, throwable) -> {
+            if (f1.isCompletedExceptionally() && f2.isCompletedExceptionally()) {
+                result.completeExceptionally(throwable);
+            }
+        });
+
+        f1.thenAccept(result::complete);
+        f2.thenAccept(result::complete);
+        return result;
+    }
+
     public static <T> CompletableFuture<List<T>> allOf(Collection<CompletableFuture<T>> futures) {
         return futures.stream()
           .collect(collectingAndThen(toList(), l -> CompletableFuture.allOf(l.toArray(new CompletableFuture[0]))
