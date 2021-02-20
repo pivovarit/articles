@@ -1,1 +1,1 @@
-https://4comprehension.com/java-11-string-api-updates
+https://4comprehension.com/improving-java-visibility-modifiers
