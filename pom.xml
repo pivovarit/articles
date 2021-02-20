@@ -18,6 +18,7 @@
         <module>java-priorityqueue-stream-order</module>
         <module>java-sliding-window-stream</module>
         <module>java-lazy-initialization</module>
+        <module>java-archunit</module>
         <module>java-sealed-classes</module>
         <module>java-completable-future-timeouts</module>
         <module>java-event-sourcing</module>
