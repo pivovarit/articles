@@ -31,6 +31,7 @@ Code snippets for articles posted at 4comprehension.com provided "as-is" and org
 - [Spring's Lightweight JPA/Hibernate Alternatives](https://4comprehension.com/lightweight-jpa-hibernate-alternatives/) [(snippets)](https://github.com/pivovarit/articles/tree/master/hibernate-alternatives)
 - [GitHub Actions, reveal.js, and Automating PDF Conversion](https://4comprehension.com/github-actions-reveal-js-and-automating-pdf-conversion/) [(snippets)](https://github.com/pivovarit/articles/tree/master/reveal-js-presentation)
 - [Be Careful with CompletableFuture.applyToEither and Exceptions](https://4comprehension.com/be-careful-with-completablefuture-applytoeither/) [(snippets)](https://github.com/pivovarit/articles/blob/master/java-completable-future-allof/src/main/java/com/pivovarit/allof/CompletableFutures.java)
+- [Improving Java's Visibility Modifiers with ArchUnit](https://4comprehension.com/improving-java-visibility-modifiers/) [(snippets)](https://github.com/pivovarit/articles/tree/master/java-archunit)
 
 ## Running 
 In most cases, I'm using a simple unit-testing infrastructure to squeeze multiple examples in a single file - it's enough to import the module in your IDE and run JUnit tests.
