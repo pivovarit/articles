@@ -21,7 +21,7 @@ jobs:
         run: docker run --rm -t -v `pwd`:/slides -v ~:/home/user astefanutti/decktape reveal-js-presentation/index.html slides/reveal-js-presentation.pdf
 
       - name: Deploy
-        uses: peaceiris/actions-gh-pages@v3
+        uses: peaceiris/actions-gh-pages@v3.8.0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./slides
