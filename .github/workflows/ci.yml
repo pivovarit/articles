@@ -13,6 +13,7 @@ jobs:
         uses: actions/setup-java@v2
         with:
           java-version: 15
+          distribution: 'zulu'
       - uses: actions/cache@v2.1.5
         with:
           path: ~/.m2/repository
