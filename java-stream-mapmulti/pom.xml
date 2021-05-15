@@ -4,9 +4,9 @@
 
     <groupId>com.pivovarit</groupId>
     <version>1.0</version>
-    <artifactId>java-stream-multimap</artifactId>
+    <artifactId>java-stream-mapmulti</artifactId>
 
-    <name>java-stream-multimap</name>
+    <name>java-stream-mapmulti</name>
     <build>
         <plugins>
             <plugin>

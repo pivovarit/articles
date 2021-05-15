@@ -16,7 +16,7 @@
         <module>kotlin-type-inference</module>
         <module>java-sneaky-throws-lambda</module>
         <module>java-priorityqueue-stream-order</module>
-        <module>java-stream-multimap</module>
+        <module>java-stream-mapmulti</module>
         <module>java-sliding-window-stream</module>
         <module>java-lazy-initialization</module>
         <module>java-archunit</module>
