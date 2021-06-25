@@ -8,7 +8,7 @@
     <version>1.0</version>
 
     <properties>
-        <kotlin.version>1.5.10</kotlin.version>
+        <kotlin.version>1.5.20</kotlin.version>
     </properties>
 
     <dependencies>
