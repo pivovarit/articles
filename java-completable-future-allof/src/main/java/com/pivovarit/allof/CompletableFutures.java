@@ -27,12 +27,10 @@ public final class CompletableFutures {
     }
 
     public static <T> CompletableFuture<List<T>> allOf(Collection<CompletableFuture<T>> futures) {
-        return futures.stream()
-          .collect(collectingAndThen(toList(), l -> CompletableFuture.allOf(l.toArray(new CompletableFuture[0]))
-            .thenApply(__ -> l)))
-          .thenApply(list -> list.stream()
-            .map(CompletableFuture::join)
-            .collect(Collectors.toList()));
+        return CompletableFuture.allOf(futures.toArray(new CompletableFuture[0]))
+            .thenApply(__ -> futures.stream()
+              .map(CompletableFuture::join)
+              .collect(Collectors.toList()));
     }
 
     public static <T> CompletableFuture<List<T>> allOfOrException(Collection<CompletableFuture<T>> futures) {
