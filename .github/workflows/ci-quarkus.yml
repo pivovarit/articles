@@ -27,7 +27,7 @@ jobs:
         run: |
           mvn package -Pnative -Dquarkus.native.container-build=true
           docker build -f src/main/docker/Dockerfile.native -t pivovarit/quarkus-hello .
-          docker run pivovarit/quarkus-hello -d
+          docker run -i --rm -d -p 8080:8080 quarkus/quarkus-hello
 
       - name: Verify
         run: |
