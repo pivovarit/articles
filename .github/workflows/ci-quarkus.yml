@@ -24,6 +24,7 @@ jobs:
             ${{ runner.os }}-maven-
 
       - name: Build with Maven
+        working-directory: quarkus/quarkus-hello
         run: |
           mvn package -Pnative -Dquarkus.native.container-build=true
           docker build -f src/main/docker/Dockerfile.native -t pivovarit/quarkus-hello .
