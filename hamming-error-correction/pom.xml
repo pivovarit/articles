@@ -297,7 +297,7 @@
     <properties>
         <kotlin.version>1.5.21</kotlin.version>
         <junit.version>5.7.2</junit.version>
-        <jmh.version>1.33</jmh.version>
+        <jmh.version>1.34</jmh.version>
         <jmh.generator>default</jmh.generator>
         <javac.target>1.8</javac.target>
     </properties>
