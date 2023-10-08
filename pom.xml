@@ -23,6 +23,7 @@
         <module>java-archunit</module>
         <module>java-sealed-classes</module>
         <module>java-completable-future-timeouts</module>
+        <module>java-batching-spliterator</module>
         <module>java-event-sourcing</module>
         <module>java-completable-future-allof</module>
         <module>java-advanced-groupingby</module>
