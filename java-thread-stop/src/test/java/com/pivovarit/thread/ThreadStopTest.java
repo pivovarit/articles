@@ -1,10 +1,12 @@
 package com.pivovarit.thread;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+@Disabled("Thread#stop throws UnsupportedOperationException on JDK21")
 class ThreadStopTest {
 
     @Test
