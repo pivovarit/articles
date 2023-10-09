@@ -14,7 +14,7 @@ jobs:
         with:
           java-version: 21
           distribution: 'oracle'
-      - uses: actions/cache@v3.3.1
+      - uses: actions/cache@v3.3.2
         with:
           path: ~/.m2/repository
           key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
