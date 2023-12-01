@@ -9,7 +9,7 @@
     <name>java-completion-order-spliterator</name>
 
     <properties>
-        <jmh.version>1.35</jmh.version>
+        <jmh.version>1.37</jmh.version>
     </properties>
 
     <build>
