@@ -14,6 +14,7 @@
         <module>kotlin-collections</module>
         <module>hamming-error-correction</module>
         <module>kotlin-type-inference</module>
+        <module>java-exception-stacktraces</module>
         <module>java-sneaky-throws-lambda</module>
         <module>java-priorityqueue-stream-order</module>
         <module>java-stream-mapmulti</module>
