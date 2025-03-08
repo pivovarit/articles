@@ -10,7 +10,8 @@
  *
  */
 
- // Default mixins and settings -----------------
+// Default mixins and settings -----------------
+@use "sass:color";
 @import "../template/mixins";
 @import "../template/settings";
 // ---------------------------------------------
@@ -40,11 +41,14 @@ $heading1TextShadow: 0 1px 0 #ccc, 0 2px 0 #c9c9c9, 0 3px 0 #bbb, 0 4px 0 #b9b9b
 
 // Links
 $linkColor: $blood;
-$linkColorHover: lighten( $linkColor, 20% );
+$linkColorHover: color.scale( $linkColor, $lightness: 20% );
 
 // Text selection
 $selectionBackgroundColor: $blood;
 $selectionColor: #fff;
+
+// Change text colors against dark slide backgrounds
+@include light-bg-text-color(#222);
 
 
 // Theme template ------------------------------
@@ -56,6 +60,12 @@ $selectionColor: #fff;
 .reveal p {
     font-weight: 300;
     text-shadow: 1px 1px $coal;
+}
+
+section.has-light-background {
+	p, h1, h2, h3, h4 {
+		text-shadow: none;
+	}
 }
 
 .reveal h1,
