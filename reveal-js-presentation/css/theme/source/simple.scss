@@ -8,6 +8,7 @@
 
 
 // Default mixins and settings -----------------
+@use "sass:color";
 @import "../template/mixins";
 @import "../template/settings";
 // ---------------------------------------------
@@ -28,14 +29,14 @@ $headingTextShadow: none;
 $headingTextTransform: none;
 $backgroundColor: #fff;
 $linkColor: #00008B;
-$linkColorHover: lighten( $linkColor, 20% );
+$linkColorHover: color.scale( $linkColor, $lightness: 20% );
 $selectionBackgroundColor: rgba(0, 0, 0, 0.99);
 
-section.has-dark-background {
-	&, h1, h2, h3, h4, h5, h6 {
-		color: #fff;
-	}
-}
+$overlayElementBgColor: 0, 0, 0;
+$overlayElementFgColor: 240, 240, 240;
+
+// Change text colors against dark slide backgrounds
+@include dark-bg-text-color(#fff);
 
 
 // Theme template ------------------------------
