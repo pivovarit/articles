@@ -22,6 +22,7 @@
         <module>java-lazy-initialization</module>
         <module>java-thread-stop</module>
         <module>java-archunit</module>
+        <module>java-reactor-context-propagation</module>
         <module>java-sealed-classes</module>
         <module>java-completable-future-timeouts</module>
         <module>java-event-sourcing</module>
