@@ -3,7 +3,6 @@ package com.pivovarit.hamming.domain.encode.stateless
 import com.pivovarit.hamming.domain.BinaryString
 import com.pivovarit.hamming.domain.EncodedString
 import com.pivovarit.hamming.domain.encode.HammingEncoder
-import org.assertj.core.api.Assertions
 import org.assertj.core.api.Assertions.*
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
