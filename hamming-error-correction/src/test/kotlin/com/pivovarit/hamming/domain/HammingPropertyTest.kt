@@ -29,7 +29,7 @@ class HammingPropertyTest {
     }
 
     private fun randomMessage(): BinaryString =
-      generateSequence { rand.nextInt(1).toString() }
+      generateSequence { rand.nextInt(2).toString() }
         .take(rand.nextInt(1000).inc())
         .reduce { acc, s -> acc + s }
         .let(::BinaryString)
