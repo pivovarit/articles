@@ -15,11 +15,11 @@
         <dependency>
             <groupId>io.vavr</groupId>
             <artifactId>vavr</artifactId>
-            <version>0.10.6</version>
+            <version>0.10.7</version>
         </dependency>
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
-            <artifactId>kotlin-stdlib-jdk8</artifactId>
+            <artifactId>kotlin-stdlib</artifactId>
             <version>${kotlin.version}</version>
         </dependency>
         <dependency>
@@ -37,7 +37,7 @@
         <dependency>
             <groupId>org.assertj</groupId>
             <artifactId>assertj-core</artifactId>
-            <version>3.27.3</version>
+            <version>3.27.4</version>
             <scope>test</scope>
         </dependency>
 
@@ -60,7 +60,7 @@
         </dependency>
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
-            <artifactId>kotlin-stdlib-jdk8</artifactId>
+            <artifactId>kotlin-stdlib</artifactId>
             <version>${kotlin.version}</version>
         </dependency>
     </dependencies>
@@ -166,7 +166,7 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
-                <version>3.5.0</version>
+                <version>3.5.1</version>
                 <executions>
                     <execution>
                         <phase>process-sources</phase>
@@ -201,7 +201,7 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>build-helper-maven-plugin</artifactId>
-                <version>3.6.0</version>
+                <version>3.6.1</version>
                 <executions>
                     <execution>
                         <id>add-source</id>
@@ -295,8 +295,8 @@
     </build>
 
     <properties>
-        <kotlin.version>2.0.21</kotlin.version>
-        <junit.version>5.12.0</junit.version>
+        <kotlin.version>2.2.0</kotlin.version>
+        <junit.version>5.13.4</junit.version>
         <jmh.version>1.37</jmh.version>
         <jmh.generator>default</jmh.generator>
         <javac.target>1.8</javac.target>

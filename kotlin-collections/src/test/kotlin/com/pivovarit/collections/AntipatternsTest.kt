@@ -1,6 +1,7 @@
 package com.pivovarit.collections
 
 import org.junit.jupiter.api.Test
+import java.util.Locale
 
 internal class AntipatternsTest {
 
@@ -22,9 +23,9 @@ internal class AntipatternsTest {
 
         list
           .map { it.toString() }
-          .map { it.toUpperCase() }
+          .map { it.uppercase(Locale.getDefault()) }
 
-        list.map { it.toString().toUpperCase() }
+        list.map { it.toString().uppercase(Locale.getDefault()) }
     }
 
     @Test

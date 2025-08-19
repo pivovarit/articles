@@ -39,7 +39,7 @@
         <dependency>
             <groupId>com.pivovarit</groupId>
             <artifactId>parallel-collectors</artifactId>
-            <version>3.2.0</version>
+            <version>3.3.0</version>
         </dependency>
         <dependency>
             <groupId>org.openjdk.jmh</groupId>
@@ -56,13 +56,13 @@
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
-            <version>5.12.0</version>
+            <version>5.13.4</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.assertj</groupId>
             <artifactId>assertj-core</artifactId>
-            <version>3.27.3</version>
+            <version>3.27.4</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
