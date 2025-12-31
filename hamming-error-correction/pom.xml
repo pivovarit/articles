@@ -11,6 +11,7 @@
         <maven>3.0.4</maven>
     </prerequisites>
 
+
     <dependencies>
         <dependency>
             <groupId>io.vavr</groupId>
@@ -162,7 +163,8 @@
                         </configuration>
                     </execution>
                 </executions>
-                <dependencies>
+            
+    <dependencies>
                     <dependency>
                         <groupId>org.openjdk.jmh</groupId>
                         <artifactId>jmh-generator-bytecode</artifactId>
@@ -278,4 +280,17 @@
         <jmh.generator>default</jmh.generator>
         <javac.target>17</javac.target>
     </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.junit</groupId>
+                <artifactId>junit-bom</artifactId>
+                <version>${junit.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
 </project>
