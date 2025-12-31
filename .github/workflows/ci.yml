@@ -1,4 +1,4 @@
-name: Build with JDK 21
+name: CI
 
 on: [push]
 
@@ -7,11 +7,11 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        java: [ '23' ]
+        java: [ '25' ]
         architecture: [ 'x64' ]
     name: Build with JDK ${{ matrix.java }} on ${{ matrix.architecture }}
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - name: Setup JDK
         uses: actions/setup-java@v5
         with:
