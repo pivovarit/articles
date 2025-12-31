@@ -299,6 +299,6 @@
         <junit.version>5.13.4</junit.version>
         <jmh.version>1.37</jmh.version>
         <jmh.generator>default</jmh.generator>
-        <javac.target>1.8</javac.target>
+        <javac.target>25</javac.target>
     </properties>
 </project>
