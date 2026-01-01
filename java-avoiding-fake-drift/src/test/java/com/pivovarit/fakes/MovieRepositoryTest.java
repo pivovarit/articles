@@ -1,6 +1,7 @@
 package com.pivovarit.fakes;
 
 import org.jdbi.v3.core.statement.UnableToExecuteStatementException;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -9,7 +10,12 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 abstract class MovieRepositoryTest {
     abstract MovieRepository getRepository();
 
-    private final MovieRepository repository = getRepository();
+    private MovieRepository repository;
+
+    @BeforeEach
+    void setUp() {
+        repository = getRepository();
+    }
 
     @Test
     void shouldSaveAndFetchMovie() {
@@ -30,12 +36,12 @@ abstract class MovieRepositoryTest {
     @Test
     void shouldRejectMovieWithEmptyTitle() {
         assertThatThrownBy(() -> repository.save(new Movie("", "NEW")))
-          .isInstanceOf(UnableToExecuteStatementException.class);
+          .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     void shouldRejectMovieWithNullTitle() {
         assertThatThrownBy(() -> repository.save(new Movie(null, "NEW")))
-          .isInstanceOf(UnableToExecuteStatementException.class);
+          .isInstanceOf(IllegalArgumentException.class);
     }
 }

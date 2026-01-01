@@ -2,6 +2,7 @@ package com.pivovarit.fakes;
 
 import org.jdbi.v3.core.Jdbi;
 import org.jdbi.v3.core.mapper.RowMapper;
+import org.jdbi.v3.core.statement.UnableToExecuteStatementException;
 import org.jdbi.v3.postgres.PostgresPlugin;
 
 import javax.sql.DataSource;
@@ -18,13 +19,20 @@ public class PostgresMovieRepository implements MovieRepository {
 
     @Override
     public long save(Movie movie) {
-        return jdbi.withHandle(handle ->
-          handle.createQuery("INSERT INTO movies (title, type) VALUES (:title, :type) RETURNING id")
-            .bind("title", movie.title())
-            .bind("type", movie.type())
-            .mapTo(Long.class)
-            .one()
-        );
+        try {
+            return jdbi.withHandle(handle ->
+              handle.createQuery("INSERT INTO movies (title, type) VALUES (:title, :type) RETURNING id")
+                .bind("title", movie.title())
+                .bind("type", movie.type())
+                .mapTo(Long.class)
+                .one()
+            );
+        } catch (UnableToExecuteStatementException e) {
+            if (e.getMessage().contains("constraint")) {
+                throw new IllegalArgumentException("Movie title cannot be blank or null", e);
+            }
+            throw new RuntimeException(e);
+        }
     }
 
     @Override

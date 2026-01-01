@@ -15,7 +15,7 @@ public class InMemoryFakeMovieRepository implements MovieRepository {
     @Override
     public long save(Movie movie) {
         if (movie.title() == null || movie.title().isBlank()) {
-            throw new UnableToExecuteStatementException("violates check constraint");
+            throw new IllegalArgumentException("Movie title cannot be blank or null");
         }
 
         long id = ThreadLocalRandom.current().nextLong();
