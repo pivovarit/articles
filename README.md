@@ -33,7 +33,7 @@ Code snippets for articles posted at 4comprehension.com provided "as-is" and org
 - [Be Careful with CompletableFuture.applyToEither and Exceptions](https://4comprehension.com/be-careful-with-completablefuture-applytoeither/) [(snippets)](https://github.com/pivovarit/articles/blob/master/java-completable-future-allof/src/main/java/com/pivovarit/allof/CompletableFutures.java)
 - [Improving Java's Visibility Modifiers with ArchUnit](https://4comprehension.com/improving-java-visibility-modifiers/) [(snippets)](https://github.com/pivovarit/articles/tree/master/java-archunit)
 - [How to Stop a Java Thread Without Using Thread.stop()?](https://4comprehension.com/how-to-stop-a-java-thread-without-using-thread-stop/) [(snippets)](https://github.com/pivovarit/articles/tree/master/java-thread-stop)
-- [Accidental Time Travel with Wiremock, SimpleDateFormat and Fractional Seconds](https://4comprehension.com/accidental-time-travel-with-wiremock/) [(snippets)]https://github.com/pivovarit/articles/tree/master/java-wiremock-timetravel
+- [Accidental Time Travel with Wiremock, SimpleDateFormat and Fractional Seconds](https://4comprehension.com/accidental-time-travel-with-wiremock/) [(snippets)](https://github.com/pivovarit/articles/tree/master/java-wiremock-timetravel)
 
 ## Running 
 In most cases, I'm using a simple unit-testing infrastructure to squeeze multiple examples into a single file — it's enough to import the module in your IDE and run JUnit tests.
