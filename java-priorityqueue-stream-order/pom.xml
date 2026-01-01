@@ -2,6 +2,13 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
+    <parent>
+        <groupId>com.pivovarit</groupId>
+        <artifactId>articles</artifactId>
+        <version>1.0-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+
     <groupId>com.pivovarit</groupId>
     <version>1.0</version>
     <artifactId>java-priorityqueue-stream-order</artifactId>

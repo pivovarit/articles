@@ -2,6 +2,13 @@
 <project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.pivovarit</groupId>
+        <artifactId>articles</artifactId>
+        <version>1.0-SNAPSHOT</version>
+        <relativePath>../../pom.xml</relativePath>
+    </parent>
+
   <groupId>com.pivovarit</groupId>
   <artifactId>quarkus-hello</artifactId>
   <version>1.0.0-SNAPSHOT</version>
@@ -24,6 +31,13 @@
         <groupId>${quarkus.platform.group-id}</groupId>
         <artifactId>${quarkus.platform.artifact-id}</artifactId>
         <version>${quarkus.platform.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.junit</groupId>
+        <artifactId>junit-bom</artifactId>
+        <version>${junit-jupiter.version}</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
