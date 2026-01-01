@@ -13,12 +13,14 @@ public class InMemoryFakeMovieRepository implements MovieRepository {
     private final Map<Long, Movie> movies = new ConcurrentHashMap<>();
 
     @Override
-    public void save(Movie movie) {
+    public long save(Movie movie) {
         if (movie.title() == null || movie.title().isBlank()) {
             throw new UnableToExecuteStatementException("violates check constraint");
         }
 
-        movies.put(ThreadLocalRandom.current().nextLong(), movie);
+        long id = ThreadLocalRandom.current().nextLong();
+        movies.put(id, movie);
+        return id;
     }
 
     @Override

@@ -17,12 +17,13 @@ public class PostgresMovieRepository implements MovieRepository {
     }
 
     @Override
-    public void save(Movie movie) {
-        jdbi.useHandle(handle ->
-          handle.createUpdate("INSERT INTO movies (title, type) VALUES (:title, :type)")
+    public long save(Movie movie) {
+        return jdbi.withHandle(handle ->
+          handle.createQuery("INSERT INTO movies (title, type) VALUES (:title, :type) RETURNING id")
             .bind("title", movie.title())
             .bind("type", movie.type())
-            .execute()
+            .mapTo(Long.class)
+            .one()
         );
     }
 

@@ -39,6 +39,7 @@ class PostgresMovieRepositoryTest extends MovieRepositoryTest {
 
         Flyway.configure()
           .dataSource(ds)
+          .locations("classpath:db/migration")
           .load()
           .migrate();
 

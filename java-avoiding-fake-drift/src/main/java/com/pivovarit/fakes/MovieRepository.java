@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface MovieRepository {
-    void save(Movie movie);
+    long save(Movie movie);
 
     List<Movie> findAll();
 
