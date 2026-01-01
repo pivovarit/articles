@@ -8,7 +8,6 @@ import org.postgresql.util.PSQLException;
 
 import javax.sql.DataSource;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 public class PostgresMovieRepository implements MovieRepository {
@@ -31,8 +30,9 @@ public class PostgresMovieRepository implements MovieRepository {
             );
         } catch (UnableToExecuteStatementException e) {
             if (e.getCause() instanceof PSQLException psqle) {
-                if (Objects.equals(psqle.getSQLState(), "23514") || Objects.equals(psqle.getSQLState(), "23502")) {
-                    throw new IllegalArgumentException("Movie title cannot be blank or null", e);
+                switch (psqle.getSQLState()) {
+                    case "23502": throw new IllegalArgumentException("Movie title cannot be blank", e);
+                    case "23514": throw new IllegalArgumentException("Movie title cannot be null", e);
                 }
             }
             throw new RuntimeException(e);
