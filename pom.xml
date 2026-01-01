@@ -18,6 +18,7 @@
         <module>java-sneaky-throws-lambda</module>
         <module>java-priorityqueue-stream-order</module>
         <module>java-stream-mapmulti</module>
+        <module>java-avoiding-fake-drift</module>
         <module>java-sliding-window-stream</module>
         <module>java-lazy-initialization</module>
         <module>java-thread-stop</module>
