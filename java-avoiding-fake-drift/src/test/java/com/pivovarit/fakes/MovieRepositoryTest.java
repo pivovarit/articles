@@ -12,16 +12,19 @@ abstract class MovieRepositoryTest {
     private final MovieRepository repository = getRepository();
 
     @Test
-    void shouldSaveMovie() {
+    void shouldSaveAndFetchMovie() {
         var m1 = new Movie("Tenet", "NEW");
         var m2 = new Movie("Casablanca", "OLD");
 
         assertThat(repository.findAll()).isEmpty();
 
-        repository.save(m1);
-        repository.save(m2);
+        long id1 = repository.save(m1);
+        long id2 = repository.save(m2);
 
         assertThat(repository.findAll()).containsExactlyInAnyOrder(m1, m2);
+        assertThat(repository.findAllByType("NEW")).containsExactly(m1);
+        assertThat(repository.findById(id1)).hasValue(m1);
+        assertThat(repository.findById(id2)).hasValue(m2);
     }
 
     @Test
