@@ -1,12 +1,16 @@
 package com.pivovarit.parallel;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
+import java.time.Duration;
+import java.time.Instant;
 import java.util.List;
 import java.util.Spliterator;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CompletionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -63,42 +67,52 @@ class PostJava8Test {
     void example_no_shortcircuit() throws Exception {
         ExecutorService executor = Executors.newFixedThreadPool(10);
 
-        List<Integer> results = IntStream.range(0, 10).boxed()
-          .map(i -> CompletableFuture.supplyAsync(() -> {
-              if (i != 9) {
-                  try {
-                      Thread.sleep(10000);
-                  } catch (InterruptedException e) {
-                      throw new RuntimeException(e);
+        Instant before = Instant.now();
+        org.assertj.core.api.Assertions.assertThatThrownBy(() -> {
+            IntStream.range(0, 10).boxed()
+              .map(i -> CompletableFuture.supplyAsync(() -> {
+                  if (i != 9) {
+                      try {
+                          Thread.sleep(10000);
+                      } catch (InterruptedException e) {
+                          throw new RuntimeException(e);
+                      }
+                      return i;
+                  } else {
+                      throw new RuntimeException();
                   }
-                  return i;
-              } else {
-                  throw new RuntimeException();
-              }
-          }, executor))
-          .collect(collectingAndThen(toList(), list -> list.stream()
-            .map(CompletableFuture::join)
-            .collect(toList())));
+              }, executor))
+              .collect(collectingAndThen(toList(), list -> list.stream()
+                .map(CompletableFuture::join)
+                .collect(toList())));
+        }).isExactlyInstanceOf(CompletionException.class);
+        Instant after = Instant.now();
+
+        assertThat(Duration.between(before, after)).isGreaterThan(Duration.ofSeconds(9));
     }
 
     @Test
     void example_shortcircuit() throws Exception {
         ExecutorService executor = Executors.newFixedThreadPool(10);
 
-        List<Integer> results = IntStream.range(0, 10).boxed()
-          .map(i -> CompletableFuture.supplyAsync(() -> {
-              if (i != 9) {
-                  try {
-                      Thread.sleep(10000);
-                  } catch (InterruptedException e) {
-                      throw new RuntimeException(e);
-                  }
-                  return i;
-              } else {
-                  throw new RuntimeException();
-              }
-          }, executor))
-          .collect(collectingAndThen(toList(), list -> allOfOrException(list).join()));
+        Assertions.assertTimeout(Duration.ofSeconds(1), () -> {
+            org.assertj.core.api.Assertions.assertThatThrownBy(() -> {
+                IntStream.range(0, 10).boxed()
+                  .map(i -> CompletableFuture.supplyAsync(() -> {
+                      if (i != 9) {
+                          try {
+                              Thread.sleep(10000);
+                          } catch (InterruptedException e) {
+                              throw new RuntimeException(e);
+                          }
+                          return i;
+                      } else {
+                          throw new RuntimeException();
+                      }
+                  }, executor))
+                  .collect(collectingAndThen(toList(), list -> allOfOrException(list).join()));
+            }).isExactlyInstanceOf(CompletionException.class);
+        });
     }
 
     @Test
