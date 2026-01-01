@@ -4,9 +4,11 @@ import org.jdbi.v3.core.Jdbi;
 import org.jdbi.v3.core.mapper.RowMapper;
 import org.jdbi.v3.core.statement.UnableToExecuteStatementException;
 import org.jdbi.v3.postgres.PostgresPlugin;
+import org.postgresql.util.PSQLException;
 
 import javax.sql.DataSource;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 public class PostgresMovieRepository implements MovieRepository {
@@ -28,7 +30,8 @@ public class PostgresMovieRepository implements MovieRepository {
                 .one()
             );
         } catch (UnableToExecuteStatementException e) {
-            if (e.getMessage().contains("constraint")) {
+            if (e.getCause() instanceof PSQLException psqle) {
+                if (Objects.equals(psqle.getSQLState(), "23514") || Objects.equals(psqle.getSQLState(), "23502"))
                 throw new IllegalArgumentException("Movie title cannot be blank or null", e);
             }
             throw new RuntimeException(e);
