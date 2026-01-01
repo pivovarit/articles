@@ -31,8 +31,9 @@ public class PostgresMovieRepository implements MovieRepository {
             );
         } catch (UnableToExecuteStatementException e) {
             if (e.getCause() instanceof PSQLException psqle) {
-                if (Objects.equals(psqle.getSQLState(), "23514") || Objects.equals(psqle.getSQLState(), "23502"))
-                throw new IllegalArgumentException("Movie title cannot be blank or null", e);
+                if (Objects.equals(psqle.getSQLState(), "23514") || Objects.equals(psqle.getSQLState(), "23502")) {
+                    throw new IllegalArgumentException("Movie title cannot be blank or null", e);
+                }
             }
             throw new RuntimeException(e);
         }
