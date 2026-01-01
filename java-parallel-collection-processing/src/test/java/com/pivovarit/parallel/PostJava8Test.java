@@ -60,6 +60,7 @@ class PostJava8Test {
     }
 
     @Test
+    @Disabled("Demonstrates exception propagation - intentionally throws")
     void example_no_shortcircuit() throws Exception {
         ExecutorService executor = Executors.newFixedThreadPool(10);
 
@@ -82,6 +83,7 @@ class PostJava8Test {
     }
 
     @Test
+    @Disabled("Demonstrates exception propagation - intentionally throws")
     void example_shortcircuit() throws Exception {
         ExecutorService executor = Executors.newFixedThreadPool(10);
 
