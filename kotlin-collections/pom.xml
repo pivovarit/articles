@@ -12,7 +12,7 @@
     <artifactId>kotlin-collections</artifactId>
 
     <properties>
-        <kotlin.version>2.2.10</kotlin.version>
+        <kotlin.version>2.3.0</kotlin.version>
         <mockito.version>2.8.0</mockito.version>
     </properties>
 
