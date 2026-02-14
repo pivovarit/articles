@@ -1,6 +1,6 @@
 name: CI
 
-on: [push]
+on: [push, pull_request]
 
 jobs:
   build:
@@ -15,10 +15,16 @@ jobs:
       - name: Setup JDK
         uses: actions/setup-java@v5
         with:
-          distribution: 'oracle'
+          distribution: 'temurin'
           java-version: ${{ matrix.java }}
           architecture: ${{ matrix.architecture }}
           cache: 'maven'
 
       - name: Build with Maven
-        run: mvn package
+        run: mvn -B --no-transfer-progress package
+
+      - name: Verify jar compatibility
+        uses: pivovarit/verify-jar-action@v1.2.0
+        with:
+          directory: 'java-jpms-jdk8/target'
+          java-version: '8'
