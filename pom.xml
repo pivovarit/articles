@@ -44,6 +44,7 @@
         <module>quarkus/quarkus-hello</module>
         <module>hibernate-alternatives/spring-jdbc</module>
         <module>hibernate-alternatives/spring-data-jdbc</module>
+        <module>java-pid-controller</module>
     </modules>
 
     <properties>
