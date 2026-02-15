@@ -1,6 +1,6 @@
 package com.pivovarit.pid;
 
-class PIDController {
+class NaivePIDController {
 
     private final double kp;
     private final double ki;
@@ -11,7 +11,7 @@ class PIDController {
     private double accumulatedError;
     private double previousError;
 
-    PIDController(double kp, double ki, double kd, double outputMin, double outputMax) {
+    NaivePIDController(double kp, double ki, double kd, double outputMin, double outputMax) {
         this.kp = kp;
         this.ki = ki;
         this.kd = kd;
@@ -28,15 +28,6 @@ class PIDController {
 
         double output = kp * error + ki * accumulatedError + kd * changeRate;
 
-        if (output > outputMax) {
-            accumulatedError -= error * dt;
-            return outputMax;
-        }
-        if (output < outputMin) {
-            accumulatedError -= error * dt;
-            return outputMin;
-        }
-
-        return output;
+        return Math.clamp(output, outputMin, outputMax);
     }
 }

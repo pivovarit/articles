@@ -14,8 +14,8 @@ class PDController {
 
     double compute(double setpoint, double measured, double dt) {
         double error = setpoint - measured;
-        double derivative = (error - previousError) / dt;
+        double changeRate = (error - previousError) / dt;
         previousError = error;
-        return kp * error + kd * derivative;
+        return kp * error + kd * changeRate;
     }
 }
