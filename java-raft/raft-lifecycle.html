@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Raft Cluster Lifecycle</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body   { font-family: system-ui, sans-serif; margin: 30px 40px;
+             background: #1a1a2e; color: #eee; }
+    h1     { text-align: center; font-size: 1.4em; margin-bottom: 4px; }
+    p      { text-align: center; color: #aaa; margin-top: 0; font-size: 0.9em; }
+    .grid  { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 20px; }
+    canvas { background: #16213e; border-radius: 10px; padding: 12px; }
+  </style>
+</head>
+<body>
+  <h1>Raft Cluster Lifecycle  —  3 nodes, 9 steps</h1>
+  <p>
+    Steps: initial → leader election → log replication →
+    partition (n3 down) → recovery (n3) → leader failure (n1) →
+    re-election (n2) → recovery (n1)
+  </p>
+  <div class="grid">
+    <canvas id="commitChart"></canvas>
+    <canvas id="logChart"></canvas>
+  </div>
+  <script>
+    const labels = ["initial","n1 elected","+cmd 1","+cmd 2","n3 down / +cmd 3","n3 back / +cmd 4","n1 down / n2 elected","+cmd 5","n1 recovered"];
+    const chartOpts = (title, yLabel) => ({
+      responsive: true,
+      interaction: { mode: 'index' },
+      plugins: {
+        legend: { labels: { color: '#eee' } },
+        title:  { display: true, text: title, color: '#eee', font: { size: 14 } }
+      },
+      scales: {
+        x: { ticks: { color: '#aaa', maxRotation: 30 }, grid: { color: '#ffffff11' } },
+        y: { title: { display: true, text: yLabel, color: '#aaa' },
+             ticks: { color: '#aaa', stepSize: 1 },
+             grid:  { color: '#ffffff11' }, min: 0, max: 6 }
+      }
+    });
+    const ds = (label, color, data) => ({
+      label, data,
+      borderColor: color, backgroundColor: color + '33',
+      borderWidth: 2.5, pointRadius: 5, tension: 0.15
+    });
+    new Chart(document.getElementById('commitChart'), {
+      type: 'line',
+      data: { labels, datasets: [
+        ds('n1  commit index', '#4a90d9', [0,0,1,2,3,4,4,4,5]),
+        ds('n2  commit index', '#27ae60', [0,0,1,2,3,4,4,5,5]),
+        ds('n3  commit index', '#e67e22', [0,0,1,2,2,4,4,5,5])
+      ]},
+      options: chartOpts('Commit Index per Node', 'committed entries')
+    });
+    new Chart(document.getElementById('logChart'), {
+      type: 'line',
+      data: { labels, datasets: [
+        ds('n1  log size', '#4a90d9', [0,0,1,2,3,4,4,4,5]),
+        ds('n2  log size', '#27ae60', [0,0,1,2,3,4,4,5,5]),
+        ds('n3  log size', '#e67e22', [0,0,1,2,2,4,4,5,5])
+      ]},
+      options: chartOpts('Log Size per Node', 'log entries')
+    });
+  </script>
+</body>
+</html>
