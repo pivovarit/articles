@@ -33,7 +33,7 @@ class HammingPropertyTest {
     }
 
     private BinaryString randomMessage() {
-        String msg = Stream.continually(() -> rand.nextInt(1))
+        String msg = Stream.continually(() -> rand.nextInt(2))
           .map(i -> Integer.toString(i))
           .take(rand.nextInt(10) + 1)
           .reduce(String::concat);
