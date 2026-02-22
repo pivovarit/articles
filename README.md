@@ -35,6 +35,8 @@ Code snippets for articles posted at 4comprehension.com provided "as-is" and org
 - [How to Stop a Java Thread Without Using Thread.stop()?](https://4comprehension.com/how-to-stop-a-java-thread-without-using-thread-stop/) [(snippets)](https://github.com/pivovarit/articles/tree/main/java-thread-stop)
 - [Accidental Time Travel with Wiremock, SimpleDateFormat and Fractional Seconds](https://4comprehension.com/accidental-time-travel-with-wiremock/) [(snippets)](https://github.com/pivovarit/articles/tree/main/java-wiremock-timetravel)
 - [Avoiding Fake Drift in Unit Tests](https://4comprehension.com/avoiding-fake-drift/) [(snippets)](https://github.com/pivovarit/articles/tree/main/java-avoiding-fake-drift)
+- [Writing JDK8-Compatible Libraries with Java Platform Module System Support](https://4comprehension.com/jdk8-with-jpms-support/) [(snippets)](https://github.com/pivovarit/articles/tree/main/java-jpms-jdk8)
+- [Implementing Efficient Last Stream Elements Gatherer in Java](https://4comprehension.com/java-last-gatherer/) [(snippets)](https://github.com/pivovarit/articles/tree/main/java-last-gatherer)
 
 ## Running 
 In most cases, I'm using a simple unit-testing infrastructure to squeeze multiple examples into a single file — it's enough to import the module in your IDE and run JUnit tests.
