@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence
+                 http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd"
+             version="2.2">
+
+    <!--
+        HIBERNATE 5 (default behaviour — reproduces the deadlock)
+        ============================================================
+        The sequence in the database has INCREMENT BY 50 to match allocationSize.
+        A single manual SELECT nextval('account_seq') therefore consumes an entire
+        batch of 50 IDs, advancing the sequence by 50 per call.
+
+        Consequence: two concurrent threads calling nextval() once each get IDs
+        that are 50 apart (e.g. 50 and 100).  Because those IDs land in different
+        transactions the FK checks on the Transfer rows create the classic
+        AB-BA deadlock (see DeadlockReproducer.java for the full explanation).
+    -->
+    <persistence-unit name="hibernate5-deadlock" transaction-type="RESOURCE_LOCAL">
+        <class>com.pivovarit.deadlock.entity.Account</class>
+        <class>com.pivovarit.deadlock.entity.Transfer</class>
+        <exclude-unlisted-classes>true</exclude-unlisted-classes>
+
+        <properties>
+            <property name="javax.persistence.jdbc.driver"   value="org.postgresql.Driver"/>
+            <property name="javax.persistence.jdbc.url"      value="jdbc:postgresql://localhost:5432/deadlock_demo"/>
+            <property name="javax.persistence.jdbc.user"     value="demo"/>
+            <property name="javax.persistence.jdbc.password" value="demo"/>
+
+            <!-- Drop-and-recreate schema on every run -->
+            <property name="hibernate.hbm2ddl.auto" value="create-drop"/>
+            <property name="hibernate.dialect"      value="org.hibernate.dialect.PostgreSQL10Dialect"/>
+            <property name="hibernate.show_sql"     value="true"/>
+            <property name="hibernate.format_sql"   value="false"/>
+
+            <!--
+                Hibernate 5 default: allocationSize = 50
+                The DDL generator will emit:  CREATE SEQUENCE account_seq INCREMENT BY 50
+                A manual SELECT nextval('account_seq') therefore skips 50 IDs.
+            -->
+            <!-- No override needed — 50 is already the default for @SequenceGenerator -->
+        </properties>
+    </persistence-unit>
+
+    <!--
+        HIBERNATE 4-COMPATIBLE BEHAVIOUR (no deadlock)
+        ================================================
+        With allocationSize = 1 the database sequence has INCREMENT BY 1.
+        A manual SELECT nextval('account_seq') only advances the sequence by 1,
+        so consecutive nextval() calls produce IDs 1, 2, 3 … rather than
+        50, 100, 150 …
+
+        Because both accounts in a settlement pair receive consecutive IDs they
+        are naturally created inside the *same* transaction, which means the FK
+        checks never block on a row held by another transaction.
+    -->
+    <persistence-unit name="hibernate4-compat" transaction-type="RESOURCE_LOCAL">
+        <class>com.pivovarit.deadlock.entity.AccountH4</class>
+        <class>com.pivovarit.deadlock.entity.Transfer</class>
+        <exclude-unlisted-classes>true</exclude-unlisted-classes>
+
+        <properties>
+            <property name="javax.persistence.jdbc.driver"   value="org.postgresql.Driver"/>
+            <property name="javax.persistence.jdbc.url"      value="jdbc:postgresql://localhost:5432/deadlock_demo"/>
+            <property name="javax.persistence.jdbc.user"     value="demo"/>
+            <property name="javax.persistence.jdbc.password" value="demo"/>
+
+            <property name="hibernate.hbm2ddl.auto" value="create-drop"/>
+            <property name="hibernate.dialect"      value="org.hibernate.dialect.PostgreSQL10Dialect"/>
+            <property name="hibernate.show_sql"     value="true"/>
+            <property name="hibernate.format_sql"   value="false"/>
+        </properties>
+    </persistence-unit>
+
+</persistence>

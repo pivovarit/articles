@@ -1,0 +1,477 @@
+# How a Hibernate 4 → 5 Upgrade Turned a Manual Sequence Increment into a Deadlock
+
+Upgrading a framework dependency should be boring. Bump the version, run the tests,
+ship it. Sometimes, though, a seemingly innocent default change somewhere deep in the
+framework rewrites the locking behaviour of your entire persistence layer — and you
+only find out under production load.
+
+This is one of those stories. The symptom was a deadlock that appeared only inside
+large, long-running transactions. The root cause was a single line that had been
+in the codebase for years and had never caused a problem:
+
+```java
+long id = (Long) em
+    .createNativeQuery("SELECT nextval('account_seq')")
+    .getSingleResult();
+```
+
+To understand why that line became dangerous after the upgrade we need to understand
+exactly what Hibernate 4 and Hibernate 5 do differently with sequences.
+
+---
+
+## How Hibernate 4 generated sequence-based IDs
+
+In Hibernate 4 the default ID generation strategy for `GenerationType.SEQUENCE` was
+`SequenceHiLoGenerator`, which used the classic **hi-lo algorithm**.
+
+The idea is straightforward: call the database sequence infrequently and multiply its
+values in-memory to produce a range of usable IDs locally.
+
+```
+Database sequence value N  →  in-memory IDs: (N-1)*allocationSize+1 … N*allocationSize
+```
+
+With the Hibernate 4 default of `allocationSize = 1` the multiplication collapses to
+a no-op: every `nextval()` call produces exactly the next integer.
+
+```sql
+-- DDL produced by Hibernate 4 with allocationSize = 1
+CREATE SEQUENCE account_seq START WITH 1 INCREMENT BY 1;
+```
+
+Each `session.persist(entity)` call issued its own round-trip to the database:
+
+```
+persist(account1) → SELECT nextval('account_seq') → 1  → INSERT account(id=1)
+persist(account2) → SELECT nextval('account_seq') → 2  → INSERT account(id=2)
+persist(account3) → SELECT nextval('account_seq') → 3  → INSERT account(id=3)
+```
+
+This was safe but expensive: one database round-trip per entity.
+
+---
+
+## How Hibernate 5 generates sequence-based IDs
+
+Hibernate 5 replaced `SequenceHiLoGenerator` with `SequenceStyleGenerator` backed by
+the **pooled optimizer** — and it changed the default `allocationSize` from 1 to **50**.
+
+The pooled optimizer amortises the cost of sequence calls by reserving a batch of IDs
+with a single `nextval()` hit, then assigning them in-memory until the batch is
+exhausted.
+
+The critical difference from hi-lo is *where the range boundaries live*: the pooled
+optimizer encodes the upper bound of the allocated range **directly in the database
+sequence value**. To make that work, the sequence must increment by exactly
+`allocationSize` per call.
+
+```sql
+-- DDL produced by Hibernate 5 with allocationSize = 50 (the new default)
+CREATE SEQUENCE account_seq START WITH 1 INCREMENT BY 50;
+```
+
+Given a `nextval()` return of `N`, Hibernate calculates:
+
+```
+lo = N - allocationSize + 1  =  N - 49
+hi = N
+
+in-memory IDs for this batch: lo, lo+1, lo+2, … hi
+```
+
+So consecutive `nextval()` calls now return 50, 100, 150, 200 … and each batch
+covers 50 in-memory IDs:
+
+```
+nextval() → 50   → batch covers IDs  1 –  50
+nextval() → 100  → batch covers IDs 51 – 100
+nextval() → 150  → batch covers IDs 101 – 150
+```
+
+Hibernate only goes back to the database when it has handed out all 50 IDs in the
+current batch, or when a new `EntityManagerFactory` is created.
+
+---
+
+## The key difference nobody warned about
+
+With `INCREMENT BY 1` a manual `SELECT nextval('account_seq')` advances the counter
+by exactly **1**. It consumes one ID from the sequence and leaves Hibernate's state
+largely unaffected.
+
+With `INCREMENT BY 50` a manual `SELECT nextval('account_seq')` advances the counter
+by **50**. It consumes an entire batch's worth of IDs in a single call.
+
+| | Hibernate 4 | Hibernate 5 |
+|---|---|---|
+| Default `allocationSize` | 1 | **50** |
+| Sequence DDL | `INCREMENT BY 1` | **`INCREMENT BY 50`** |
+| Manual `nextval()` advances counter by | **1** | **50** |
+| Two sequential `nextval()` calls return | 1, 2 | **50, 100** |
+
+That 50× jump is the root cause of the deadlock.
+
+---
+
+## The application code pattern
+
+Many Hibernate 4 codebases mixed JPA persistence with direct JDBC or native-query
+sequence calls. A common pattern in financial batch processors looked like this:
+
+```java
+// Pre-fetch both IDs before opening the main transaction
+long idA = fetchNextId(em, "account_seq");  // → 1  (H4) or 50  (H5)
+long idB = fetchNextId(em, "account_seq");  // → 2  (H4) or 100 (H5)
+
+// Decide how to process the pair
+if (idB == idA + 1) {
+    // IDs are adjacent — process both in the SAME transaction
+    processPairInSingleTransaction(idA, idB);
+} else {
+    // Large gap — treat as separate batches, run concurrently
+    processConcurrently(idA, idB);
+}
+```
+
+The intent was to detect whether two IDs belonged to the same "batch window" by
+checking adjacency. Under Hibernate 4 with `INCREMENT BY 1` consecutive calls
+always returned adjacent IDs, so the pair always went into the same transaction.
+Under Hibernate 5 with `INCREMENT BY 50` the gap between two consecutive calls is
+always 50, so every pair was now dispatched to *concurrent* transactions — and that
+changed everything about their locking behaviour.
+
+---
+
+## What PostgreSQL does when you insert a child row
+
+Before tracing the deadlock it helps to understand how PostgreSQL enforces foreign
+key constraints on INSERT.
+
+When you insert a row that references a parent table via a foreign key, PostgreSQL
+must verify that the referenced row exists. It does this by issuing an implicit:
+
+```sql
+SELECT 1 FROM parent_table WHERE id = $referenced_id FOR SHARE
+```
+
+A `FOR SHARE` lock is **compatible with other share locks** but is
+**incompatible with exclusive locks** — specifically with the exclusive lock held by
+an in-progress `INSERT` on that row.
+
+If the referenced parent row is being inserted by a *concurrent, uncommitted*
+transaction, the FK check **blocks and waits** until that transaction either commits
+(check passes) or rolls back (check fails with a FK violation error).
+
+---
+
+## The deadlock, step by step
+
+Now we have all the pieces. Consider two settlement threads running concurrently,
+each following the pre-fetch pattern above.
+
+### With Hibernate 4 (INCREMENT BY 1) — no deadlock
+
+```
+Thread-1 pre-fetch:  nextval() → 1,   nextval() → 2    idA=1, idB=2   (gap=1 → same TX)
+Thread-2 pre-fetch:  nextval() → 3,   nextval() → 4    idA=3, idB=4   (gap=1 → same TX)
+
+Thread-1 TX: INSERT account(1)
+             INSERT account(2)
+             INSERT transfer(from=1, to=2)  ← FK check on account(1) and account(2):
+                                               both exist in THIS transaction → no wait
+
+Thread-2 TX: INSERT account(3)
+             INSERT account(4)
+             INSERT transfer(from=3, to=4)  ← same situation, no wait
+```
+
+Each transaction is self-contained. The FK checks never have to wait for a row
+held by another transaction, because both accounts in a pair are created inside
+the same transaction.
+
+### With Hibernate 5 (INCREMENT BY 50) — DEADLOCK
+
+```
+Thread-1 pre-fetch:  nextval() → 50,   nextval() → 100   idA=50,  idB=100  (gap=50 → concurrent)
+Thread-2 pre-fetch:  nextval() → 150,  nextval() → 200   idA=150, idB=200  (gap=50 → concurrent)
+```
+
+The gap is now 50, so the application routes them to concurrent transactions. Each
+thread creates its *own* account and a transfer pointing at the *other* thread's
+account — which is currently being inserted by that other thread:
+
+```
+Thread-1 TX opens:
+  INSERT account(id=50)              → holds EXCLUSIVE row lock on account(50)
+  [flush forced; lock held]
+
+Thread-2 TX opens:
+  INSERT account(id=100)             → holds EXCLUSIVE row lock on account(100)
+  [flush forced; lock held]
+
+--- both locks now held simultaneously ---
+
+Thread-1 continues:
+  INSERT transfer(from=50, to=100)
+    → FK check: SELECT … FROM account WHERE id=100 FOR SHARE
+    → account(100) is exclusively locked by Thread-2
+    → Thread-1 WAITS
+
+Thread-2 continues:
+  INSERT transfer(from=100, to=50)
+    → FK check: SELECT … FROM account WHERE id=50 FOR SHARE
+    → account(50) is exclusively locked by Thread-1
+    → Thread-2 WAITS
+
+Thread-1 is waiting for Thread-2.
+Thread-2 is waiting for Thread-1.
+PostgreSQL deadlock detector fires (default timeout: 1 s).
+One transaction is chosen as the victim and rolled back.
+```
+
+The exception thrown in the victim thread:
+
+```
+org.postgresql.util.PSQLException: ERROR: deadlock detected
+  Detail: Process 42 waits for ShareLock on transaction 891; blocked by process 43.
+          Process 43 waits for ShareLock on transaction 890; blocked by process 42.
+  Hint: See server log for query details.
+```
+
+---
+
+## Why the large transaction made it worse
+
+With Hibernate 4 and `allocationSize=1`, each `persist()` call was immediately
+followed by a database round-trip for the next sequence value and then an `INSERT`.
+Transactions were shorter and row locks were held for less time. Even if two
+transactions occasionally referenced overlapping rows, the overlap window was tiny.
+
+With Hibernate 5 and `allocationSize=50`, Hibernate accumulates up to 50 entities
+in memory before needing to touch the database for the next sequence value. In a
+*huge* transaction the first `persist()` call triggers a `nextval()` round-trip,
+and then the next 49 persists are pure in-memory operations. The transaction does
+a great deal of work — acquiring row locks, accumulating FK references, building
+the action queue — before the eventual flush. All those row locks are held for the
+full duration of that accumulated work, which in a batch job can be seconds or
+minutes. The wider the window, the more likely a concurrent transaction will
+try to acquire a conflicting lock.
+
+---
+
+## The entity configuration
+
+Here is the annotated `Account` entity as it appears in the reproducer. Note that
+`allocationSize = 50` is not set explicitly — it is the Hibernate 5 default. The
+comment is there to make the intent obvious:
+
+```java
+@Entity
+@Table(name = "account")
+public class Account {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "account_gen")
+    @SequenceGenerator(
+            name          = "account_gen",
+            sequenceName  = "account_seq",
+            allocationSize = 50   // Hibernate 5 default — forces INCREMENT BY 50 in DDL
+    )
+    private Long id;
+
+    private String name;
+}
+```
+
+Hibernate's DDL generator produces:
+
+```sql
+CREATE SEQUENCE account_seq
+    START WITH 1
+    INCREMENT BY 50
+    MINVALUE 1
+    NO MAXVALUE
+    CACHE 1;
+```
+
+The Hibernate 4-compatible variant uses `allocationSize = 1`:
+
+```java
+@SequenceGenerator(
+        name          = "account_h4_gen",
+        sequenceName  = "account_h4_seq",
+        allocationSize = 1  // Hibernate 4 default — INCREMENT BY 1
+)
+```
+
+DDL:
+
+```sql
+CREATE SEQUENCE account_h4_seq
+    START WITH 1
+    INCREMENT BY 1;
+```
+
+---
+
+## Reproducing it
+
+The companion project ships a `DeadlockReproducer` that orchestrates the two-thread
+scenario using `CountDownLatch` to guarantee the accounts are both in-flight before
+the FK-carrying inserts are attempted:
+
+```java
+// Both threads insert their Account and flush, holding the exclusive row lock.
+// Then they are released simultaneously to attempt the cross-referencing Transfer insert.
+
+CountDownLatch bothStarted = new CountDownLatch(2);
+CountDownLatch proceed     = new CountDownLatch(1);
+
+Thread thread1 = new Thread(() -> {
+    EntityManager em = emf.createEntityManager();
+    em.getTransaction().begin();
+
+    Account myAccount = new Account("Settlement-Account-T1");
+    em.persist(myAccount);
+    em.flush();           // INSERT account(50) — exclusive lock held
+
+    bothStarted.countDown();
+    proceed.await();      // wait for Thread-2 to also hold its lock
+
+    // Transfer points at Thread-2's account — FK check will block on Thread-2's lock
+    Account theirAccount = em.getReference(Account.class, accountIdT2);
+    em.persist(new Transfer(myAccount, theirAccount, new BigDecimal("1000.00")));
+
+    em.getTransaction().commit();   // ← one of the two threads will never reach this
+});
+```
+
+Running the demo:
+
+```bash
+docker compose up -d
+mvn compile exec:java -Dexec.mainClass=com.pivovarit.deadlock.DeadlockReproducer
+```
+
+Scenario 1 output (Hibernate 5, `INCREMENT BY 50`):
+
+```
+--- SCENARIO 1: Hibernate 5 defaults (allocationSize=50, INCREMENT BY 50) ---
+
+[pre-fetch] Thread-1 will use Account id=50
+[pre-fetch] Thread-2 will use Account id=100
+[pre-fetch] ID gap = 50 (50 apart → concurrent TXs → DEADLOCK)
+
+[T1] Inserted Account{id=50} — holding exclusive row lock
+[T2] Inserted Account{id=100} — holding exclusive row lock
+
+[T2] Transaction rolled back:
+     PSQLException: ERROR: deadlock detected
+     Detail: Process 42 waits for ShareLock on transaction 891; blocked by process 43.
+             Process 43 waits for ShareLock on transaction 890; blocked by process 42.
+
+  RESULT: DEADLOCK DETECTED
+  PostgreSQL rolled back one of the transactions to break the cycle.
+```
+
+Scenario 2 output (Hibernate 4-compatible, `INCREMENT BY 1`):
+
+```
+--- SCENARIO 2: Hibernate 4-compatible (allocationSize=1, INCREMENT BY 1) ---
+
+[pre-fetch H4] Thread-1 will use Account id=1
+[pre-fetch H4] Thread-2 will use Account id=2
+[pre-fetch H4] ID gap = 1 → SAME TX
+
+[H4] Both accounts persisted in the same transaction — no deadlock possible
+[H4] Committed successfully
+
+  RESULT: both transactions committed — no deadlock
+```
+
+---
+
+## Fixes
+
+### Option 1 — stop calling `nextval()` manually (best)
+
+The cleanest fix is to let Hibernate own the sequence completely. Remove all native
+queries that call `nextval()` on a Hibernate-managed sequence. Use `persist()` and
+let Hibernate assign the ID:
+
+```java
+// Before (dangerous after H5 upgrade)
+long id = (Long) em.createNativeQuery("SELECT nextval('account_seq')").getSingleResult();
+account.setId(id);
+em.persist(account);
+
+// After (safe)
+em.persist(account);
+Long id = account.getId(); // available after flush
+```
+
+### Option 2 — revert to `allocationSize = 1`
+
+Set `allocationSize = 1` on every `@SequenceGenerator` whose underlying sequence
+might also be accessed with manual SQL. This restores Hibernate 4 behaviour: the
+database sequence has `INCREMENT BY 1`, so a manual `nextval()` call advances the
+counter by exactly 1, not 50.
+
+```java
+@SequenceGenerator(
+        name          = "account_gen",
+        sequenceName  = "account_seq",
+        allocationSize = 1  // safe for mixed Hibernate + JDBC access
+)
+```
+
+The trade-off is one database round-trip per INSERT instead of one per 50. For most
+applications that is acceptable; for high-throughput batch jobs it may not be.
+
+### Option 3 — use a dedicated sequence for non-Hibernate code
+
+Keep the Hibernate-managed sequence with `INCREMENT BY 50` for performance, and
+create a separate sequence for audit logs, batch IDs, or anything else that needs
+a manually-fetched value:
+
+```sql
+-- For Hibernate (INCREMENT BY 50, high throughput)
+CREATE SEQUENCE account_seq INCREMENT BY 50;
+
+-- For manual use in batch correlation IDs, audit logs, etc. (INCREMENT BY 1)
+CREATE SEQUENCE batch_correlation_seq INCREMENT BY 1;
+```
+
+This eliminates interference between Hibernate's internal pool and any code that
+calls `nextval()` directly.
+
+---
+
+## Summary
+
+| | Hibernate 4 | Hibernate 5 |
+|---|---|---|
+| Default `allocationSize` | 1 | 50 |
+| DB sequence `INCREMENT BY` | 1 | 50 |
+| Manual `nextval()` advances counter by | 1 | **50** |
+| Two sequential `nextval()` calls return | 1, 2 (adjacent) | 50, 100 **(50 apart)** |
+| Application batching decision | same transaction | **concurrent transactions** |
+| FK check on in-flight row | same TX → no wait | other TX → **wait → deadlock** |
+
+The deadlock was not caused by a bug in the application logic. The logic had been
+correct for years. The upgrade changed a single default — `allocationSize` from 1
+to 50 — which changed the DDL emitted for the sequence — which changed what a manual
+`nextval()` call actually does at the database level — which changed the concurrency
+strategy of the batch processor — which changed the lock acquisition order — which
+finally turned a benign access pattern into a classical AB-BA deadlock.
+
+Silent default changes in framework upgrades are among the hardest class of
+migration problems to find, because nothing in your code changed and no test covers
+the gap between what the sequence counter returns and what your concurrency logic
+assumes about that value.
+
+The lesson is simple: if you mix JPA-managed sequences with any code that calls
+`nextval()` directly — JDBC templates, stored procedures, native queries — audit
+every such call after a Hibernate major-version upgrade and verify that your
+assumptions about the sequence step size still hold.
