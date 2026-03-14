@@ -46,6 +46,7 @@
         <module>hibernate-alternatives/spring-data-jdbc</module>
         <module>java-pid-controller</module>
         <module>java-lossless-fractions</module>
+        <module>java-enum-hashcode-serialization</module>
     </modules>
 
     <properties>
