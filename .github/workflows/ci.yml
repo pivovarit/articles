@@ -24,7 +24,7 @@ jobs:
         run: mvn -B --no-transfer-progress package
 
       - name: Verify jar compatibility
-        uses: pivovarit/verify-jar-action@v1.2.0
+        uses: pivovarit/verify-jar-action@v1.3.0
         with:
           directory: 'java-jpms-jdk8/target'
           java-version: '8'
