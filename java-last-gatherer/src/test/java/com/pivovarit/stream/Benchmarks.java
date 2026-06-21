@@ -35,9 +35,9 @@ final class Benchmarks {
           .include(clazz.getSimpleName())
 //          .jvmArgsAppend("-XX:+UnlockDiagnosticVMOptions","-XX:+DebugNonSafepoints", "-Xlog:class+load=info", "-XX:+LogCompilation", "-XX:+PrintAssembly")
           .warmupIterations(3)
-          .measurementIterations(4)
+          .measurementIterations(3)
           .resultFormat(ResultFormatType.JSON)
-          .addProfiler(AsyncProfiler.class, "event=cpu;output=flamegraph;dir=" + Benchmarks.BENCHMARKS_PATH + ";libPath=" + "/opt/homebrew/opt/async-profiler/lib/libasyncProfiler.dylib")
+//          .addProfiler(AsyncProfiler.class, "event=cpu;output=flamegraph;dir=" + Benchmarks.BENCHMARKS_PATH + ";libPath=" + "/opt/homebrew/opt/async-profiler/lib/libasyncProfiler.dylib")
           .forks(1)
           .build()).run();
     }

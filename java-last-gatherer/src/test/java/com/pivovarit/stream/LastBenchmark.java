@@ -93,6 +93,13 @@ public class LastBenchmark {
     @Benchmark
     public void take_6(Blackhole bh) {
         Stream.of(data)
+          .gather(new LastGathererTake6<>(n))
+          .forEach(bh::consume);
+    }
+
+    @Benchmark
+    public void more_gatherers(Blackhole bh) {
+        Stream.of(data)
           .gather(MoreGatherers.last(n))
           .forEach(bh::consume);
     }
