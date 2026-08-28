@@ -15,6 +15,12 @@ class SingleEntryMap<K, V> implements Serializable {
         this.value = value;
     }
 
+    SingleEntryMap(int bucket, K key, V value) {
+        this.bucket = bucket;
+        this.key = key;
+        this.value = value;
+    }
+
     public Optional<V> get(K key) {
         return key.hashCode() == bucket && key.equals(this.key)
           ? Optional.of(value)

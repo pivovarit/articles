@@ -1,16 +1,18 @@
 package com.pivovarit.hash;
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 
 class Example {
     static class Serialize {
         void main() throws Exception {
             var map = new SingleEntryMap<>(Type.A, "hello");
-            try (var out = new ObjectOutputStream(new FileOutputStream("/tmp/map.bin"))) {
-                out.writeObject(map);
+            try (var out = new DataOutputStream(new FileOutputStream("/tmp/map.bin"))) {
+                out.writeInt(map.bucket());
+                out.writeUTF(map.key().name());
+                out.writeUTF(map.value());
                 IO.println("Type.A.hashCode() = " + Type.A.hashCode());
             }
         }
@@ -18,8 +20,13 @@ class Example {
 
     static class Deserialize {
         void main() throws Exception {
-            try (var in = new ObjectInputStream(new FileInputStream("/tmp/map.bin"))) {
-                SingleEntryMap<Type, String> map = (SingleEntryMap<Type, String>) in.readObject();
+            // Read only the plain fields we wrote (int + two Strings) instead of
+            // deserializing a full object graph, avoiding unsafe object deserialization.
+            try (var in = new DataInputStream(new FileInputStream("/tmp/map.bin"))) {
+                int bucket = in.readInt();
+                Type key = Type.valueOf(in.readUTF());
+                String value = in.readUTF();
+                var map = new SingleEntryMap<>(bucket, key, value);
 
                 IO.println("Type.A.hashCode() = " + Type.A.hashCode());
                 IO.println("stored bucket     = " + map.bucket());
